@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
 import Widget from './Widget';
 import QuizScreen from './QuizScreen';
+import CreateQuiz from './CreateQuiz';
 import Explore from './Explore';
 
 export default function Home() {
   const [currentScreen, setCurrentScreen] = useState('Home');
 
   const handlePressCreateQuiz = () => {
-    setCurrentScreen('QuizScreen');
+    setCurrentScreen('CreateQuiz');
   };
 
   const handlePressExploreQuizzes = () => {
@@ -30,8 +31,8 @@ export default function Home() {
             </ScrollView>
           </View>
         );
-      case 'QuizScreen':
-        return <QuizScreen />;
+      case 'CreateQuiz':
+        return <CreateQuiz />;
       case 'Explore':
         return <Explore />;
       default:
