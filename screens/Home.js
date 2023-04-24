@@ -1,25 +1,43 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
-import Loading from './Loading';
-import get_topic_mcq from '../lib/external';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import Widget from './Widget';
+import QuestionScreen from './QuestionScreen';
+import Explore from './Explore';
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [mcqResult, setMcqResult] = useState([]);
+  const [currentScreen, setCurrentScreen] = useState('Home');
 
-  const handleGetMcq = async () => {
-    setIsLoading(true);
-    const result = await get_topic_mcq();
-    setIsLoading(false);
-    setMcqResult(result);
+  const handlePressCreateQuiz = () => {
+    setCurrentScreen('QuestionScreen');
   };
 
-  return (
-    <View style={styles.container}>
-      <Widget name="Create A Quiz" />
-    </View>
-  );
+  const handlePressExploreQuizzes = () => {
+    setCurrentScreen('Explore');
+  };
+
+  const renderScreen = () => {
+    switch (currentScreen) {
+      case 'Home':
+        return (
+          <View style={styles.container}>
+            <TouchableOpacity onPress={handlePressCreateQuiz}>
+              <Widget name="Create A Quiz" color="#0096FF" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handlePressExploreQuizzes}>
+              <Widget name="Explore Quizzes" color="#6495ED" />
+            </TouchableOpacity>
+          </View>
+        );
+      case 'QuestionScreen':
+        return <QuestionScreen />;
+      case 'Explore':
+        return <Explore />;
+      default:
+        return null;
+    }
+  };
+
+  return renderScreen();
 }
 
 const styles = StyleSheet.create({
