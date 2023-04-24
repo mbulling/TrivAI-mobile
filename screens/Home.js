@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
 import Widget from './Widget';
 import QuestionScreen from './QuestionScreen';
 import Explore from './Explore';
@@ -20,12 +20,14 @@ export default function Home() {
       case 'Home':
         return (
           <View style={styles.container}>
-            <TouchableOpacity onPress={handlePressCreateQuiz}>
-              <Widget name="Create A Quiz" color="#0096FF" />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={handlePressExploreQuizzes}>
-              <Widget name="Explore Quizzes" color="#6495ED" />
-            </TouchableOpacity>
+            <ScrollView style={styles.scroll}>
+              <TouchableOpacity onPress={handlePressCreateQuiz} style={styles.widgetRow}>
+                <Widget name="Create A Quiz" color="#0096FF" />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handlePressExploreQuizzes} style={styles.widgetRow}>
+                <Widget name="Explore Quizzes" color="#6495ED" />
+              </TouchableOpacity>
+            </ScrollView>
           </View>
         );
       case 'QuestionScreen':
@@ -47,4 +49,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '90%',
   },
+  widgetRow: {
+    width: '100%',
+  },
+  scroll: {
+    width: '100%',
+    marginTop: 70,
+  }
 });
