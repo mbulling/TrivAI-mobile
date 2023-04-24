@@ -31,10 +31,11 @@ export default function CreateQuiz() {
 
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={styles.container}>
+      <Text style={styles.title}>Create a Quiz</Text>
       <Text>Enter topic:</Text>
       <TextInput
-        style={{ height: 40, width: '80%', borderColor: 'gray', borderWidth: 1, marginTop: 10 }}
+        style={styles.textInput}
         onChangeText={handleTextChange}
         value={topic}
       />
@@ -58,7 +59,7 @@ export default function CreateQuiz() {
         <Picker.Item label="Hard" value="hard" />
       </Picker>
       {/* <Button title="Start Quiz" onPress={handleQuizStart} /> */}
-    </View>
+    </View >
   );
 }
 
@@ -67,5 +68,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%',
+  },
+  textInput: {
+    width: '80%',
+    height: 40,
+    backgroundColor: '#E5E4E2',
+    padding: 10,
+    borderRadius: 10,
+  },
+  title: {
+    fontSize: 36,
   },
 });
