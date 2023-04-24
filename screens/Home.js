@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
-import Loading from './Loading';
-import get_topic_mcq from './external';
+import React, { useState } from "react";
+import { StyleSheet, View, Text, Button } from "react-native";
+import Loading from "./Loading";
+import get_topic_mcq from "./external";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +36,7 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
