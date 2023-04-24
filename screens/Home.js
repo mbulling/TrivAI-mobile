@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
 import Loading from './Loading';
-import get_topic_mcq from './external';
+import get_topic_mcq from '../lib/external';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
