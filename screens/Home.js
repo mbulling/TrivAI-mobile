@@ -1,42 +1,71 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
 import { StyleSheet, View, Text, Button } from "react-native";
 import Loading from "./Loading";
 import get_topic_mcq from "./external";
+=======
+import React, { useState } from 'react';
+import { StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
+import Widget from './Widget';
+import QuestionScreen from './QuestionScreen';
+import Explore from './Explore';
+>>>>>>> 89269ecce544dd7eb2cb299609e77d9ffef35c3b
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [mcqResult, setMcqResult] = useState([]);
+  const [currentScreen, setCurrentScreen] = useState('Home');
 
-  const handleGetMcq = async () => {
-    setIsLoading(true);
-    const result = await get_topic_mcq();
-    setIsLoading(false);
-    setMcqResult(result);
+  const handlePressCreateQuiz = () => {
+    setCurrentScreen('QuestionScreen');
   };
 
-  return (
-    <View style={styles.container}>
-      <Button onPress={handleGetMcq} title="Get MCQ" />
-      {isLoading ? (
-        <Loading />
-      ) : (
-        mcqResult.map((question, index) => (
-          <View key={index}>
-            <Text>{question.question}</Text>
-            {question.options.map((option, optionIndex) => (
-              <Text key={optionIndex}>{option}</Text>
-            ))}
+  const handlePressExploreQuizzes = () => {
+    setCurrentScreen('Explore');
+  };
+
+  const renderScreen = () => {
+    switch (currentScreen) {
+      case 'Home':
+        return (
+          <View style={styles.container}>
+            <ScrollView style={styles.scroll}>
+              <TouchableOpacity onPress={handlePressCreateQuiz} style={styles.widgetRow}>
+                <Widget name="Create A Quiz" color="#0096FF" />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handlePressExploreQuizzes} style={styles.widgetRow}>
+                <Widget name="Explore Quizzes" color="#6495ED" />
+              </TouchableOpacity>
+            </ScrollView>
           </View>
-        ))
-      )}
-    </View>
-  );
+        );
+      case 'QuestionScreen':
+        return <QuestionScreen />;
+      case 'Explore':
+        return <Explore />;
+      default:
+        return null;
+    }
+  };
+
+  return renderScreen();
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+<<<<<<< HEAD
     justifyContent: "center",
     alignItems: "center",
+=======
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '90%',
   },
+  widgetRow: {
+    width: '100%',
+>>>>>>> 89269ecce544dd7eb2cb299609e77d9ffef35c3b
+  },
+  scroll: {
+    width: '100%',
+    marginTop: 70,
+  }
 });
