@@ -11,15 +11,20 @@ export default function Widget({ name }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'green',
+    backgroundColor: '#0096FF',
     padding: 10,
     marginVertical: 5,
     borderRadius: 5,
     elevation: 5,
     width: '100%',
+    height: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
-    fontSize: 16,
+    textAlign: 'center',
+    fontSize: 26,
+    color: 'white',
     fontWeight: 'bold',
     width: '100%',
   },

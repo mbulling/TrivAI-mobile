@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
 import Loading from './Loading';
 import get_topic_mcq from '../lib/external';
+import Widget from './Widget';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -16,19 +17,7 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <Button onPress={handleGetMcq} title="Get MCQ" />
-      {isLoading ? (
-        <Loading />
-      ) : (
-        mcqResult.map((question, index) => (
-          <View key={index}>
-            <Text>{question.question}</Text>
-            {question.options.map((option, optionIndex) => (
-              <Text key={optionIndex}>{option}</Text>
-            ))}
-          </View>
-        ))
-      )}
+      <Widget name="Create A Quiz" />
     </View>
   );
 }
@@ -38,5 +27,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    width: '90%',
   },
 });
