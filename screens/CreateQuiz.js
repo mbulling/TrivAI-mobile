@@ -14,7 +14,7 @@ export default function CreateQuiz() {
   const navigation = useNavigation();
 
   const handlePressTakeQuiz = () => {
-    navigation.navigate('QuizScreen', { topic, num_questions });
+    navigation.navigate('QuizScreen', { topic: topic, numberQuestions: num_questions });
   };
 
   const handleTextChange = (text) => {

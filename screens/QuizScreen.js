@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import get_topic_mcq from "../lib/external";
+import { get_topic_mcq } from "../lib/external";
 import { View, Text, Pressable } from "react-native";
 import Loading from "./Loading";
 
@@ -14,7 +14,7 @@ const fetchException = (err) => {
   return null;
 };
 
-const QuizScreen = ({ topic, num_questions }) => {
+const QuizScreen = (props) => {
   const [questions, setQuestions] = useState([]);
   const [numberCorrect, setNumberCorrect] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -22,13 +22,14 @@ const QuizScreen = ({ topic, num_questions }) => {
   useEffect(() => {
     const fetchQuestions = async () => {
       const retries = async (tries = 3) => {
+        const { topic, numberQuestions } = props.route.params;
         if (tries <= 0) {
           console.log("max retries reached, could not fetch mcq");
           return null;
         }
         const attempt = await get_topic_mcq(
           topic,
-          Math.max(Math.min(num_questions, 10), 1)
+          Math.max(Math.min(numberQuestions, 10), 1)
         )
           .then(fetchSuccess, fetchReject)
           .catch(fetchException);
@@ -42,6 +43,7 @@ const QuizScreen = ({ topic, num_questions }) => {
       setQuestions(res);
     };
     fetchQuestions();
+
   }, []);
 
   const _selectionHandler = (selectionIndex) => {
