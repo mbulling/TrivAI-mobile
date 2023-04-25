@@ -19,6 +19,7 @@ export default function Home() {
       <Stack.Screen name="Home" component={HomeWidgets} />
       <Stack.Screen name="CreateQuiz" component={CreateQuiz} />
       <Stack.Screen name="Explore" component={Explore} />
+      <Stack.Screen name="QuizScreen" component={QuizScreen} />
       {/* <Stack.Screen name="UserProfile" component={UserProfile} /> */}
       {/* <Stack.Screen name="RecentTopics" component={RecentTopics} /> */}
     </Stack.Navigator>
@@ -29,7 +30,7 @@ function HomeWidgets() {
   const navigation = useNavigation();
 
   const handlePressCreateQuiz = () => {
-    navigation.navigate('CreateQuiz');
+    navigation.navigate('CreateQuiz', { navigation });
   };
 
   const handlePressUserProfile = () => {

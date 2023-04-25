@@ -14,7 +14,7 @@ const fetchException = (err) => {
   return null;
 };
 
-const QuizScreen = ({ topic, numberQuestions }) => {
+const QuizScreen = ({ topic, num_questions }) => {
   const [questions, setQuestions] = useState([]);
   const [numberCorrect, setNumberCorrect] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -28,7 +28,7 @@ const QuizScreen = ({ topic, numberQuestions }) => {
         }
         const attempt = await get_topic_mcq(
           topic,
-          Math.max(Math.min(numberQuestions, 10), 1)
+          Math.max(Math.min(num_questions, 10), 1)
         )
           .then(fetchSuccess, fetchReject)
           .catch(fetchException);

@@ -41,8 +41,11 @@ export default function Widget({ name, color }) {
       marginLeft: 5,
     },
     img: {
-      height: 100,
-      width: 100,
+      // height: 100,
+      // width: undefined,
+      flex: 1,
+      aspectRatio: 1,
+      margin: 20,
     },
     cols: {
       flex: 1,

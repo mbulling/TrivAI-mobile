@@ -1,21 +1,21 @@
-import React, { useState, useEffect, useNavigation } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TextInput, Slider, Button } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Loading from './Loading';
 import QuizScreen from './QuizScreen';
 import { get_topics } from '../lib/external';
-
-//const navigation = useNavigation();
+import { useNavigation } from '@react-navigation/native';
+import NavigationContainer from '@react-navigation/native';
 
 export default function CreateQuiz() {
   const [topic, setTopic] = useState('');
   const [num_questions, setNumber] = useState(0);
   const [difficulty, setDifficulty] = useState('easy');
-  const [currentScreen, setCurrentScreen] = useState('CreateQuiz');
+  const navigation = useNavigation();
 
-  // const handlePressTakeQuiz = (topic, num_questions) => {
-  //   setCurrentScreen('QuizScreen', { topic, num_questions });
-  // };
+  const handlePressTakeQuiz = () => {
+    navigation.navigate('QuizScreen', { topic, num_questions });
+  };
 
   const handleTextChange = (text) => {
     setTopic(text);
@@ -28,13 +28,6 @@ export default function CreateQuiz() {
   const handleDifficultyChange = (difficulty) => {
     setDifficulty(difficulty);
   };
-
-  const handleQuizStart = () => {
-    // Navigate to QuizScreen with topic, num_questions, and difficulty state values as params
-    //navigation.navigate('QuizScreen', { topic, num_questions });
-    //setCurrentScreen('QuizScreen');
-  };
-
 
   return (
     <View style={styles.container}>
@@ -64,8 +57,8 @@ export default function CreateQuiz() {
         <Picker.Item label="Medium" value="medium" />
         <Picker.Item label="Hard" value="hard" />
       </Picker>
-      <Button title="Start Quiz" onPress={handleQuizStart} />
-    </View >
+      <Button title="Start Quiz" onPress={handlePressTakeQuiz} />
+    </View>
   );
 }
 
