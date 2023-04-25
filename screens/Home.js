@@ -44,7 +44,7 @@ function HomeWidgets() {
     navigation.navigate('RecentTopics');
   };
 
-  const renderWidget = (name, color, onPress) => {
+  const renderWidget = (name, color, onPress, icon) => {
     return (
       <View style={styles.widgetRow}>
         <TouchableOpacity style={{ width: '100%' }} onPress={onPress}>
@@ -76,7 +76,8 @@ const styles = StyleSheet.create({
   },
   widgetRow: {
     width: '100%',
-    padding: 10,
+    paddingRight: 10,
+    paddingTop: 10,
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
