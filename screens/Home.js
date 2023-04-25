@@ -1,68 +1,71 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
 import Widget from './Widget';
 import QuizScreen from './QuizScreen';
 import CreateQuiz from './CreateQuiz';
 import Explore from './Explore';
-import UserProfile from './UserProfile';
-import RecentTopics from './RecentTopics';
+//import UserProfile from './UserProfile';
+//import RecentTopics from './RecentTopics';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
 
 export default function Home() {
-  const [currentScreen, setCurrentScreen] = useState('Home');
+  const navigation = useNavigation();
+
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeWidgets} />
+      <Stack.Screen name="CreateQuiz" component={CreateQuiz} />
+      <Stack.Screen name="Explore" component={Explore} />
+      {/* <Stack.Screen name="UserProfile" component={UserProfile} /> */}
+      {/* <Stack.Screen name="RecentTopics" component={RecentTopics} /> */}
+    </Stack.Navigator>
+  );
+}
+
+function HomeWidgets() {
+  const navigation = useNavigation();
 
   const handlePressCreateQuiz = () => {
-    setCurrentScreen('CreateQuiz');
-  };
-
-  const handlePressRecentTopics = () => {
-    setCurrentScreen('RecentTopics');
+    navigation.navigate('CreateQuiz');
   };
 
   const handlePressUserProfile = () => {
-    setCurrentScreen('UserProfile');
+    navigation.navigate('UserProfile');
   };
 
   const handlePressExploreQuizzes = () => {
-    setCurrentScreen('Explore');
+    navigation.navigate('Explore');
   };
 
-  const renderScreen = () => {
-    switch (currentScreen) {
-      case 'Home':
-        return (
-          <View style={styles.container}>
-            <ScrollView style={styles.scroll}>
-              <View style={styles.spacer} />
-              <TouchableOpacity onPress={handlePressCreateQuiz} style={styles.widgetRow}>
-                <Widget name="Create A Quiz" color="#0096FF" />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={handlePressExploreQuizzes} style={styles.widgetRow}>
-                <Widget name="Explore Quizzes" color="#6495ED" />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={handlePressRecentTopics} style={styles.widgetRow}>
-                <Widget name="Recent Topics" color="#1F51FF" />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={handlePressUserProfile} style={styles.widgetRow}>
-                <Widget name="Profile" color="#3F00FF" />
-              </TouchableOpacity>
-              <View style={styles.spacer} />
-            </ScrollView>
-          </View>
-        );
-      case 'CreateQuiz':
-        return <CreateQuiz />;
-      case 'Explore':
-        return <Explore />;
-      case 'UserProfile':
-        return <UserProfile />;
-      case 'RecentTopics':
-        return <RecentTopics />;
-      default:
-        return null;
-    }
+  const handlePressRecentTopics = () => {
+    navigation.navigate('RecentTopics');
   };
 
-  return renderScreen();
+  const renderWidget = (name, color, onPress) => {
+    return (
+      <View style={styles.widgetRow}>
+        <TouchableOpacity style={{ width: '100%' }} onPress={onPress}>
+          <Widget name={name} color={color} />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      <ScrollView style={styles.scroll}>
+        <View style={styles.widgetRow}>
+          {renderWidget('Create A Quiz', '#0096FF', handlePressCreateQuiz)}
+          {renderWidget('Explore Quizzes', '#6495ED', handlePressExploreQuizzes)}
+          {renderWidget('Recent Topics', '#1F51FF', handlePressRecentTopics)}
+          {renderWidget('Profile', '#3F00FF', handlePressUserProfile)}
+        </View>
+      </ScrollView>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -70,16 +73,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
-    width: '90%',
   },
   widgetRow: {
     width: '100%',
-    height: '25%',
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
   },
   scroll: {
     width: '100%',
+    flex: 1,
   },
-  spacer: {
-    height: '15%',
-  }
 });

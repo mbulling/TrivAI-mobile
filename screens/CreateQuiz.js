@@ -5,12 +5,17 @@ import Loading from './Loading';
 import QuizScreen from './QuizScreen';
 import { get_topics } from '../lib/external';
 
+//const navigation = useNavigation();
+
 export default function CreateQuiz() {
   const [topic, setTopic] = useState('');
   const [num_questions, setNumber] = useState(0);
   const [difficulty, setDifficulty] = useState('easy');
+  const [currentScreen, setCurrentScreen] = useState('CreateQuiz');
 
-  //const navigation = useNavigation();
+  // const handlePressTakeQuiz = (topic, num_questions) => {
+  //   setCurrentScreen('QuizScreen', { topic, num_questions });
+  // };
 
   const handleTextChange = (text) => {
     setTopic(text);
@@ -24,10 +29,11 @@ export default function CreateQuiz() {
     setDifficulty(difficulty);
   };
 
-  // const handleQuizStart = () => {
-  //   // Navigate to QuizScreen with topic, num_questions, and difficulty state values as params
-  //   navigation.navigate('Quiz', { topic, num_questions, difficulty });
-  // };
+  const handleQuizStart = () => {
+    // Navigate to QuizScreen with topic, num_questions, and difficulty state values as params
+    //navigation.navigate('QuizScreen', { topic, num_questions });
+    //setCurrentScreen('QuizScreen');
+  };
 
 
   return (
@@ -58,7 +64,7 @@ export default function CreateQuiz() {
         <Picker.Item label="Medium" value="medium" />
         <Picker.Item label="Hard" value="hard" />
       </Picker>
-      {/* <Button title="Start Quiz" onPress={handleQuizStart} /> */}
+      <Button title="Start Quiz" onPress={handleQuizStart} />
     </View >
   );
 }
