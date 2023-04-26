@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { get_topic_mcq } from "../lib/external";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import Loading from "./Loading";
 
 const fetchSuccess = (res) => res;
@@ -64,7 +64,7 @@ const QuizScreen = (props) => {
 
 const FinishedScreen = ({ numberCorrect }) => {
   return (
-    <View>
+    <View style={styles.questionContainer}>
       <Text>You got {numberCorrect} questions correct!</Text>
     </View>
   );
@@ -76,7 +76,7 @@ const Question = ({ question, handler }) => {
       <Header lead={question.question} />
       {question.options.map((opt, index) => {
         return (
-          <Pressable key={opt} onPress={() => handler(index)}>
+          <Pressable key={opt} onPress={() => handler(index)} style={styles.options}>
             <Option text={opt} />
           </Pressable>
         );
@@ -86,11 +86,33 @@ const Question = ({ question, handler }) => {
 };
 
 const Header = ({ lead }) => {
-  return <Text>{lead}</Text>;
+  return <Text style={styles.question}>{lead}</Text>;
 };
 
 const Option = ({ text }) => {
-  return <Text>{text}</Text>;
+  return <Text style={styles.answerContainer}>{text}</Text>;
 };
+
+
+const styles = StyleSheet.create({
+  question: {
+    fontSize: 30,
+    padding: 20,
+  },
+  questionContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+  },
+  answerContainer: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 20,
+    overflow: "hidden",
+  },
+  options: {
+    padding: 10,
+  },
+});
 
 export default QuizScreen;
