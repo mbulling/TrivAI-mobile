@@ -45,6 +45,12 @@ export default function Widget({ name, color, left }) {
       alignItems: 'center',
       flexDirection: 'row',
     },
+    shadow: {
+      shadowColor: '#171717',
+      shadowOffset: { width: -1, height: 4 },
+      shadowOpacity: 0.3,
+      shadowRadius: 3,
+    },
     leftWrapper: {
       marginRight: 20,
     },
@@ -74,7 +80,7 @@ export default function Widget({ name, color, left }) {
   if (left) {
     return (
       <View style={styles.leftWrapper}>
-        <View style={styles.containerLeft}>
+        <View style={[styles.containerLeft, styles.shadow]}>
           <View style={styles.cols}>
             <Text style={styles.text}>{name}</Text>
           </View>
@@ -87,7 +93,7 @@ export default function Widget({ name, color, left }) {
   } else {
     return (
       <View style={styles.rightWrapper}>
-        <View style={styles.containerRight}>
+        <View style={[styles.containerRight, styles.shadow]}>
           <View style={styles.cols}>
             <Image style={styles.img} source={getIcon()} />
           </View>
