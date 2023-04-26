@@ -14,7 +14,7 @@ const fetchException = (err) => {
   return null;
 };
 
-const QuizScreen = (props) => {
+const QuizScreen = ({ route, navigation }) => {
   const [questions, setQuestions] = useState([]);
   const [numberCorrect, setNumberCorrect] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -22,7 +22,7 @@ const QuizScreen = (props) => {
   useEffect(() => {
     const fetchQuestions = async () => {
       const retries = async (tries = 3) => {
-        const { topic, numberQuestions } = props.route.params;
+        const { topic, numberQuestions } = route.params;
         if (tries <= 0) {
           console.log("max retries reached, could not fetch mcq");
           return null;
@@ -43,7 +43,6 @@ const QuizScreen = (props) => {
       setQuestions(res);
     };
     fetchQuestions();
-
   }, []);
 
   const _selectionHandler = (selectionIndex) => {
@@ -54,7 +53,9 @@ const QuizScreen = (props) => {
 
   if (loading) return <Loading />;
   if (questions.length === 0)
-    return <FinishedScreen numberCorrect={numberCorrect} />;
+    return (
+      <FinishedScreen numberCorrect={numberCorrect} navigation={navigation} />
+    );
   return (
     <View>
       <Question handler={_selectionHandler} question={questions[0]} />
@@ -62,10 +63,20 @@ const QuizScreen = (props) => {
   );
 };
 
-const FinishedScreen = ({ numberCorrect }) => {
+const FinishedScreen = ({ numberCorrect, navigation }) => {
+  const _navigationHandler = (screenName) => {
+    navigation.navigate(screenName);
+  };
+
   return (
     <View>
       <Text>You got {numberCorrect} questions correct!</Text>
+      <Pressable onPress={() => _navigationHandler("CreateQuiz")}>
+        <Text>Create Another Quiz</Text>
+      </Pressable>
+      <Pressable onPress={() => _navigationHandler("Home")}>
+        <Text>Go Home</Text>
+      </Pressable>
     </View>
   );
 };
