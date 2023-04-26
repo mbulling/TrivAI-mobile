@@ -6,6 +6,7 @@ import {
   TextInput,
   Slider,
   Button,
+  TouchableOpacity,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import Loading from "./Loading";
@@ -42,13 +43,13 @@ export default function CreateQuiz() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Create a Quiz</Text>
-      <Text>Enter topic:</Text>
+      <Text style = {styles.topic}>Enter topic:</Text>
       <TextInput
         style={styles.textInput}
         onChangeText={handleTextChange}
         value={topic}
       />
-      <Text>Select number of questions:</Text>
+      <Text style = {styles.questions}>Select number of questions:</Text>
       <Slider
         style={{ width: "80%", marginTop: 10 }}
         minimumValue={0}
@@ -57,9 +58,9 @@ export default function CreateQuiz() {
         value={num_questions}
         onValueChange={handleNumberChange}
       />
-      <Text>Select difficulty:</Text>
+      <Text style = {styles.difficulty}>Select difficulty:</Text>
       <Picker
-        style={{ width: "80%", marginTop: 10 }}
+        style={{ width: "80%" }}
         selectedValue={difficulty}
         onValueChange={handleDifficultyChange}
       >
@@ -67,7 +68,9 @@ export default function CreateQuiz() {
         <Picker.Item label="Medium" value="medium" />
         <Picker.Item label="Hard" value="hard" />
       </Picker>
-      <Button title="Start Quiz" onPress={handlePressTakeQuiz} />
+      <TouchableOpacity style={styles.button} onPress={handlePressTakeQuiz}>
+        <Text style={styles.buttonText}>Start Quiz</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -75,18 +78,41 @@ export default function CreateQuiz() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
+    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '100%',
   },
   textInput: {
-    width: "80%",
-    height: 40,
-    backgroundColor: "#E5E4E2",
-    padding: 10,
+    width: '80%',
     borderRadius: 10,
   },
   title: {
+    marginTop: 20,
     fontSize: 36,
+  },
+  topic: {
+    marginTop: 40,
+    marginBottom: 10,
+    fontSize: 20,
+  },
+  questions: {
+    marginTop: 40,
+    marginBottom: 10,
+  },
+  difficulty: {
+    marginTop: 40,
+  },
+  button: {
+    backgroundColor: '#007AFF',
+    paddingHorizontal: 120,
+    paddingVertical: 20,
+    borderRadius: 5,
+    marginTop: 20,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
