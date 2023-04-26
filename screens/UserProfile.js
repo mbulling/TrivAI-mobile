@@ -1,19 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
-import Loading from './Loading';
-import { getName, getQuestionCorrect, getRecentTopics } from '../lib/external';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
+import Loading from "./Loading";
+import * as BE from "../lib/external";
+
+const defaultUser = {
+  name: "Mason",
+  questionCorrect: 0,
+  recentTopics: ["Math", "Science", "Biology"],
+};
 
 export default function UserProfile() {
-  const [name, setName] = useState('');
-  const [questionCorrect, setQuestionCorrect] = useState(0);
-  const [recentTopics, setRecentTopics] = useState([]);
+  const [user, setUser] = useState(defaultUser);
 
   useEffect(() => {
     const checkRegistration = async () => {
-      const result = await getName();
-      setName('Mason');
-      setQuestionCorrect(10);
-      setRecentTopics(['Math', 'Science', 'History', 'English', 'Physics', 'Chemistry']);
+      const name = await BE.getName();
+      const questionCorrect = await BE.getQuestionCorrect();
+      const recentTopics = await BE.getRecentTopics();
+      if (name !== null) setUser((user) => ({ ...user, name: name }));
+      else console.log("could not get user name");
+      if (questionCorrect !== null)
+        setUser((user) => ({ ...user, questionCorrect: questionCorrect }));
+      else console.log("could not get user questions correct");
+      if (recentTopics !== null)
+        setRecentTopics((user) => ({ ...user, recentTopics: recentTopics }));
+      else console.log("could not get user recent topics");
     };
 
     checkRegistration();
@@ -22,15 +33,19 @@ export default function UserProfile() {
   return (
     <ScrollView>
       <View style={styles.profile}>
-        <Text style={styles.name}>{name}</Text>
-        <Text style={styles.userStats}>Questions Correct: {questionCorrect}</Text>
+        <Text style={styles.name}>{user.name}</Text>
+        <Text style={styles.userStats}>
+          Questions Correct: {user.questionCorrect}
+        </Text>
       </View>
       <View style={styles.recents}>
         <Text style={styles.userStats}>Recent Topics:</Text>
         <View style={styles.topicsColumn}>
-          {recentTopics.map((topic) => (
-            <Text style={styles.topic}>{topic}</Text>
-          ))}
+          {user.recentTopics.length > 0
+            ? user.recentTopics.map((topic) => (
+                <Text style={styles.topic}>{topic}</Text>
+              ))
+            : null}
         </View>
       </View>
     </ScrollView>
@@ -44,25 +59,25 @@ const styles = StyleSheet.create({
   },
   userStats: {
     fontSize: 20,
-    color: 'grey',
+    color: "grey",
   },
   profile: {
     padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   recents: {
     margin: 10,
   },
   topicsColumn: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
+    flexDirection: "row",
+    alignItems: "flex-start",
     padding: 10,
-    flexWrap: 'wrap',
+    flexWrap: "wrap",
   },
   topic: {
     padding: 10,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     margin: 10,
   },
 });
