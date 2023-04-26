@@ -5,7 +5,7 @@ import myQuiz from '../assets/myQuiz.png';
 import myTrophy from '../assets/myTrophy.png';
 import newQuiz from '../assets/newQuiz.png';
 
-export default function Widget({ name, color }) {
+export default function Widget({ name, color, left }) {
   function getIcon() {
     switch (name) {
       case 'Create A Quiz':
@@ -19,7 +19,7 @@ export default function Widget({ name, color }) {
     }
   }
   const styles = StyleSheet.create({
-    container: {
+    containerLeft: {
       backgroundColor: color,
       padding: 10,
       marginVertical: 5,
@@ -32,6 +32,25 @@ export default function Widget({ name, color }) {
       alignItems: 'center',
       flexDirection: 'row',
     },
+    containerRight: {
+      backgroundColor: color,
+      padding: 10,
+      marginVertical: 5,
+      borderBottomLeftRadius: 100,
+      borderTopLeftRadius: 100,
+      elevation: 5,
+      width: '100%',
+      height: 150,
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: 'row',
+    },
+    leftWrapper: {
+      marginRight: 20,
+    },
+    rightWrapper: {
+      marginLeft: 20,
+    },
     text: {
       textAlign: 'center',
       fontSize: 26,
@@ -41,8 +60,6 @@ export default function Widget({ name, color }) {
       marginLeft: 5,
     },
     img: {
-      // height: 100,
-      // width: undefined,
       flex: 1,
       aspectRatio: 1,
       margin: 20,
@@ -51,20 +68,36 @@ export default function Widget({ name, color }) {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-
-    }
+    },
   });
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.cols}>
-        <Text style={styles.text}>{name}</Text>
+  if (left) {
+    return (
+      <View style={styles.leftWrapper}>
+        <View style={styles.containerLeft}>
+          <View style={styles.cols}>
+            <Text style={styles.text}>{name}</Text>
+          </View>
+          <View style={styles.cols}>
+            <Image style={styles.img} source={getIcon()} />
+          </View>
+        </View >
       </View>
-      <View style={styles.cols}>
-        <Image style={styles.img} source={getIcon()} />
+    );
+  } else {
+    return (
+      <View style={styles.rightWrapper}>
+        <View style={styles.containerRight}>
+          <View style={styles.cols}>
+            <Image style={styles.img} source={getIcon()} />
+          </View>
+          <View style={styles.cols}>
+            <Text style={styles.text}>{name}</Text>
+          </View>
+        </View >
       </View>
-    </View >
-  );
+    );
+  }
 }
 
 

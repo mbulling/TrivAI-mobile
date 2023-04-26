@@ -45,11 +45,11 @@ function HomeWidgets() {
     navigation.navigate('RecentTopics');
   };
 
-  const renderWidget = (name, color, onPress, icon) => {
+  const renderWidget = (name, color, onPress, left) => {
     return (
       <View style={styles.widgetRow}>
         <TouchableOpacity style={{ width: '100%' }} onPress={onPress}>
-          <Widget name={name} color={color} />
+          <Widget name={name} color={color} left={left} />
         </TouchableOpacity>
       </View>
     );
@@ -59,10 +59,10 @@ function HomeWidgets() {
     <View style={styles.container}>
       <ScrollView style={styles.scroll}>
         <View style={styles.widgetRow}>
-          {renderWidget('Create A Quiz', '#0096FF', handlePressCreateQuiz)}
-          {renderWidget('Explore Quizzes', '#6495ED', handlePressExploreQuizzes)}
-          {renderWidget('Recent Topics', '#1F51FF', handlePressRecentTopics)}
-          {renderWidget('Profile', '#3F00FF', handlePressUserProfile)}
+          {renderWidget('Create A Quiz', '#0096FF', handlePressCreateQuiz, true)}
+          {renderWidget('Explore Quizzes', '#6495ED', handlePressExploreQuizzes, false)}
+          {renderWidget('Recent Topics', '#1F51FF', handlePressRecentTopics, true)}
+          {renderWidget('Profile', '#3F00FF', handlePressUserProfile, false)}
         </View>
       </ScrollView>
     </View>
@@ -77,7 +77,6 @@ const styles = StyleSheet.create({
   },
   widgetRow: {
     width: '100%',
-    paddingRight: 10,
     paddingTop: 10,
     justifyContent: 'center',
     alignItems: 'center',
