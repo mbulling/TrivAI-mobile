@@ -1,17 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
-import Loading from "./Loading";
 import * as BE from "../lib/external";
-
-const defaultUser = {
-  name: "Mason",
-  questionCorrect: 0,
-  recentTopics: ["Math", "Science", "Biology"],
-};
+import UserContext from "../contexts/user";
 
 export default function UserProfile() {
-  const [user, setUser] = useState(defaultUser);
-
+  const { user, setUser } = useContext(UserContext);
   useEffect(() => {
     const checkRegistration = async () => {
       const name = await BE.getName();
