@@ -57,10 +57,10 @@ export default function Widget({ name, color, left }) {
       flexDirection: 'row',
     },
     shadow: {
-      shadowColor: '#171717',
-      shadowOffset: { width: -1, height: 4 },
-      shadowOpacity: 0.3,
-      shadowRadius: 3,
+      shadowColor: '#3d3d3d',
+      shadowOffset: { width: -1, height: 3 },
+      shadowOpacity: 0.4,
+      shadowRadius: 2,
     },
     leftWrapper: {
       marginRight: 20,

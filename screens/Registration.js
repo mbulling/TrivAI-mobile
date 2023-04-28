@@ -1,6 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import UserContext from "../contexts/user";
-import { View, Button, Text, TextInput } from "react-native";
+import { View, Button, Text, TextInput, Animated } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as BE from "../lib/external";
 
@@ -10,7 +10,7 @@ const Registration = () => {
 
   return (
     <Stack.Navigator initialRouteName="Landing">
-      <Stack.Screen name="Landing" component={Landing} />
+      <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
       <Stack.Screen
         name="Register"
         children={(props) => <Register setUser={setUser} {...props} />}
@@ -20,13 +20,24 @@ const Registration = () => {
 };
 
 const Landing = ({ navigation }) => {
+  const [opacity] = useState(new Animated.Value(0));
+
+  useEffect(() => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 3000,
+      useNativeDriver: true,
+    }).start(() => navigation.navigate("Register"));
+  }, []);
+
   return (
-    <View>
+    <Animated.View style={{ opacity }}>
       <Text>Landing Page</Text>
       <Button onPress={() => navigation.navigate("Register")} title="Sign up" />
-    </View>
+    </Animated.View>
   );
 };
+
 const Register = ({ setUser }) => {
   const [name, onChangeName] = useState("");
 

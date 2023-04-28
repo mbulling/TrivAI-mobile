@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { StyleSheet, View, TouchableOpacity, ScrollView } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import Widget from "./Widget";
 import QuizScreen from "./QuizScreen";
 import CreateQuiz from "./CreateQuiz";
@@ -21,7 +22,7 @@ export default function Home() {
   if (user.name === "") return <Registration />;
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeWidgets} />
+      <Stack.Screen name="Home" component={HomeWidgets} options={{ headerShown: false }} />
       <Stack.Screen name="CreateQuiz" component={CreateQuiz} />
       <Stack.Screen name="Explore" component={Explore} />
       <Stack.Screen name="QuizScreen" component={QuizScreen} />
@@ -62,31 +63,19 @@ function HomeWidgets() {
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.scroll}>
+    <LinearGradient
+      colors={["#1F51FF", "#0096FF"]}
+      style={styles.container}
+    >
+      <ScrollView style={styles.scroll} contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
         <View style={styles.widgetRow}>
-          {renderWidget(
-            "Create Quiz",
-            "#0096FF",
-            handlePressCreateQuiz,
-            true
-          )}
-          {renderWidget(
-            "Explore Quizzes",
-            "#6495ED",
-            handlePressExploreQuizzes,
-            false
-          )}
-          {renderWidget(
-            "Recent Topics",
-            "#1F51FF",
-            handlePressRecentTopics,
-            true
-          )}
+          {renderWidget("Create Quiz", "#0096FF", handlePressCreateQuiz, true)}
+          {renderWidget("Explore Quizzes", "#6495ED", handlePressExploreQuizzes, true)}
+          {renderWidget("Recent Topics", "#1F51FF", handlePressRecentTopics, false)}
           {renderWidget("Profile", "#3F00FF", handlePressUserProfile, false)}
         </View>
       </ScrollView>
-    </View>
+    </LinearGradient>
   );
 }
 
@@ -97,11 +86,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   widgetRow: {
-    width: "100%",
-    paddingTop: 10,
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    flex: 1,
+    flexWrap: "wrap",
+    paddingTop: 10,
   },
   scroll: {
     width: "100%",
