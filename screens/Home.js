@@ -45,7 +45,7 @@ function HomeWidgets() {
   };
 
   const handlePressExploreQuizzes = () => {
-    navigation.navigate("Explore");
+    navigation.navigate("Explore", { navigation });
   };
 
   const handlePressRecentTopics = () => {

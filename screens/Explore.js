@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Loading from './Loading';
 import { get_topics } from '../lib/external';
 
-export default function Explore() {
+export default function Explore({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
   const [topicResult, setTopicResult] = useState([]);
+
+  const handlePressTopic = (topic) => {
+    navigation.navigate("CreateQuiz", {
+      topic: topic,
+    });
+  };
 
   useEffect(() => {
     const fetchTopics = async () => {
@@ -26,16 +33,19 @@ export default function Explore() {
             <ScrollView horizontal={true}>
               <View style={styles.subtopicsColumn}>
                 {topic.subtopics.map((subtopic) => (
-                  <View style={styles.subtopic}>
-                    <Text key={subtopic}>{subtopic}</Text>
-                  </View>
+                  <TouchableOpacity onPress={() => handlePressTopic(subtopic)}>
+                    <View style={styles.subtopic}>
+                      <Text key={subtopic}>{subtopic}</Text>
+                    </View>
+                  </TouchableOpacity>
                 ))}
               </View>
             </ScrollView>
-          </View>
-        ))}
-      </View>
-    </ScrollView>
+          </View >
+        ))
+        }
+      </View >
+    </ScrollView >
   );
 }
 
