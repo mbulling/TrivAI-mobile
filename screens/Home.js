@@ -64,15 +64,15 @@ function HomeWidgets() {
 
   return (
     <LinearGradient
-      colors={["#1F51FF", "#0096FF"]}
+      colors={["#FFFFFF", "#FFFFFF"]}
       style={styles.container}
     >
       <ScrollView style={styles.scroll} contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
         <View style={styles.widgetRow}>
-          {renderWidget("Create Quiz", "#0096FF", handlePressCreateQuiz, true)}
-          {renderWidget("Explore Quizzes", "#6495ED", handlePressExploreQuizzes, true)}
-          {renderWidget("Recent Topics", "#1F51FF", handlePressRecentTopics, false)}
-          {renderWidget("Profile", "#3F00FF", handlePressUserProfile, false)}
+          {renderWidget("Create", "#4051A6", handlePressCreateQuiz, true)}
+          {renderWidget("Explore", "#EE5F88", handlePressExploreQuizzes, true)}
+          {renderWidget("Recents", "#4051A6", handlePressRecentTopics, false)}
+          {renderWidget("Profile", "#EE5F88", handlePressUserProfile, false)}
         </View>
       </ScrollView>
     </LinearGradient>
