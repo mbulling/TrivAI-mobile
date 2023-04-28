@@ -25,17 +25,17 @@ export default function Explore({ navigation }) {
   }, []);
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.topicRow}>
       <View>
         {topicResult.map((topic) => (
-          <View key={topic.topic} style={styles.topicRow}>
+          <View key={topic.topic}>
             <Text style={styles.topicHeader}>{topic.topic}</Text>
-            <ScrollView horizontal={true}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
               <View style={styles.subtopicsColumn}>
                 {topic.subtopics.map((subtopic) => (
                   <TouchableOpacity onPress={() => handlePressTopic(subtopic)}>
                     <View style={styles.subtopic}>
-                      <Text key={subtopic}>{subtopic}</Text>
+                      <Text style = {styles.text} key={subtopic}>{subtopic}</Text>
                     </View>
                   </TouchableOpacity>
                 ))}
@@ -56,23 +56,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   topicHeader: {
+    paddingTop: 5,
     fontSize: 30,
-    marginLeft: 10,
+    marginLeft: 15,
+    color: "#FFFFFF",
+    font: 'Courier Prime',  
+    fontWeight: "bold",
   },
   topicRow: {
     padding: 10,
+    backgroundColor: "#4051A6",
   },
   subtopicsColumn: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    padding: 10,
   },
   subtopic: {
-    backgroundColor: 'white',
+    backgroundColor: '#BCD5D4',
+    borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
     width: 200,
     height: 100,
     margin: 10,
+    shadowColor: '#3d3d3d',
+    shadowOffset: { width: -1, height: 3 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2
   },
+  text: {
+    fontWeight: "bold",
+    fontSize: 15,
+  }
 });
