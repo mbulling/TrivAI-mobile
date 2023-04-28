@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { get_topic_mcq } from "../lib/external";
-import { View, Text, Pressable, StyleSheet, Image } from "react-native";
-import myTrophy from '../assets/myTrophy.png';
+import { View, Text, Pressable, StyleSheet, Image, Button } from "react-native";
+import myTrophy from "../assets/myTrophy.png";
 import Loading from "./Loading";
 
 const fetchSuccess = (res) => res;
@@ -53,10 +53,15 @@ const QuizScreen = ({ route, navigation }) => {
       setNumberCorrect((prev) => prev + 1);
     }
     setRevealAnswer(true);
-    setTimeout(() => {
-      setQuestions((prev) => prev.slice(1));
-      setRevealAnswer(false);
-    }, 1000);
+  };
+
+  const _nextHandler = () => {
+    if (!revealAnswer) {
+      console.log("no answer selected yet");
+      return;
+    }
+    setQuestions((prev) => prev.slice(1));
+    setRevealAnswer(false);
   };
 
   if (loading) return <Loading />;
@@ -67,7 +72,8 @@ const QuizScreen = ({ route, navigation }) => {
   return (
     <View>
       <Question
-        handler={_selectionHandler}
+        optionHandler={_selectionHandler}
+        nextHandler={_nextHandler}
         question={questions[0]}
         revealAnswer={revealAnswer}
       />
@@ -94,7 +100,7 @@ const FinishedScreen = ({ numberCorrect, navigation }) => {
   );
 };
 
-const Question = ({ question, handler, revealAnswer }) => {
+const Question = ({ question, optionHandler, nextHandler, revealAnswer }) => {
   return (
     <View>
       <Header lead={question.question} />
@@ -102,7 +108,7 @@ const Question = ({ question, handler, revealAnswer }) => {
         return (
           <Pressable
             key={opt}
-            onPress={() => handler(index)}
+            onPress={() => optionHandler(index)}
             style={styles.options}
           >
             <Option
@@ -113,6 +119,7 @@ const Question = ({ question, handler, revealAnswer }) => {
           </Pressable>
         );
       })}
+      <Button title="Next" onPress={nextHandler} />
     </View>
   );
 };
