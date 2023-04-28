@@ -232,12 +232,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 30,
     paddingBottom: 20,
+    width: "80%"
   },
   finishBtn: {
     padding: 20,
     backgroundColor: "#EE5F88",
     borderRadius: 30,
-    width: 250,
+    width: "70%",
     margin: 5,
     alignItems: "center",
     // shadow
