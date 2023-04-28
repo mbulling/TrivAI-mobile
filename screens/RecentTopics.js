@@ -1,26 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { getRecentTopics } from "../lib/external";
+import UserContext from "../contexts/user";
 
-const defaultRecentTopics = ["Math", "Science", "Biology"];
 export default function RecentTopics() {
-  const [recentTopics, setRecentTopics] = useState(defaultRecentTopics);
-
-  useEffect(() => {
-    const fetchRecents = async () => {
-      const recentTopics = await getRecentTopics();
-      if (recentTopics !== null) setRecentTopics(() => recentTopics);
-      else console.log("could not get user recent topics");
-    };
-
-    fetchRecents();
-  }, []);
+  const { user } = useContext(UserContext);
 
   return (
     <ScrollView>
       <View style={styles.recents}>
         <View style={styles.topicsColumn}>
-          {recentTopics.map((topic) => (
+          {user.recentTopics.map((topic) => (
             <Text style={styles.topic}>{topic}</Text>
           ))}
         </View>
