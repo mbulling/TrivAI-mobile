@@ -18,23 +18,18 @@ import NavigationContainer from "@react-navigation/native";
 import HorizontalPicker from "./HorizontalPicker";
 import * as BE from "../lib/external";
 
-export default function CreateQuiz() {
-  const [topic, setTopic] = useState("");
+export default function CreateQuiz({ route, navigation }) {
+  const { topic } = route.params;
   const [num_questions, setNumber] = useState(0);
   const [difficulty, setDifficulty] = useState("easy");
-  const navigation = useNavigation();
+  //const navigation = useNavigation();
 
   const handlePressTakeQuiz = async () => {
-    BE.appendRecentTopics(topic);
-
+    await BE.appendRecentTopics(topic);
     navigation.navigate("QuizScreen", {
       topic: topic,
       numberQuestions: num_questions,
     });
-  };
-
-  const handleTextChange = (text) => {
-    setTopic(text);
   };
 
   const handleNumberChange = (value) => {
@@ -83,12 +78,6 @@ export default function CreateQuiz() {
           <Text style={styles.buttonText}>Start Quiz</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.topic}>Enter topic:</Text>
-      <TextInput
-        style={styles.textInput}
-        onChangeText={handleTextChange}
-        value={topic}
-      />
     </View>
   );
 }

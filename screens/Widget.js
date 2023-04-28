@@ -1,14 +1,24 @@
-import React from 'react';
-import { View, Text, ScrollView, StyleSheet, Image } from 'react-native';
+import React, { useRef, useEffect } from 'react';
+import { View, Text, ScrollView, StyleSheet, Image, Animated } from 'react-native';
 import myCamera from '../assets/myCamera.png';
 import myQuiz from '../assets/myQuiz.png';
 import myTrophy from '../assets/myTrophy.png';
 import newQuiz from '../assets/newQuiz.png';
 
 export default function Widget({ name, color, left }) {
+  const position = useRef(new Animated.Value(left ? -200 : 200)).current;
+
+  useEffect(() => {
+    Animated.timing(position, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
   function getIcon() {
     switch (name) {
-      case 'Create A Quiz':
+      case 'Create Quiz':
         return newQuiz;
       case 'Explore Quizzes':
         return myQuiz;
@@ -18,6 +28,7 @@ export default function Widget({ name, color, left }) {
         return myTrophy;
     }
   }
+
   const styles = StyleSheet.create({
     containerLeft: {
       backgroundColor: color,
@@ -77,30 +88,38 @@ export default function Widget({ name, color, left }) {
     },
   });
 
+  const animatedStyles = {
+    transform: [
+      {
+        translateX: position,
+      },
+    ],
+  };
+
   if (left) {
     return (
       <View style={styles.leftWrapper}>
-        <View style={[styles.containerLeft, styles.shadow]}>
+        <Animated.View style={[styles.containerLeft, styles.shadow, animatedStyles]}>
           <View style={styles.cols}>
             <Text style={styles.text}>{name}</Text>
           </View>
           <View style={styles.cols}>
             <Image style={styles.img} source={getIcon()} />
           </View>
-        </View >
+        </Animated.View >
       </View>
     );
   } else {
     return (
       <View style={styles.rightWrapper}>
-        <View style={[styles.containerRight, styles.shadow]}>
+        <Animated.View style={[styles.containerRight, styles.shadow, animatedStyles]}>
           <View style={styles.cols}>
             <Image style={styles.img} source={getIcon()} />
           </View>
           <View style={styles.cols}>
             <Text style={styles.text}>{name}</Text>
           </View>
-        </View >
+        </Animated.View >
       </View>
     );
   }
