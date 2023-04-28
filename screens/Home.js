@@ -61,7 +61,7 @@ function HomeWidgets() {
     <View style={styles.container}>
       <ScrollView style={styles.scroll}>
         <View style={styles.widgetRow}>
-          {renderWidget('Create A Quiz', '#0096FF', handlePressCreateQuiz, true)}
+          {renderWidget('Create Quiz', '#0096FF', handlePressCreateQuiz, true)}
           {renderWidget('Explore Quizzes', '#6495ED', handlePressExploreQuizzes, false)}
           {renderWidget('Recent Topics', '#1F51FF', handlePressRecentTopics, true)}
           {renderWidget('Profile', '#3F00FF', handlePressUserProfile, false)}
