@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -8,7 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 
-const HorizontalNumberPicker = ({values, width, itemWidth, onValueChange}) => {
+const HorizontalNumberPicker = ({ values, width, itemWidth, onValueChange }) => {
   const [selected, setSelected] = useState(1);
   const scrollX = useRef(new Animated.Value(0)).current;
 
@@ -46,11 +46,11 @@ const HorizontalNumberPicker = ({values, width, itemWidth, onValueChange}) => {
         decelerationRate="fast"
         showsHorizontalScrollIndicator={false}
         onScroll={Animated.event(
-          [{nativeEvent: {contentOffset: {x: scrollX}}}],
-          {useNativeDriver: true, listener: onScroll},
+          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+          { useNativeDriver: true, listener: onScroll },
         )}
         scrollEventThrottle={16}
-        contentContainerStyle={{paddingHorizontal: ITEM_SPACING}}
+        contentContainerStyle={{ paddingHorizontal: ITEM_SPACING }}
       >
         {values.map((value, index) => {
           const inputRange = [(index - 1) * ITEM_SIZE, index * ITEM_SIZE, (index + 1) * ITEM_SIZE];
@@ -65,8 +65,8 @@ const HorizontalNumberPicker = ({values, width, itemWidth, onValueChange}) => {
             extrapolate: 'clamp',
           });
           return (
-            <View key={index} style={[styles.numberContainer, {width: ITEM_SIZE}]}>
-              <Animated.Text style={[styles.numberText, {opacity, transform: [{scale}]}]}>{value}</Animated.Text>
+            <View key={index} style={[styles.numberContainer, { width: ITEM_SIZE }]}>
+              <Animated.Text style={[styles.numberText, { opacity, transform: [{ scale }] }]}>{value}</Animated.Text>
             </View>
           );
         })}
