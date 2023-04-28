@@ -6,6 +6,7 @@ import CreateQuiz from "./CreateQuiz";
 import Explore from "./Explore";
 import UserProfile from "./UserProfile";
 import RecentTopics from "./RecentTopics";
+import EnterTopic from './EnterTopic';
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import UserContext from "../contexts/user";
@@ -26,6 +27,7 @@ export default function Home() {
       <Stack.Screen name="QuizScreen" component={QuizScreen} />
       <Stack.Screen name="UserProfile" component={UserProfile} />
       <Stack.Screen name="RecentTopics" component={RecentTopics} />
+      <Stack.Screen name="EnterTopic" component={EnterTopic} />
     </Stack.Navigator>
   );
 }
@@ -34,7 +36,7 @@ function HomeWidgets() {
   const navigation = useNavigation();
 
   const handlePressCreateQuiz = () => {
-    navigation.navigate("CreateQuiz", { navigation });
+    navigation.navigate('EnterTopic', { navigation });
   };
 
   const handlePressUserProfile = () => {
@@ -64,7 +66,7 @@ function HomeWidgets() {
       <ScrollView style={styles.scroll}>
         <View style={styles.widgetRow}>
           {renderWidget(
-            "Create A Quiz",
+            "Create Quiz",
             "#0096FF",
             handlePressCreateQuiz,
             true

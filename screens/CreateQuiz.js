@@ -17,21 +17,17 @@ import { useNavigation } from "@react-navigation/native";
 import NavigationContainer from "@react-navigation/native";
 import HorizontalPicker from './HorizontalPicker';
 
-export default function CreateQuiz() {
-  const [topic, setTopic] = useState("");
+export default function CreateQuiz({ route, navigation }) {
+  const { topic } = route.params;
   const [num_questions, setNumber] = useState(0);
   const [difficulty, setDifficulty] = useState("easy");
-  const navigation = useNavigation();
+  //const navigation = useNavigation();
 
   const handlePressTakeQuiz = () => {
     navigation.navigate("QuizScreen", {
       topic: topic,
       numberQuestions: num_questions,
     });
-  };
-
-  const handleTextChange = (text) => {
-    setTopic(text);
   };
 
   const handleNumberChange = (value) => {
@@ -42,22 +38,22 @@ export default function CreateQuiz() {
     setDifficulty(difficulty);
   };
 
-  const numbers = [1,2,3,4,5,6,7,8,9,10]
-  const difficulties = ['easy','medium','hard']
+  const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  const difficulties = ['easy', 'medium', 'hard']
 
   return (
     <View style={styles.container}>
       <View style={styles.topRow}>
         <View style={styles.pickerWrapper1}>
           <View style={styles.difficultyBox}>
-            <Text style = {{marginTop: 20, fontSize: 15, fontWeight: 500}}>choose difficulty</Text>
-            <HorizontalPicker values={difficulties} width = {150} itemWidth={200} onValueChange={handleDifficultyChange}/>
+            <Text style={{ marginTop: 20, fontSize: 15, fontWeight: 500 }}>choose difficulty</Text>
+            <HorizontalPicker values={difficulties} width={150} itemWidth={200} onValueChange={handleDifficultyChange} />
           </View>
         </View>
         <View style={styles.pickerWrapper2}>
           <View style={styles.questionPicker}>
-            <Text style = {{marginTop: 20, fontSize: 15, fontWeight: 500}}>number of questions</Text>
-            <HorizontalPicker values={numbers} width = {200} itemWidth={200} onValueChange={handleNumberChange}/>
+            <Text style={{ marginTop: 20, fontSize: 15, fontWeight: 500 }}>number of questions</Text>
+            <HorizontalPicker values={numbers} width={200} itemWidth={200} onValueChange={handleNumberChange} />
           </View>
         </View>
       </View>
@@ -66,12 +62,6 @@ export default function CreateQuiz() {
           <Text style={styles.buttonText}>Start Quiz</Text>
         </TouchableOpacity>
       </View>
-      <Text style = {styles.topic}>Enter topic:</Text>
-      <TextInput
-        style={styles.textInput}
-        onChangeText={handleTextChange}
-        value={topic}
-      />
     </View>
   );
 }
