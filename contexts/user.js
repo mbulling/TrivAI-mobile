@@ -2,9 +2,9 @@ import React, { useState, createContext, useEffect } from "react";
 import * as BE from "../lib/external";
 
 const defaultUser = {
-  name: "Mason",
+  name: "",
   questionCorrect: 0,
-  recentTopics: ["Math", "Science", "Biology", "Reading"],
+  recentTopics: [],
 };
 
 const UserContext = createContext(defaultUser);
