@@ -23,6 +23,7 @@ const QuizScreen = ({ route, navigation }) => {
     const fetchQuestions = async () => {
       const retries = async (tries = 3) => {
         const { topic, numberQuestions } = route.params;
+        if (topic === undefined || numberQuestions === undefined) return null;
         if (tries <= 0) {
           console.log("max retries reached, could not fetch mcq");
           return null;
