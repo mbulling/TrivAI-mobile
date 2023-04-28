@@ -15,9 +15,10 @@ import QuizScreen from "./QuizScreen";
 import { get_topics } from "../lib/external";
 import { useNavigation } from "@react-navigation/native";
 import NavigationContainer from "@react-navigation/native";
-import HorizontalPicker from "./HorizontalPicker";
+// import HorizontalPicker from "./HorizontalPicker";
 import * as BE from "../lib/external";
 import UserContext from "../contexts/user";
+import HorizontalPicker from '@vseslav/react-native-horizontal-picker';
 
 export default function CreateQuiz({ route, navigation }) {
   const { topic } = route.params;
@@ -50,19 +51,42 @@ export default function CreateQuiz({ route, navigation }) {
   const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const difficulties = ["easy", "medium", "hard"];
 
+
+  const questionItem = (item, index) => (
+    <View style={styles.pickerWrapper2}>
+      <View style={styles.questionPicker}>
+        <Text style = {styles.wtf}>
+          {item}
+        </Text>
+      </View>
+    </View>
+  );
+
+  const difficultyItem = (item, index) => (
+    <View style={styles.pickerWrapper2}>
+      <View style={styles.difficultyPicker}>
+        <Text style = {styles.wtf}>
+          {item}
+        </Text>
+      </View>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.topRow}>
         <View style={styles.pickerWrapper2}>
-          <View style={styles.questionPicker}>
+           <View style={styles.questionPicker}>
             <Text style={{ marginTop: 20, fontSize: 15, fontWeight: 500 }}>
               number of questions
             </Text>
             <HorizontalPicker
-              values={numbers}
-              width={200}
-              itemWidth={200}
-              onValueChange={handleNumberChange}
+              data={numbers}
+              renderItem={questionItem}
+              itemWidth={10}
+              onChange = {handleNumberChange}
+              defaultIndex = {9}
+              animatedScrollToDefaultIndex = {true}
             />
           </View>
         </View>
@@ -74,10 +98,12 @@ export default function CreateQuiz({ route, navigation }) {
               choose difficulty
             </Text>
             <HorizontalPicker
-              values={difficulties}
-              width={200}
-              itemWidth={200}
-              onValueChange={handleDifficultyChange}
+              data={difficulties}
+              renderItem={difficultyItem}
+              itemWidth={20}
+              onChange = {handleNumberChange}
+              defaultIndex = {difficulties.length}
+              animatedScrollToDefaultIndex = {true}
             />
           </View>
         </View>
@@ -189,4 +215,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: "#FFFFFF",
   },
+  wtf: {
+    justifyContent: "left",
+    fontWeight: "bold",
+    fontSize: 25
+  }
 });
