@@ -21,7 +21,7 @@ export default function Home() {
   if (user.name === "") return <Registration />;
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeWidgets} />
+      <Stack.Screen name="Home" component={HomeWidgets} options={{ headerShown: false }} />
       <Stack.Screen name="CreateQuiz" component={CreateQuiz} />
       <Stack.Screen name="Explore" component={Explore} />
       <Stack.Screen name="QuizScreen" component={QuizScreen} />
@@ -63,7 +63,7 @@ function HomeWidgets() {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scroll}>
+      <ScrollView style={styles.scroll} contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
         <View style={styles.widgetRow}>
           {renderWidget(
             "Create Quiz",
@@ -97,11 +97,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   widgetRow: {
-    width: "100%",
-    paddingTop: 10,
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    flex: 1,
+    flexWrap: "wrap",
+    paddingTop: 10,
   },
   scroll: {
     width: "100%",
