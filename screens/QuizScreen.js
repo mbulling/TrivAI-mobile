@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { get_topic_mcq } from "../lib/external";
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet, Image } from "react-native";
+import myTrophy from '../assets/myTrophy.png';
 import Loading from "./Loading";
 
 const fetchSuccess = (res) => res;
@@ -81,6 +82,7 @@ const FinishedScreen = ({ numberCorrect, navigation }) => {
 
   return (
     <View style={styles.questionContainer}>
+      <Image source={myTrophy} style={styles.trophy} />
       <Text>You got {numberCorrect} questions correct!</Text>
       <Pressable onPress={() => _navigationHandler("EnterTopic")}>
         <Text>Create Another Quiz</Text>
@@ -157,6 +159,10 @@ const styles = StyleSheet.create({
     backgroundColor: "green",
     borderRadius: 20,
     overflow: "hidden",
+  },
+  trophy: {
+    width: 200,
+    height: 200,
   },
   incorrectAnswerContainer: {
     padding: 20,
