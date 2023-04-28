@@ -79,13 +79,22 @@ const QuizScreen = ({ route, navigation }) => {
       <FinishedScreen numberCorrect={numberCorrect} navigation={navigation} />
     );
   return (
-    <View>
-      <Question
-        optionHandler={_selectionHandler}
-        nextHandler={_nextHandler}
-        question={questions[0]}
-        revealAnswer={revealAnswer}
-      />
+    <View style={styles.quizScreenContainer}>
+      <View style={styles.questionContainer}>
+        <Question
+          optionHandler={_selectionHandler}
+          nextHandler={_nextHandler}
+          question={questions[0]}
+          revealAnswer={revealAnswer}
+        />
+      </View>
+
+      <View style={styles.nextButtonContainer}>
+        <NextButton
+          nextHandler={_nextHandler}
+          revealAnswer={revealAnswer}
+        />
+      </View>
     </View>
   );
 };
@@ -96,7 +105,7 @@ const FinishedScreen = ({ numberCorrect, navigation }) => {
   };
 
   return (
-    <View style={styles.questionContainer}>
+    <View style={styles.endScreenContainer}>
       <Image source={myTrophy} style={styles.trophy} />
       <Text>You got {numberCorrect} questions correct!</Text>
       <Pressable onPress={() => _navigationHandler("EnterTopic")}>
@@ -128,10 +137,21 @@ const Question = ({ question, optionHandler, nextHandler, revealAnswer }) => {
           </Pressable>
         );
       })}
-      <Button title="Next" onPress={nextHandler} />
     </View>
   );
 };
+
+const NextButton = ({ nextHandler, revealAnswer }) => {
+  if (revealAnswer) {
+    return (
+      <View style={styles.nextButton}>
+        <Button title="Next" color="white" onPress={nextHandler} />
+      </View>
+    )
+  } else {
+    return <></>
+  }
+}
 
 const Header = ({ lead }) => {
   return <Text style={styles.question}>{lead}</Text>;
@@ -157,6 +177,17 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   questionContainer: {
+    flex: 1
+  },
+  nextButtonContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    paddingBottom: 20
+  },
+  quizScreenContainer: {
+    flex: 1
+  },
+  endScreenContainer: {
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
@@ -172,7 +203,7 @@ const styles = StyleSheet.create({
   },
   correctAnswerContainer: {
     padding: 20,
-    backgroundColor: "green",
+    backgroundColor: "lightgreen",
     borderRadius: 20,
     overflow: "hidden",
   },
@@ -182,10 +213,16 @@ const styles = StyleSheet.create({
   },
   incorrectAnswerContainer: {
     padding: 20,
-    backgroundColor: "red",
+    backgroundColor: "tomato",
     borderRadius: 20,
     overflow: "hidden",
   },
+  nextButton: {
+    margin: 10,
+    padding: 10,
+    backgroundColor: "darkblue",
+    borderRadius: 20
+  }
 });
 
 export default QuizScreen;
