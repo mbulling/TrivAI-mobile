@@ -15,10 +15,6 @@ const Registration = () => {
         name="Register"
         children={(props) => <Register setUser={setUser} {...props} />}
       />
-      <Stack.Screen
-        name="Login"
-        children={(props) => <Login setUser={setUser} {...props} />}
-      />
     </Stack.Navigator>
   );
 };
@@ -27,10 +23,6 @@ const Landing = ({ navigation }) => {
   return (
     <View>
       <Text>Landing Page</Text>
-      <Button
-        onPress={() => navigation.navigate("Login")}
-        title="Already have an account login"
-      />
       <Button onPress={() => navigation.navigate("Register")} title="Sign up" />
     </View>
   );
@@ -53,26 +45,6 @@ const Register = ({ setUser }) => {
         keyboardType={"default"}
       />
       <Button onPress={_registrationHandler} title="register" />
-    </View>
-  );
-};
-const Login = ({ setUser }) => {
-  const [name, onChangeName] = useState("");
-
-  const _loginHandler = async () => {
-    setUser((prev) => ({ ...prev, name: name }));
-  };
-
-  return (
-    <View>
-      <Text>Login Page</Text>
-      <TextInput
-        onChangeText={onChangeName}
-        value={name}
-        placeholder={"Enter your name."}
-        keyboardType={"default"}
-      />
-      <Button onPress={_loginHandler} title="login" />
     </View>
   );
 };

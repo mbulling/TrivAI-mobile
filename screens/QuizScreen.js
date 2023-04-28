@@ -3,6 +3,7 @@ import { get_topic_mcq } from "../lib/external";
 import { View, Text, Pressable, StyleSheet, Image, Button } from "react-native";
 import myTrophy from "../assets/myTrophy.png";
 import Loading from "./Loading";
+import * as BE from "../lib/external";
 
 const fetchSuccess = (res) => res;
 
@@ -48,8 +49,9 @@ const QuizScreen = ({ route, navigation }) => {
     fetchQuestions();
   }, []);
 
-  const _selectionHandler = (selectionIndex) => {
+  const _selectionHandler = async (selectionIndex) => {
     if (selectionIndex === questions[0].answer_id) {
+      await BE.incrQuestionCorrect();
       setNumberCorrect((prev) => prev + 1);
     }
     setRevealAnswer(true);
