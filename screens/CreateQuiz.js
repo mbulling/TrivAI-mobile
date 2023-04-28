@@ -19,9 +19,8 @@ import HorizontalPicker from './HorizontalPicker';
 
 export default function CreateQuiz({ route, navigation }) {
   const { topic } = route.params;
-  const [num_questions, setNumber] = useState(0);
-  const [difficulty, setDifficulty] = useState("easy");
-  //const navigation = useNavigation();
+  const [num_questions, setNumber] = useState(3);
+  const [difficulty, setDifficulty] = useState("medium");
 
   const handlePressTakeQuiz = () => {
     navigation.navigate("QuizScreen", {
@@ -44,12 +43,6 @@ export default function CreateQuiz({ route, navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.topRow}>
-        <View style={styles.pickerWrapper1}>
-          <View style={styles.difficultyBox}>
-            <Text style={{ marginTop: 20, fontSize: 15, fontWeight: 500 }}>choose difficulty</Text>
-            <HorizontalPicker values={difficulties} width={150} itemWidth={200} onValueChange={handleDifficultyChange} />
-          </View>
-        </View>
         <View style={styles.pickerWrapper2}>
           <View style={styles.questionPicker}>
             <Text style={{ marginTop: 20, fontSize: 15, fontWeight: 500 }}>number of questions</Text>
@@ -61,6 +54,14 @@ export default function CreateQuiz({ route, navigation }) {
         <TouchableOpacity style={styles.button} onPress={handlePressTakeQuiz}>
           <Text style={styles.buttonText}>Start Quiz</Text>
         </TouchableOpacity>
+      </View>
+      <View style={styles.topRow}>
+        <View style={styles.pickerWrapper1}>
+          <View style={styles.difficultyBox}>
+            <Text style={{ marginTop: 20, fontSize: 15, fontWeight: 500 }}>choose difficulty</Text>
+            <HorizontalPicker values={difficulties} width={150} itemWidth={200} onValueChange={handleDifficultyChange} />
+          </View>
+        </View>
       </View>
     </View>
   );
@@ -88,17 +89,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 30,
-    marginRight: 8,
-    marginVertical: 40,
+    margin: 20,
+    maxHeight: 120,
   },
   pickerWrapper2: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 8,
-    marginRight: 30,
-    marginVertical: 40,
+    margin: 20,
+    maxHeight: 120,
   },
   difficultyBox: {
     alignItems: 'center',
