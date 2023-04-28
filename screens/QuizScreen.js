@@ -107,12 +107,15 @@ const FinishedScreen = ({ numberCorrect, navigation }) => {
   return (
     <View style={styles.endScreenContainer}>
       <Image source={myTrophy} style={styles.trophy} />
-      <Text>You got {numberCorrect} questions correct!</Text>
-      <Pressable onPress={() => _navigationHandler("EnterTopic")}>
-        <Text>Create Another Quiz</Text>
-      </Pressable>
-      <Pressable onPress={() => _navigationHandler("Home")}>
-        <Text>Go Home</Text>
+      <Text style={styles.finishMsg}>You got {numberCorrect} questions correct!</Text>
+      <View style={styles.finishBtn}>
+        <Pressable onPress={() => _navigationHandler("EnterTopic")}>
+          <Text style={styles.finishBtnText}>Create Another Quiz</Text>
+        </Pressable>
+      </View>
+
+      <Pressable style={styles.finishBtn} onPress={() => _navigationHandler("Home")}>
+        <Text style={styles.finishBtnText}>Go Home</Text>
       </Pressable>
     </View>
   );
@@ -208,8 +211,8 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   trophy: {
-    width: 200,
-    height: 200,
+    width: 250,
+    height: 250,
   },
   incorrectAnswerContainer: {
     padding: 20,
@@ -222,6 +225,35 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "darkblue",
     borderRadius: 20
+  finishMsg: {
+    color: "#4051A6",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 30,
+    paddingBottom: 20,
+  },
+  finishBtn: {
+    padding: 20,
+    backgroundColor: "#EE5F88",
+    borderRadius: 30,
+    width: 250,
+    margin: 5,
+    alignItems: "center",
+    // shadow
+    shadowColor: '#363636',
+    shadowOffset: {
+      width: 5,
+      height: 5,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 10,
+  },
+  finishBtnText: {
+    textAlign: "center",
+    color: "#FFFFFF",
+    fontSize: 15,
+    fontWeight: "bold"
   }
 });
 
