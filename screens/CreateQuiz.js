@@ -67,11 +67,6 @@ export default function CreateQuiz({ route, navigation }) {
           </View>
         </View>
       </View>
-      <View style={styles.outerCircle}>
-        <TouchableOpacity style={styles.button} onPress={handlePressTakeQuiz}>
-          <Text style={styles.buttonText}>Start Quiz</Text>
-        </TouchableOpacity>
-      </View>
       <View style={styles.topRow}>
         <View style={styles.pickerWrapper1}>
           <View style={styles.difficultyBox}>
@@ -80,12 +75,17 @@ export default function CreateQuiz({ route, navigation }) {
             </Text>
             <HorizontalPicker
               values={difficulties}
-              width={150}
+              width={200}
               itemWidth={200}
               onValueChange={handleDifficultyChange}
             />
           </View>
         </View>
+      </View>
+      <View style={styles.outerCircle}>
+        <TouchableOpacity style={styles.button} onPress={handlePressTakeQuiz}>
+          <Text style={styles.buttonText}>Start Quiz</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -94,7 +94,7 @@ export default function CreateQuiz({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start",
+    justifyContent: "center",
     alignItems: "center",
     width: "100%",
   },
@@ -107,7 +107,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    height: 200,
+    height: 150,
+    margin: -10,
   },
   pickerWrapper1: {
     flex: 1,
@@ -125,13 +126,13 @@ const styles = StyleSheet.create({
   },
   difficultyBox: {
     alignItems: "center",
-    backgroundColor: "#fac8f9",
+    backgroundColor: "#FFD44D",
     borderRadius: 10,
   },
   questionPicker: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#83d4fc",
+    backgroundColor: "#EE5F88",
     borderRadius: 10,
   },
   topic: {
@@ -144,25 +145,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 200,
     borderWidth: 8,
-    borderColor: "#29578a",
+    borderColor: "#4051A6",
     width: 330,
     height: 330,
-    shadowColor: "#000",
+    shadowColor: "#fff",
     shadowOffset: {
       width: 0,
       height: 3,
     },
-    shadowOpacity: 0.29,
-    shadowRadius: 4.65,
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    margin: 25,
   },
   button: {
-    backgroundColor: "#fff",
+    backgroundColor: "#4051A6",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 200,
     width: 300,
     height: 300,
-    shadowColor: "#000",
+    shadowColor: "#363636",
     shadowOffset: {
       width: 0,
       height: 3,
@@ -171,12 +173,12 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 7,
     borderWidth: 5,
-    borderColor: "#29578a",
+    borderColor: "#fff",
     borderStyle: "solid",
   },
   buttonText: {
-    color: "#000",
-    fontSize: 18,
+    color: "#fff",
+    fontSize: 40,
     fontWeight: "bold",
   },
   textInput: {
