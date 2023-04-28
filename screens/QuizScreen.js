@@ -71,7 +71,7 @@ const FinishedScreen = ({ numberCorrect, navigation }) => {
   return (
     <View style={styles.questionContainer}>
       <Text>You got {numberCorrect} questions correct!</Text>
-      <Pressable onPress={() => _navigationHandler("CreateQuiz")}>
+      <Pressable onPress={() => _navigationHandler("EnterTopic")}>
         <Text>Create Another Quiz</Text>
       </Pressable>
       <Pressable onPress={() => _navigationHandler("Home")}>
