@@ -4,24 +4,7 @@ import * as BE from "../lib/external";
 import UserContext from "../contexts/user";
 
 export default function UserProfile() {
-  const { user, setUser } = useContext(UserContext);
-  useEffect(() => {
-    const checkRegistration = async () => {
-      const name = await BE.getName();
-      const questionCorrect = await BE.getQuestionCorrect();
-      const recentTopics = await BE.getRecentTopics();
-      if (name !== null) setUser((user) => ({ ...user, name: name }));
-      else console.log("could not get user name");
-      if (questionCorrect !== null)
-        setUser((user) => ({ ...user, questionCorrect: questionCorrect }));
-      else console.log("could not get user questions correct");
-      if (recentTopics !== null)
-        setRecentTopics((user) => ({ ...user, recentTopics: recentTopics }));
-      else console.log("could not get user recent topics");
-    };
-
-    checkRegistration();
-  }, []);
+  const { user } = useContext(UserContext);
 
   return (
     <ScrollView>
