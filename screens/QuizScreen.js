@@ -225,6 +225,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "darkblue",
     borderRadius: 20
+  },
   finishMsg: {
     color: "#4051A6",
     fontWeight: "bold",
