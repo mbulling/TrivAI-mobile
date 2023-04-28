@@ -18,7 +18,7 @@ export default function Widget({ name, color, left }) {
 
   function getIcon() {
     switch (name) {
-      case 'Create A Quiz':
+      case 'Create Quiz':
         return newQuiz;
       case 'Explore Quizzes':
         return myQuiz;
