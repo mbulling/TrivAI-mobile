@@ -21,7 +21,7 @@ To run the app locally, you will need to have the following:
 3. Set up your API access by requesting the API route.
 4. In the `lib` directory, create a `key.js` file and add the API route as follows:
 
-    ```export AWS_HOST = "<HOST LINK>";```
+    ```export default AWS_HOST = "<HOST LINK>";```
 
 
 ### Running the App
