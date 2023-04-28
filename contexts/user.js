@@ -1,9 +1,10 @@
 import React, { useState, createContext, useEffect } from "react";
 import * as BE from "../lib/external";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const defaultUser = {
   name: "",
-  questionCorrect: 0,
+  questionsCorrect: 0,
   recentTopics: [],
 };
 
@@ -22,22 +23,21 @@ export const UserProvider = ({ children }) => {
       if (name !== null) setUser((user) => ({ ...user, name: name }));
       else console.log("could not get user name, defaulting to default value");
       if (questionCorrect !== null)
-        setUser((user) => ({ ...user, questionCorrect: questionCorrect }));
+        setUser((user) => ({ ...user, questionsCorrect: questionCorrect }));
       else
         console.log(
           "could not get user questions correct, defaulting to default value"
         );
       if (recentTopics !== null)
-        setRecentTopics((user) => ({ ...user, recentTopics: recentTopics }));
+        setUser((user) => ({ ...user, recentTopics: recentTopics }));
       else
         console.log(
           "could not get user recent topics, defaulting to default value"
         );
     };
-
+    // AsyncStorage.clear();
     checkRegistration();
   }, []);
-
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {children}

@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { get_topic_mcq } from "../lib/external";
 import { View, Text, Pressable, StyleSheet, Image, Button } from "react-native";
 import myTrophy from "../assets/myTrophy.png";
 import Loading from "./Loading";
 import * as BE from "../lib/external";
+import UserContext from "../contexts/user";
 
 const fetchSuccess = (res) => res;
 
@@ -21,6 +22,7 @@ const QuizScreen = ({ route, navigation }) => {
   const [numberCorrect, setNumberCorrect] = useState(0);
   const [revealAnswer, setRevealAnswer] = useState(false);
   const [loading, setLoading] = useState(true);
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -52,6 +54,11 @@ const QuizScreen = ({ route, navigation }) => {
   const _selectionHandler = async (selectionIndex) => {
     if (selectionIndex === questions[0].answer_id) {
       await BE.incrQuestionCorrect();
+      setUser((user) => ({
+        ...user,
+        questionsCorrect: user.questionsCorrect + 1,
+      }));
+      console.log(user.questionsCorrect);
       setNumberCorrect((prev) => prev + 1);
     }
     setRevealAnswer(true);

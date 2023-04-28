@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   StyleSheet,
   View,
@@ -17,14 +17,22 @@ import { useNavigation } from "@react-navigation/native";
 import NavigationContainer from "@react-navigation/native";
 import HorizontalPicker from "./HorizontalPicker";
 import * as BE from "../lib/external";
+import UserContext from "../contexts/user";
 
 export default function CreateQuiz({ route, navigation }) {
   const { topic } = route.params;
   const [num_questions, setNumber] = useState(0);
   const [difficulty, setDifficulty] = useState("easy");
   //const navigation = useNavigation();
+  const { user, setUser } = useContext(UserContext);
 
   const handlePressTakeQuiz = async () => {
+    console.log(topic, user.recentTopics);
+    setUser((prev) => ({
+      ...prev,
+      recentTopics: [...new Set([...user.recentTopics, topic])],
+    }));
+
     await BE.appendRecentTopics(topic);
     navigation.navigate("QuizScreen", {
       topic: topic,

@@ -5,21 +5,22 @@ import UserContext from "../contexts/user";
 
 export default function UserProfile() {
   const { user } = useContext(UserContext);
-
   return (
     <ScrollView>
       <View style={styles.profile}>
         <Text style={styles.name}>{user.name}</Text>
         <Text style={styles.userStats}>
-          Questions Correct: {user.questionCorrect}
+          Questions Correct: {user.questionsCorrect}
         </Text>
       </View>
       <View style={styles.recents}>
         <Text style={styles.userStats}>Recent Topics:</Text>
         <View style={styles.topicsColumn}>
           {user.recentTopics.length > 0
-            ? user.recentTopics.map((topic) => (
-                <Text style={styles.topic}>{topic}</Text>
+            ? user.recentTopics.map((topic, i) => (
+                <Text key={i} style={styles.topic}>
+                  {topic}
+                </Text>
               ))
             : null}
         </View>
