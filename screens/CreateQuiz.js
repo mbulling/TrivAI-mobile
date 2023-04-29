@@ -70,7 +70,7 @@ export default function CreateQuiz({ route, navigation }) {
           <TouchableOpacity
             style={[
               styles.difficultyButton,
-              { backgroundColor: difficulty === "easy" ? "green" : "#f0f0f0" },
+              { backgroundColor: difficulty === "easy" ? "#4051A6" : "#a0a8d3" },
             ]}
             onPress={() => handleDifficultyChange("easy")}
           >
@@ -79,7 +79,7 @@ export default function CreateQuiz({ route, navigation }) {
           <TouchableOpacity
             style={[
               styles.difficultyButton,
-              { backgroundColor: difficulty === "medium" ? "green" : "#f0f0f0" },
+              { backgroundColor: difficulty === "medium" ? "#4051A6" : "#a0a8d3" },
             ]}
             onPress={() => handleDifficultyChange("medium")}
           >
@@ -88,7 +88,7 @@ export default function CreateQuiz({ route, navigation }) {
           <TouchableOpacity
             style={[
               styles.difficultyButton,
-              { backgroundColor: difficulty === "hard" ? "green" : "#f0f0f0" },
+              { backgroundColor: difficulty === "hard" ? "#4051A6" : "#a0a8d3" },
             ]}
             onPress={() => handleDifficultyChange("hard")}
           >
@@ -121,10 +121,14 @@ const styles = StyleSheet.create({
   },
   difficultyButton: {
     borderRadius: 10,
+    width: "32%",
+    alignItems: "center",
   },
   difficultyButtonText: {
     fontSize: 20,
+    color: "white",
     padding: 10,
+    fontWeight: "bold",
   },
   topRow: {
     flexDirection: "row",
@@ -136,13 +140,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    margin: 10,
+    padding: 10,
+    width: "90%",
+    borderRadius: 10,
+    backgroundColor: "#FFD44D",
   },
   difficultyButtonsRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "80%",
+    width: "100%",
+    padding: 10,
   },
   outerCircle: {
     justifyContent: "center",
