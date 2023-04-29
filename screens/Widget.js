@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, Image, Animated } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Image, Animated, ActivityIndicator } from 'react-native';
+import { useFonts } from 'expo-font';
 import myCamera from '../assets/myCamera.png';
 import myQuiz from '../assets/myQuiz.png';
 import myTrophy from '../assets/myTrophy.png';
@@ -8,6 +9,10 @@ import UserPfp from '../assets/UserPfp.png';
 
 export default function Widget({ name, color, left }) {
   const position = useRef(new Animated.Value(left ? -200 : 200)).current;
+  const [fontsLoaded] = useFonts({
+    'Inter-Bold': require('../assets/fonts/Inter-Bold.otf'),
+  });
+
 
   useEffect(() => {
     Animated.timing(position, {
@@ -15,7 +20,7 @@ export default function Widget({ name, color, left }) {
       duration: 500,
       useNativeDriver: true,
     }).start();
-  }, []);
+  }, [fontsLoaded]);
 
   function getIcon() {
     switch (name) {
@@ -76,6 +81,7 @@ export default function Widget({ name, color, left }) {
       fontWeight: 'medium',
       width: '100%',
       marginLeft: 10,
+      fontFamily: 'Inter-Bold',
     },
     img: {
       flex: 1,
@@ -97,7 +103,13 @@ export default function Widget({ name, color, left }) {
     ],
   };
 
-  if (left) {
+  if (!fontsLoaded) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  } else if (left) {
     return (
       <View style={styles.leftWrapper}>
         <Animated.View style={[styles.containerLeft, styles.shadow, animatedStyles]}>

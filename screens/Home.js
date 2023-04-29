@@ -64,14 +64,14 @@ function HomeWidgets() {
 
   return (
     <LinearGradient
-      colors={["#FFFFFF", "#FFFFFF"]}
+      colors={["#EE5F88", "#4051A6"]}
       style={styles.container}
     >
       <ScrollView style={styles.scroll} contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
         <View style={styles.widgetRow}>
           {renderWidget("Create", "#4051A6", handlePressCreateQuiz, true)}
-          {renderWidget("Explore", "#EE5F88", handlePressExploreQuizzes, true)}
-          {renderWidget("Recents", "#4051A6", handlePressRecentTopics, false)}
+          {renderWidget("Explore", "#EE5F88", handlePressExploreQuizzes, false)}
+          {renderWidget("Recents", "#4051A6", handlePressRecentTopics, true)}
           {renderWidget("Profile", "#EE5F88", handlePressUserProfile, false)}
         </View>
       </ScrollView>
@@ -90,10 +90,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexWrap: "wrap",
-    paddingTop: 10,
+    paddingTop: '2.5%',
+    paddingBottom: '2.5%',
   },
   scroll: {
     width: "100%",
+    height: "100%",
     flex: 1,
   },
 });
