@@ -45,8 +45,8 @@ export default function CreateQuiz({ route, navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
-        <Text style={{ fontSize: 15, fontWeight: "bold", padding: 10 }}>
-          number of questions
+        <Text style={{ fontSize: 18, fontWeight: "bold", padding: 10, color: "white" }}>
+          Number of Questions
         </Text>
         <View style={styles.topRow}>
           <Slider
@@ -56,10 +56,10 @@ export default function CreateQuiz({ route, navigation }) {
             step={1}
             value={num_questions}
             onValueChange={(value) => setNumber(value)}
-            minimumTrackTintColor="#FFFFFF"
-            maximumTrackTintColor="#000000"
+            minimumTrackTintColor="#ffffff"
+            maximumTrackTintColor="#363636"
           />
-          <Text style={{ fontSize: 25, fontWeight: "bold", width: '20%', textAlign: 'center' }}>
+          <Text style={{ fontSize: 25, width: '20%', textAlign: 'center', color: "white" }}>
             {num_questions}
           </Text>
         </View>
@@ -144,6 +144,7 @@ const styles = StyleSheet.create({
     width: "90%",
     borderRadius: 10,
     backgroundColor: "#FFD44D",
+    marginTop: 20,
   },
   difficultyButtonsRow: {
     flexDirection: "row",
