@@ -44,7 +44,7 @@ export default function CreateQuiz({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.topContainer}>
+      <View style={[styles.topContainer, styles.shadow]}>
         <Text style={{ fontSize: 18, fontWeight: "bold", padding: 10, color: "white" }}>
           Number of Questions
         </Text>
@@ -65,7 +65,7 @@ export default function CreateQuiz({ route, navigation }) {
         </View>
       </View>
 
-      <View style={styles.difficultyButtons}>
+      <View style={[styles.difficultyButtons, styles.shadow]}>
         <View style={styles.difficultyButtonsRow}>
           <TouchableOpacity
             style={[
@@ -193,5 +193,11 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 40,
     fontWeight: "bold",
+  },
+  shadow: {
+    shadowColor: '#3d3d3d',
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.6,
+    shadowRadius: 2,
   },
 });
