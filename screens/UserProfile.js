@@ -6,7 +6,7 @@ import UserContext from "../contexts/user";
 export default function UserProfile() {
   const { user } = useContext(UserContext);
   return (
-    <ScrollView>
+    <ScrollView style={styles.container}>
       <View style={styles.profile}>
         <Text style={styles.name}>{user.name}</Text>
         <Text style={styles.userStats}>
@@ -18,10 +18,10 @@ export default function UserProfile() {
         <View style={styles.topicsColumn}>
           {user.recentTopics.length > 0
             ? user.recentTopics.map((topic, i) => (
-                <Text key={i} style={styles.topic}>
-                  {topic}
-                </Text>
-              ))
+              <Text key={i} style={styles.topic}>
+                {topic}
+              </Text>
+            ))
             : null}
         </View>
       </View>
@@ -30,6 +30,10 @@ export default function UserProfile() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+    alignContent: "center",
+  },
   name: {
     fontSize: 30,
     marginLeft: 10,
@@ -42,9 +46,13 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: "center",
     alignItems: "center",
+
   },
   recents: {
+    justifyContent: "center",
+    alignItems: "center",
     margin: 10,
+    padding: 10,
   },
   topicsColumn: {
     flexDirection: "row",
