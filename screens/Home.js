@@ -71,8 +71,8 @@ function HomeWidgets() {
         <View style={styles.widgetRow}>
           {renderWidget("Create", "#4051A6", handlePressCreateQuiz, true)}
           {renderWidget("Explore", "#EE5F88", handlePressExploreQuizzes, false)}
-          {renderWidget("Recents", "#4051A6", handlePressRecentTopics, true)}
-          {renderWidget("Profile", "#EE5F88", handlePressUserProfile, false)}
+          {/* {renderWidget("Recents", "#4051A6", handlePressRecentTopics, true)} */}
+          {renderWidget("Profile", "#4051A6", handlePressUserProfile, true)}
         </View>
       </ScrollView>
     </LinearGradient>
@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexWrap: "wrap",
-    paddingTop: '2.5%',
-    paddingBottom: '2.5%',
+    paddingTop: '6.5%',
+    paddingBottom: '6.5%',
   },
   scroll: {
     width: "100%",
