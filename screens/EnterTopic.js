@@ -52,7 +52,6 @@ export default function EnterTopic() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: "space-evenly",
     marginTop: 50,
     alignItems: "center",
     width: '100%',
@@ -84,9 +83,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 5,
     elevation: 7,
-    // borderWidth: 5,
-    // borderColor: '#29578a',
-    // borderStyle: 'solid',
     borderRadius: 10,
     height: 70,
   },
@@ -97,11 +93,12 @@ const styles = StyleSheet.create({
   },
   textInput: {
     width: '80%',
-    height: 80,
+    height: 50,
     borderColor: '#7a42f4',
     borderRadius: 10,
     paddingHorizontal: 10,
     backgroundColor: '#FFFFFF',
     fontSize: '24px',
+    marginTop: 10,
   },
 });
