@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import { LinearGradient } from "expo-linear-gradient";
 import { get_topic_mcq } from "../lib/external";
 import { View, Text, Pressable, StyleSheet, Image, Button } from "react-native";
 import myTrophy from "../assets/myTrophy.png";
@@ -79,23 +80,27 @@ const QuizScreen = ({ route, navigation }) => {
       <FinishedScreen numberCorrect={numberCorrect} navigation={navigation} />
     );
   return (
-    <View style={styles.quizScreenContainer}>
-      <View style={styles.questionContainer}>
-        <Question
-          optionHandler={_selectionHandler}
-          nextHandler={_nextHandler}
-          question={questions[0]}
-          revealAnswer={revealAnswer}
-        />
-      </View>
+    <LinearGradient
+      colors={["#4051A6", "#4051A6"]}
+      style={styles.container}>
+      <View style={styles.quizScreenContainer}>
+        <View style={styles.questionContainer}>
+          <Question
+            optionHandler={_selectionHandler}
+            nextHandler={_nextHandler}
+            question={questions[0]}
+            revealAnswer={revealAnswer}
+          />
+        </View>
 
-      <View style={styles.nextButtonContainer}>
-        <NextButton
-          nextHandler={_nextHandler}
-          revealAnswer={revealAnswer}
-        />
+        <View style={styles.nextButtonContainer}>
+          <NextButton
+            nextHandler={_nextHandler}
+            revealAnswer={revealAnswer}
+          />
+        </View>
       </View>
-    </View>
+    </LinearGradient>
   );
 };
 
@@ -162,22 +167,31 @@ const Header = ({ lead }) => {
 
 const Option = ({ text, revealAnswer, isCorrectAnswer }) => {
   return (
-    <Text
-      style={
-        (!revealAnswer && styles.answerContainer) ||
-        (isCorrectAnswer && styles.correctAnswerContainer) ||
-        styles.incorrectAnswerContainer
-      }
-    >
-      {text}
-    </Text>
+    <View style={styles.optionContainer}>
+      <Text
+        style={
+          (!revealAnswer && styles.answerContainer) ||
+          (isCorrectAnswer && styles.correctAnswerContainer) ||
+          styles.incorrectAnswerContainer
+        }
+      >
+        {text}
+      </Text>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    height: "100%",
+    flex: 1,
+  },
   question: {
     fontSize: 30,
     padding: 20,
+    fontFamily: "Inter-Bold",
+    color: "white",
   },
   questionContainer: {
     flex: 1
@@ -197,28 +211,59 @@ const styles = StyleSheet.create({
   },
   answerContainer: {
     backgroundColor: "white",
+    fontFamily: "Inter-Regular",
     padding: 20,
+    fontSize: 18,
     borderRadius: 20,
-    overflow: "hidden",
+    overflow: "wrap",
+    textOverflow: "wrap",
+    shadowColor: "#ffffff",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
   },
   options: {
     padding: 10,
   },
   correctAnswerContainer: {
+    backgroundColor: "green",
+    fontFamily: "Inter-Bold",
     padding: 20,
-    backgroundColor: "lightgreen",
+    color: "#64e764",
+    fontSize: 18,
     borderRadius: 20,
-    overflow: "hidden",
+    overflow: "wrap",
+    textOverflow: "wrap",
+    shadowColor: "#ffffff",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
   },
   trophy: {
     width: 250,
     height: 250,
   },
   incorrectAnswerContainer: {
+    backgroundColor: "#ffffff",
+    fontFamily: "Inter-Regular",
     padding: 20,
-    backgroundColor: "tomato",
+    fontSize: 18,
     borderRadius: 20,
-    overflow: "hidden",
+    overflow: "wrap",
+    textOverflow: "wrap",
+    shadowColor: "#ffffff",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
   },
   nextButton: {
     margin: 10,

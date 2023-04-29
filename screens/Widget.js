@@ -11,6 +11,7 @@ export default function Widget({ name, color, left }) {
   const position = useRef(new Animated.Value(left ? -200 : 200)).current;
   const [fontsLoaded] = useFonts({
     'Inter-Bold': require('../assets/fonts/Inter-Bold.otf'),
+    'Inter-Regular': require('../assets/fonts/Inter-Regular.otf'),
   });
 
 
