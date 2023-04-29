@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
   },
   options: {
-    padding: 10,
+    paddingTop: 10,
   },
   correctAnswerContainer: {
     backgroundColor: "green",
