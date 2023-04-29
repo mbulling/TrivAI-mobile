@@ -44,28 +44,28 @@ export default function CreateQuiz({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.topRow}>
-        <Text style={{ marginTop: 20, fontSize: 15, fontWeight: "bold" }}>
+      <View style={styles.topContainer}>
+        <Text style={{ fontSize: 15, fontWeight: "bold", padding: 10 }}>
           number of questions
         </Text>
-        <Slider
-          style={{ width: 200, height: 40 }}
-          minimumValue={1}
-          maximumValue={10}
-          step={1}
-          value={num_questions}
-          onValueChange={(value) => setNumber(value)}
-          minimumTrackTintColor="#FFFFFF"
-          maximumTrackTintColor="#000000"
-        />
-        <Text style={{ marginTop: 20, fontSize: 15, fontWeight: "bold" }}>
-          {num_questions}
-        </Text>
+        <View style={styles.topRow}>
+          <Slider
+            style={{ width: '60%', height: 50 }}
+            minimumValue={1}
+            maximumValue={10}
+            step={1}
+            value={num_questions}
+            onValueChange={(value) => setNumber(value)}
+            minimumTrackTintColor="#FFFFFF"
+            maximumTrackTintColor="#000000"
+          />
+          <Text style={{ fontSize: 25, fontWeight: "bold", width: '20%', textAlign: 'center' }}>
+            {num_questions}
+          </Text>
+        </View>
       </View>
+
       <View style={styles.difficultyButtons}>
-        <Text style={{ marginTop: 20, fontSize: 15, fontWeight: "bold" }}>
-          choose difficulty
-        </Text>
         <View style={styles.difficultyButtonsRow}>
           <TouchableOpacity
             style={[
@@ -112,13 +112,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
   },
+  topContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#EE5F88",
+    borderRadius: 10,
+    padding: 10,
+  },
+  difficultyButton: {
+    borderRadius: 10,
+  },
+  difficultyButtonText: {
+    fontSize: 20,
+    padding: 10,
+  },
   topRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    height: 150,
-    margin: -10,
   },
   difficultyButtons: {
     alignItems: "center",
