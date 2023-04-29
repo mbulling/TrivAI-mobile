@@ -15,7 +15,6 @@ import QuizScreen from "./QuizScreen";
 import { get_topics } from "../lib/external";
 import { useNavigation } from "@react-navigation/native";
 import NavigationContainer from "@react-navigation/native";
-import HorizontalPicker from "./HorizontalPicker";
 import * as BE from "../lib/external";
 import UserContext from "../contexts/user";
 
@@ -23,7 +22,7 @@ export default function CreateQuiz({ route, navigation }) {
   const { topic } = route.params;
   const [num_questions, setNumber] = useState(3);
   const [difficulty, setDifficulty] = useState("medium");
-  //const navigation = useNavigation();
+
   const { user, setUser } = useContext(UserContext);
 
   const handlePressTakeQuiz = async () => {
@@ -39,47 +38,62 @@ export default function CreateQuiz({ route, navigation }) {
     });
   };
 
-  const handleNumberChange = (value) => {
-    setNumber(value);
+  const handleDifficultyChange = (value) => {
+    setDifficulty(value);
   };
-
-  const handleDifficultyChange = (difficulty) => {
-    setDifficulty(difficulty);
-  };
-
-  const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const difficulties = ["easy", "medium", "hard"];
 
   return (
     <View style={styles.container}>
-      <View style={styles.topRow}>
-        <View style={styles.pickerWrapper2}>
-          <View style={styles.questionPicker}>
-            <Text style={{ marginTop: 20, fontSize: 15, fontWeight: 500 }}>
-              number of questions
-            </Text>
-            <HorizontalPicker
-              values={numbers}
-              width={200}
-              itemWidth={200}
-              onValueChange={handleNumberChange}
-            />
-          </View>
+      <View style={[styles.topContainer, styles.shadow]}>
+        <Text style={{ fontSize: 18, fontWeight: "bold", padding: 10, color: "white" }}>
+          Number of Questions
+        </Text>
+        <View style={styles.topRow}>
+          <Slider
+            style={{ width: '60%', height: 50 }}
+            minimumValue={1}
+            maximumValue={10}
+            step={1}
+            value={num_questions}
+            onValueChange={(value) => setNumber(value)}
+            minimumTrackTintColor="#ffffff"
+            maximumTrackTintColor="#363636"
+          />
+          <Text style={{ fontSize: 25, width: '20%', textAlign: 'center', color: "white" }}>
+            {num_questions}
+          </Text>
         </View>
       </View>
-      <View style={styles.topRow}>
-        <View style={styles.pickerWrapper1}>
-          <View style={styles.difficultyBox}>
-            <Text style={{ marginTop: 20, fontSize: 15, fontWeight: 500 }}>
-              choose difficulty
-            </Text>
-            <HorizontalPicker
-              values={difficulties}
-              width={200}
-              itemWidth={200}
-              onValueChange={handleDifficultyChange}
-            />
-          </View>
+
+      <View style={[styles.difficultyButtons, styles.shadow]}>
+        <View style={styles.difficultyButtonsRow}>
+          <TouchableOpacity
+            style={[
+              styles.difficultyButton,
+              { backgroundColor: difficulty === "easy" ? "#4051A6" : "#a0a8d3" },
+            ]}
+            onPress={() => handleDifficultyChange("easy")}
+          >
+            <Text style={styles.difficultyButtonText}>Easy</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.difficultyButton,
+              { backgroundColor: difficulty === "medium" ? "#4051A6" : "#a0a8d3" },
+            ]}
+            onPress={() => handleDifficultyChange("medium")}
+          >
+            <Text style={styles.difficultyButtonText}>Medium</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.difficultyButton,
+              { backgroundColor: difficulty === "hard" ? "#4051A6" : "#a0a8d3" },
+            ]}
+            onPress={() => handleDifficultyChange("hard")}
+          >
+            <Text style={styles.difficultyButtonText}>Hard</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.outerCircle}>
@@ -98,47 +112,46 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
   },
-  textInput: {
-    width: "80%",
+  topContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#EE5F88",
     borderRadius: 10,
+    padding: 10,
+  },
+  difficultyButton: {
+    borderRadius: 10,
+    width: "32%",
+    alignItems: "center",
+  },
+  difficultyButtonText: {
+    fontSize: 20,
+    color: "white",
+    padding: 10,
+    fontWeight: "bold",
   },
   topRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    height: 150,
-    margin: -10,
   },
-  pickerWrapper1: {
-    flex: 1,
+  difficultyButtons: {
+    alignItems: "center",
     justifyContent: "center",
-    alignItems: "center",
-    margin: 20,
-    maxHeight: 120,
-  },
-  pickerWrapper2: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    margin: 20,
-    maxHeight: 120,
-  },
-  difficultyBox: {
-    alignItems: "center",
+    width: "100%",
+    padding: 10,
+    width: "90%",
+    borderRadius: 10,
     backgroundColor: "#FFD44D",
-    borderRadius: 10,
+    marginTop: 20,
   },
-  questionPicker: {
-    justifyContent: "center",
+  difficultyButtonsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#EE5F88",
-    borderRadius: 10,
-  },
-  topic: {
-    marginTop: 40,
-    marginBottom: 10,
-    fontSize: 20,
+    width: "100%",
+    padding: 10,
   },
   outerCircle: {
     justifyContent: "center",
@@ -181,12 +194,10 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: "bold",
   },
-  textInput: {
-    width: "80%",
-    height: 40,
-    borderColor: "#7a42f4",
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    backgroundColor: "#FFFFFF",
+  shadow: {
+    shadowColor: '#3d3d3d',
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.6,
+    shadowRadius: 2,
   },
 });
