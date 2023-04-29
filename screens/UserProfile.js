@@ -14,7 +14,6 @@ export default function UserProfile() {
         </Text>
       </View>
       <View style={styles.recents}>
-        <Text style={styles.userStats}>Recent Topics:</Text>
         <View style={styles.topicsColumn}>
           {user.recentTopics.length > 0
             ? user.recentTopics.map((topic, i) => (
@@ -33,14 +32,18 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     alignContent: "center",
+    backgroundColor: "#4051A6",
   },
   name: {
-    fontSize: 30,
+    fontSize: 40,
     marginLeft: 10,
+    color: "white",
+    fontFamily: "Inter-Bold",
+    marginTop: 20,
   },
   userStats: {
     fontSize: 20,
-    color: "grey",
+    color: "white",
   },
   profile: {
     padding: 10,
