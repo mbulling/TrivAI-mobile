@@ -15,16 +15,14 @@ import QuizScreen from "./QuizScreen";
 import { get_topics } from "../lib/external";
 import { useNavigation } from "@react-navigation/native";
 import NavigationContainer from "@react-navigation/native";
-// import HorizontalPicker from "./HorizontalPicker";
 import * as BE from "../lib/external";
 import UserContext from "../contexts/user";
-import HorizontalPicker from '@vseslav/react-native-horizontal-picker';
 
 export default function CreateQuiz({ route, navigation }) {
   const { topic } = route.params;
   const [num_questions, setNumber] = useState(3);
   const [difficulty, setDifficulty] = useState("medium");
-  //const navigation = useNavigation();
+
   const { user, setUser } = useContext(UserContext);
 
   const handlePressTakeQuiz = async () => {
@@ -40,72 +38,62 @@ export default function CreateQuiz({ route, navigation }) {
     });
   };
 
-  const handleNumberChange = (value) => {
-    setNumber(value);
+  const handleDifficultyChange = (value) => {
+    setDifficulty(value);
   };
-
-  const handleDifficultyChange = (difficulty) => {
-    setDifficulty(difficulty);
-  };
-
-  const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const difficulties = ["easy", "medium", "hard"];
-
-
-  const questionItem = (item, index) => (
-    <View style={styles.pickerWrapper2}>
-      <View style={styles.questionPicker}>
-        <Text style = {styles.wtf}>
-          {item}
-        </Text>
-      </View>
-    </View>
-  );
-
-  const difficultyItem = (item, index) => (
-    <View style={styles.pickerWrapper2}>
-      <View style={styles.difficultyPicker}>
-        <Text style = {styles.wtf}>
-          {item}
-        </Text>
-      </View>
-    </View>
-  );
 
   return (
     <View style={styles.container}>
       <View style={styles.topRow}>
-        <View style={styles.pickerWrapper2}>
-           <View style={styles.questionPicker}>
-            <Text style={{ marginTop: 20, fontSize: 15, fontWeight: 500 }}>
-              number of questions
-            </Text>
-            <HorizontalPicker
-              data={numbers}
-              renderItem={questionItem}
-              itemWidth={10}
-              onChange = {handleNumberChange}
-              defaultIndex = {9}
-              animatedScrollToDefaultIndex = {true}
-            />
-          </View>
-        </View>
+        <Text style={{ marginTop: 20, fontSize: 15, fontWeight: "bold" }}>
+          number of questions
+        </Text>
+        <Slider
+          style={{ width: 200, height: 40 }}
+          minimumValue={1}
+          maximumValue={10}
+          step={1}
+          value={num_questions}
+          onValueChange={(value) => setNumber(value)}
+          minimumTrackTintColor="#FFFFFF"
+          maximumTrackTintColor="#000000"
+        />
+        <Text style={{ marginTop: 20, fontSize: 15, fontWeight: "bold" }}>
+          {num_questions}
+        </Text>
       </View>
-      <View style={styles.topRow}>
-        <View style={styles.pickerWrapper1}>
-          <View style={styles.difficultyBox}>
-            <Text style={{ marginTop: 20, fontSize: 15, fontWeight: 500 }}>
-              choose difficulty
-            </Text>
-            <HorizontalPicker
-              data={difficulties}
-              renderItem={difficultyItem}
-              itemWidth={20}
-              onChange = {handleNumberChange}
-              defaultIndex = {difficulties.length}
-              animatedScrollToDefaultIndex = {true}
-            />
-          </View>
+      <View style={styles.difficultyButtons}>
+        <Text style={{ marginTop: 20, fontSize: 15, fontWeight: "bold" }}>
+          choose difficulty
+        </Text>
+        <View style={styles.difficultyButtonsRow}>
+          <TouchableOpacity
+            style={[
+              styles.difficultyButton,
+              { backgroundColor: difficulty === "easy" ? "green" : "#f0f0f0" },
+            ]}
+            onPress={() => handleDifficultyChange("easy")}
+          >
+            <Text style={styles.difficultyButtonText}>Easy</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.difficultyButton,
+              { backgroundColor: difficulty === "medium" ? "green" : "#f0f0f0" },
+            ]}
+            onPress={() => handleDifficultyChange("medium")}
+          >
+            <Text style={styles.difficultyButtonText}>Medium</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.difficultyButton,
+              { backgroundColor: difficulty === "hard" ? "green" : "#f0f0f0" },
+            ]}
+            onPress={() => handleDifficultyChange("hard")}
+          >
+            <Text style={styles.difficultyButtonText}>Hard</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.outerCircle}>
@@ -124,10 +112,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
   },
-  textInput: {
-    width: "80%",
-    borderRadius: 10,
-  },
   topRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -136,35 +120,17 @@ const styles = StyleSheet.create({
     height: 150,
     margin: -10,
   },
-  pickerWrapper1: {
-    flex: 1,
+  difficultyButtons: {
+    alignItems: "center",
     justifyContent: "center",
-    alignItems: "center",
-    margin: 20,
-    maxHeight: 120,
+    width: "100%",
+    margin: 10,
   },
-  pickerWrapper2: {
-    flex: 1,
-    justifyContent: "center",
+  difficultyButtonsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    margin: 20,
-    maxHeight: 120,
-  },
-  difficultyBox: {
-    alignItems: "center",
-    backgroundColor: "#FFD44D",
-    borderRadius: 10,
-  },
-  questionPicker: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#EE5F88",
-    borderRadius: 10,
-  },
-  topic: {
-    marginTop: 40,
-    marginBottom: 10,
-    fontSize: 20,
+    width: "80%",
   },
   outerCircle: {
     justifyContent: "center",
@@ -207,17 +173,4 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: "bold",
   },
-  textInput: {
-    width: "80%",
-    height: 40,
-    borderColor: "#7a42f4",
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    backgroundColor: "#FFFFFF",
-  },
-  wtf: {
-    justifyContent: "left",
-    fontWeight: "bold",
-    fontSize: 25
-  }
 });

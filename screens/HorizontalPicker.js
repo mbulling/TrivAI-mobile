@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 const HorizontalNumberPicker = ({ values, width, itemWidth, onValueChange }) => {
-  const [selected, setSelected] = useState(2);
+  const [selected, setSelected] = useState(3);
   const scrollX = useRef(new Animated.Value(0)).current;
 
   const middleIndex = Math.floor(values.length / 2);
