@@ -56,6 +56,12 @@ const QuizScreen = ({ route, navigation }) => {
       return;
     }
 
+    await BE.incrQuestionTotal(); // Increment total questions answered
+    setUser((user) => ({
+      ...user,
+      questionsTotal: user.questionsTotal + 1,
+    }));
+
     if (selectionIndex === questions[0].answer_id) {
       await BE.incrQuestionCorrect();
       setUser((user) => ({

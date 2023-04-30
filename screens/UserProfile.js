@@ -12,6 +12,9 @@ export default function UserProfile() {
         <Text style={styles.userStats}>
           Questions Correct: {user.questionsCorrect}
         </Text>
+        <Text style={styles.userStats}>
+          Questions Answered: {user.questionsTotal}
+        </Text>
       </View>
       <View style={styles.recents}>
         <View style={styles.topicsColumn}>
