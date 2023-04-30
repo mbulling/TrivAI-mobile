@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-import { LinearGradient } from "expo-linear-gradient";
 import { get_topic_mcq } from "../lib/external";
 import { View, Text, Pressable, StyleSheet, Image, Button, ScrollView } from "react-native";
 import myTrophy from "../assets/myTrophy.png";
@@ -53,6 +52,10 @@ const QuizScreen = ({ route, navigation }) => {
   }, []);
 
   const _selectionHandler = async (selectionIndex, selectedOption) => {
+    if (revealAnswer) { // Prevent user from answering twice
+      return;
+    }
+
     if (selectionIndex === questions[0].answer_id) {
       await BE.incrQuestionCorrect();
       setUser((user) => ({
@@ -81,9 +84,6 @@ const QuizScreen = ({ route, navigation }) => {
       <FinishedScreen numberCorrect={numberCorrect} navigation={navigation} />
     );
   return (
-    // <LinearGradient
-    //   colors={["#ffffff", "#ffffff"]}
-    //   style={styles.container}>
     <View style={styles.quizScreenContainer}>
       <ScrollView>
         <View style={styles.questionContainer}>
@@ -102,7 +102,6 @@ const QuizScreen = ({ route, navigation }) => {
         />
       </View>
     </View>
-    // </LinearGradient>
   );
 };
 
