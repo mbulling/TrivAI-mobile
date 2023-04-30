@@ -34,7 +34,7 @@ export default function EnterTopic() {
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
-        <Text style={styles.topic}>Enter topic:</Text>
+        <Text style={styles.topic}>Enter Topic:</Text>
         <TextInput
           style={styles.textInput}
           onChangeText={handleTextChange}
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   topic: {
-    marginTop: 40,
+    marginTop: 80,
     marginBottom: 10,
     fontSize: 25,
     color: '#363636',
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 7,
     borderRadius: 10,
-    height: 70,
+    height: 60,
   },
   buttonText: {
     color: '#fff',
