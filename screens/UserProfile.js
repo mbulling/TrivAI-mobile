@@ -51,7 +51,8 @@ const styles = StyleSheet.create({
     fontSize: 40,
     marginLeft: 10,
     color: "white",
-    fontFamily: "Inter-Bold",
+    // fontFamily: "Inter-Bold",
+    fontWeight: "bold",
     marginTop: 35,
   },
   userStats: {
@@ -92,7 +93,8 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 30,
     color: "white",
-    fontFamily: "Inter-Bold",
+    // fontFamily: "Inter-Bold",
+    fontWeight: "bold",
   },
   scroll: {
     height: "100%",

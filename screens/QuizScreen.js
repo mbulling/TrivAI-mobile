@@ -96,7 +96,7 @@ const QuizScreen = ({ route, navigation }) => {
           <Question
             optionHandler={_selectionHandler}
             nextHandler={_nextHandler}
-            question={questions[0]}
+            question={questions != null ? questions[0] : null}
             revealAnswer={revealAnswer}
           />
         </View>
@@ -206,7 +206,8 @@ const styles = StyleSheet.create({
   question: {
     fontSize: 30,
     padding: 20,
-    fontFamily: "Inter-Bold",
+    // fontFamily: "Inter-Bold",
+    fontWeight: "bold",
     color: "white",
     backgroundColor: "#4051A6",
   },
@@ -228,7 +229,7 @@ const styles = StyleSheet.create({
   },
   answerContainer: {
     backgroundColor: "white",
-    fontFamily: "Inter-Regular",
+    // fontFamily: "Inter-Regular",
     padding: 20,
     fontSize: 18,
     borderRadius: 20,
@@ -244,7 +245,8 @@ const styles = StyleSheet.create({
   },
   correctAnswerContainer: {
     backgroundColor: "green",
-    fontFamily: "Inter-Bold",
+    // fontFamily: "Inter-Bold",
+    fontWeight: "bold",
     padding: 20,
     color: "white",
     fontSize: 18,
@@ -256,7 +258,7 @@ const styles = StyleSheet.create({
   },
   incorrectAnswerContainer: {
     backgroundColor: "#880808",
-    fontFamily: "Inter-Regular",
+    // fontFamily: "Inter-Regular",
     padding: 20,
     color: "#EE4B2B",
     fontSize: 18,
