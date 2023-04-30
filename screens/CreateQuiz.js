@@ -35,7 +35,7 @@ export default function CreateQuiz({ route, navigation }) {
 
     await BE.appendRecentTopics(topic);
     navigation.navigate("Quiz", {
-      topic: topic,
+      topic: `[${difficulty} difficulty] ` + topic,
       numberQuestions: num_questions,
     });
   };

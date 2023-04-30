@@ -85,7 +85,7 @@ const QuizScreen = ({ route, navigation }) => {
   };
 
   if (loading) return <Loading />;
-  if (questions.length === 0)
+  if (questions != null && questions.length === 0)
     return (
       <FinishedScreen numberCorrect={numberCorrect} navigation={navigation} />
     );
