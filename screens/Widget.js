@@ -14,7 +14,6 @@ export default function Widget({ name, color, left }) {
     'Inter-Regular': require('../assets/fonts/Inter-Regular.otf'),
   });
 
-
   useEffect(() => {
     Animated.timing(position, {
       toValue: 0,

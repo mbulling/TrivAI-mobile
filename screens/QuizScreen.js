@@ -62,7 +62,7 @@ const QuizScreen = ({ route, navigation }) => {
       questionsTotal: user.questionsTotal + 1,
     }));
 
-    if (questions[0] != null && selectionIndex === questions[0].answer_id) {
+    if (questions != null && questions[0] != null && selectionIndex === questions[0].answer_id) {
       await BE.incrQuestionCorrect();
       setUser((user) => ({
         ...user,

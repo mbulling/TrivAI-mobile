@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { StyleSheet, View, TouchableOpacity, ScrollView } from "react-native";
+import React, { useContext, useRef, useEffect } from "react";
+import { StyleSheet, View, TouchableOpacity, ScrollView, Animated } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Widget from "./Widget";
 import QuizScreen from "./QuizScreen";
@@ -35,6 +35,15 @@ export default function Home() {
 
 function HomeWidgets() {
   const navigation = useNavigation();
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
 
   const handlePressCreateQuiz = () => {
     navigation.navigate('Enter Topic', { navigation });
@@ -68,14 +77,14 @@ function HomeWidgets() {
       style={styles.container}
     >
       <ScrollView style={styles.scroll} contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
-        <View style={styles.widgetRow}>
+        <Animated.View style={[styles.widgetRow, { opacity: fadeAnim }]}>
           {renderWidget("Create", "#4051A6", handlePressCreateQuiz, true)}
           {renderWidget("Explore", "#EE5F88", handlePressExploreQuizzes, false)}
           {/* {renderWidget("Recents", "#4051A6", handlePressRecentTopics, true)} */}
           {renderWidget("Profile", "#4051A6", handlePressUserProfile, true)}
-        </View>
+        </Animated.View>
       </ScrollView>
-    </LinearGradient>
+    </LinearGradient >
   );
 }
 
