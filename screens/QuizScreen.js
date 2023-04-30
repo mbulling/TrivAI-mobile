@@ -139,22 +139,24 @@ const Question = ({ question, optionHandler, nextHandler, revealAnswer }) => {
   return (
     <View>
       <Header lead={question.question} />
-      {question.options.map((opt, index) => {
-        return (
-          <Pressable
-            key={opt}
-            onPress={() => optionHandler(index, setSelectedOption)}
-            style={styles.options}
-          >
-            <Option
-              text={opt}
-              revealAnswer={revealAnswer}
-              isCorrectAnswer={index === question.answer_id}
-              isSelected={index === selectedOption}
-            />
-          </Pressable>
-        );
-      })}
+      <View style={styles.listOptions}>
+        {question.options.map((opt, index) => {
+          return (
+            <Pressable
+              key={opt}
+              onPress={() => optionHandler(index, setSelectedOption)}
+              style={styles.options}
+            >
+              <Option
+                text={opt}
+                revealAnswer={revealAnswer}
+                isCorrectAnswer={index === question.answer_id}
+                isSelected={index === selectedOption}
+              />
+            </Pressable>
+          );
+        })}
+      </View>
     </View>
   );
 };
@@ -231,16 +233,20 @@ const styles = StyleSheet.create({
     fontFamily: "Inter-Regular",
     padding: 20,
     fontSize: 18,
+    marginTop: 5,
     borderRadius: 20,
     overflow: "wrap",
     textOverflow: "wrap",
-    shadowColor: "#363636",
+    shadowColor: "#EE5F88",
     shadowOffset: {
-      width: 0,
+      width: -3,
       height: 3,
     },
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.3,
     shadowRadius: 0,
+  },
+  listOptions: {
+    padding: 10,
   },
   options: {
     paddingTop: 10,
@@ -249,28 +255,44 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   correctAnswerContainer: {
+    marginTop: 5,
     backgroundColor: "green",
     fontFamily: "Inter-Bold",
-    padding: 20,
-    color: "#64e764",
-    fontSize: 18,
-    borderRadius: 20,
-    overflow: "wrap",
-    textOverflow: "wrap",
-  },
-  trophy: {
-    width: 250,
-    height: 250,
-  },
-  incorrectAnswerContainer: {
-    backgroundColor: "#880808",
-    fontFamily: "Inter-Regular",
     padding: 20,
     color: "white",
     fontSize: 18,
     borderRadius: 20,
     overflow: "wrap",
     textOverflow: "wrap",
+    shadowColor: "#AFE1AF",
+    shadowOffset: {
+      width: -5,
+      height: 5,
+    },
+    shadowOpacity: 0.9,
+    shadowRadius: 2,
+  },
+  trophy: {
+    width: 250,
+    height: 250,
+  },
+  incorrectAnswerContainer: {
+    marginTop: 5,
+    backgroundColor: "#880808",
+    fontFamily: "Inter-Regular",
+    padding: 20,
+    color: "#EE4B2B",
+    fontSize: 18,
+    borderRadius: 20,
+    overflow: "wrap",
+    textOverflow: "wrap",
+    shadowColor: "#AA4A44",
+    shadowOffset: {
+      width: -5,
+      height: 5,
+    },
+    shadowOpacity: 0.6,
+    shadowRadius: 2,
   },
   nextButton: {
     margin: 10,
