@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     backgroundColor: "darkblue",
     borderRadius: 20,
     position: "absolute",
-    bottom: 5,
+    bottom: 15,
     width: "90%",
     shadowColor: "#363636",
     shadowOffset: {
