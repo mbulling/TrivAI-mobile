@@ -92,12 +92,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 36,
     textAlign: "center",
-    overflow: "wrap",
   },
   name: {
     fontSize: 30,
     fontWeight: "bold",
-    overflow: "wrap",
     color: "#4051A6",
   },
   textInput: {
