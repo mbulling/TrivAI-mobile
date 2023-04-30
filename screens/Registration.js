@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { LinearGradient } from "expo-linear-gradient";
 import UserContext from "../contexts/user";
 import { View, Button, Text, TextInput, Animated, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -9,7 +10,7 @@ const Registration = () => {
   const { user, setUser } = useContext(UserContext);
 
   return (
-    <Stack.Navigator initialRouteName="Register">
+    <Stack.Navigator initialRouteName="Landing">
       <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
       <Stack.Screen
         name="Register"
@@ -26,15 +27,16 @@ const Landing = ({ navigation }) => {
   useEffect(() => {
     Animated.timing(opacity, {
       toValue: 1,
-      duration: 3000,
+      duration: 2000,
       useNativeDriver: true,
     }).start(() => navigation.navigate("Register"));
   }, []);
 
   return (
     <Animated.View style={{ opacity }}>
-      <Text>Landing Page</Text>
-      <Button onPress={() => navigation.navigate("Register")} title="Sign up" />
+      <LinearGradient
+        colors={["#EE5F88", "#4051A6"]}
+        style={styles.landingScreen} />
     </Animated.View>
   );
 };
@@ -119,6 +121,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
     fontWeight: "bold",
+  },
+  landingScreen: {
+    width: "100%",
+    height: "100%",
   },
 });
 
