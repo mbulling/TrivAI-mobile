@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { get_topic_mcq } from "../lib/external";
-import { View, Text, Pressable, StyleSheet, Image, Button } from "react-native";
+import { View, Text, Pressable, StyleSheet, Image, Button, ScrollView } from "react-native";
 import myTrophy from "../assets/myTrophy.png";
 import Loading from "./Loading";
 import * as BE from "../lib/external";
@@ -84,15 +84,16 @@ const QuizScreen = ({ route, navigation }) => {
       colors={["#4051A6", "#4051A6"]}
       style={styles.container}>
       <View style={styles.quizScreenContainer}>
-        <View style={styles.questionContainer}>
-          <Question
-            optionHandler={_selectionHandler}
-            nextHandler={_nextHandler}
-            question={questions[0]}
-            revealAnswer={revealAnswer}
-          />
-        </View>
-
+        <ScrollView>
+          <View style={styles.questionContainer}>
+            <Question
+              optionHandler={_selectionHandler}
+              nextHandler={_nextHandler}
+              question={questions[0]}
+              revealAnswer={revealAnswer}
+            />
+          </View>
+        </ScrollView>
         <View style={styles.nextButtonContainer}>
           <NextButton
             nextHandler={_nextHandler}
@@ -198,8 +199,8 @@ const styles = StyleSheet.create({
   },
   nextButtonContainer: {
     flex: 1,
-    justifyContent: "flex-end",
-    paddingBottom: 20
+    justifyContent: "center",
+    alignItems: "center",
   },
   quizScreenContainer: {
     flex: 1
@@ -269,7 +270,10 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
     backgroundColor: "darkblue",
-    borderRadius: 20
+    borderRadius: 20,
+    position: "absolute",
+    bottom: 5,
+    width: "90%",
   },
   finishMsg: {
     color: "#4051A6",
