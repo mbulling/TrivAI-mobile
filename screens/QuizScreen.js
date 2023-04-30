@@ -81,28 +81,28 @@ const QuizScreen = ({ route, navigation }) => {
       <FinishedScreen numberCorrect={numberCorrect} navigation={navigation} />
     );
   return (
-    <LinearGradient
-      colors={["#4051A6", "#4051A6"]}
-      style={styles.container}>
-      <View style={styles.quizScreenContainer}>
-        <ScrollView>
-          <View style={styles.questionContainer}>
-            <Question
-              optionHandler={_selectionHandler}
-              nextHandler={_nextHandler}
-              question={questions[0]}
-              revealAnswer={revealAnswer}
-            />
-          </View>
-        </ScrollView>
-        <View style={styles.nextButtonContainer}>
-          <NextButton
+    // <LinearGradient
+    //   colors={["#ffffff", "#ffffff"]}
+    //   style={styles.container}>
+    <View style={styles.quizScreenContainer}>
+      <ScrollView>
+        <View style={styles.questionContainer}>
+          <Question
+            optionHandler={_selectionHandler}
             nextHandler={_nextHandler}
+            question={questions[0]}
             revealAnswer={revealAnswer}
           />
         </View>
+      </ScrollView>
+      <View style={styles.nextButtonContainer}>
+        <NextButton
+          nextHandler={_nextHandler}
+          revealAnswer={revealAnswer}
+        />
       </View>
-    </LinearGradient>
+    </View>
+    // </LinearGradient>
   );
 };
 
@@ -203,6 +203,7 @@ const styles = StyleSheet.create({
     padding: 20,
     fontFamily: "Inter-Bold",
     color: "white",
+    backgroundColor: "#4051A6",
   },
   questionContainer: {
     flex: 1
@@ -228,13 +229,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     overflow: "wrap",
     textOverflow: "wrap",
-    shadowColor: "#ffffff",
+    shadowColor: "#363636",
     shadowOffset: {
       width: 0,
       height: 3,
     },
     shadowOpacity: 0.5,
-    shadowRadius: 5,
+    shadowRadius: 0,
   },
   options: {
     paddingTop: 10,
@@ -251,13 +252,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     overflow: "wrap",
     textOverflow: "wrap",
-    shadowColor: "#ffffff",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
   },
   trophy: {
     width: 250,
@@ -272,13 +266,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     overflow: "wrap",
     textOverflow: "wrap",
-    shadowColor: "#ffffff",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
   },
   nextButton: {
     margin: 10,
