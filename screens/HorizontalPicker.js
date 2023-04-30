@@ -21,10 +21,15 @@ const HorizontalNumberPicker = ({ values, onValueChange }) => {
   const scrollViewRef = useRef(null);
 
   useEffect(() => {
-    scrollViewRef.current.scrollTo({
-      x: middleIndex * ITEM_SIZE,
-      animated: false,
-    });
+    const timeout = setTimeout(() => {
+      requestAnimationFrame(() => {
+        scrollViewRef.current.scrollTo({
+          x: (middleIndex * ITEM_SIZE) / 2 - 40,
+          animated: true,
+        });
+      });
+    }, 100);
+    return () => clearTimeout(timeout);
   }, []);
 
   const onScroll = (event) => {
@@ -64,7 +69,7 @@ const HorizontalNumberPicker = ({ values, onValueChange }) => {
           });
           const scale = scrollX.interpolate({
             inputRange,
-            outputRange: [0.4, 1, 0.4],
+            outputRange: [0.7, 1.1, 0.7],
             extrapolate: 'clamp',
           });
           return (
@@ -91,6 +96,7 @@ const styles = StyleSheet.create({
   numberText: {
     fontSize: 34,
     fontWeight: 'bold',
+    color: 'white',
   },
 });
 
