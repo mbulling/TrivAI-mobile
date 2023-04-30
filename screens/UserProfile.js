@@ -5,29 +5,39 @@ import UserContext from "../contexts/user";
 
 export default function UserProfile() {
   const { user } = useContext(UserContext);
+  const userScore = 100 * user.questionsCorrect / user.questionsTotal;
+
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.profile}>
         <Text style={styles.name}>{user.name}</Text>
-        <Text style={styles.userStats}>
-          Questions Correct: {user.questionsCorrect}
-        </Text>
-        <Text style={styles.userStats}>
-          Questions Answered: {user.questionsTotal}
-        </Text>
-      </View>
-      <View style={styles.recents}>
-        <View style={styles.topicsColumn}>
-          {user.recentTopics.length > 0
-            ? user.recentTopics.map((topic, i) => (
-              <Text key={i} style={styles.topic}>
-                {topic}
-              </Text>
-            ))
-            : null}
+        <View style={styles.userNumbers}>
+          <Text style={styles.score}>
+            {userScore.toFixed(2)}%
+          </Text>
+          <Text style={styles.userStats}>
+            Questions Correct: {user.questionsCorrect}
+          </Text>
+          <Text style={styles.userStats}>
+            Questions Answered: {user.questionsTotal}
+          </Text>
         </View>
+
       </View>
-    </ScrollView>
+      <ScrollView style={styles.scroll}>
+        <View style={styles.recents}>
+          <View style={styles.topicsColumn}>
+            {user.recentTopics.length > 0
+              ? user.recentTopics.map((topic, i) => (
+                <Text key={i} style={styles.topic}>
+                  {topic}
+                </Text>
+              ))
+              : null}
+          </View>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
@@ -72,5 +82,19 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 6,
     overflow: "hidden",
+  },
+  userNumbers: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  score: {
+    padding: 10,
+    fontSize: 30,
+    color: "white",
+    fontFamily: "Inter-Bold",
+  },
+  scroll: {
+    height: "100%",
   },
 });
