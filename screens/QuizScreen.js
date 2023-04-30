@@ -52,7 +52,7 @@ const QuizScreen = ({ route, navigation }) => {
     fetchQuestions();
   }, []);
 
-  const _selectionHandler = async (selectionIndex) => {
+  const _selectionHandler = async (selectionIndex, selectedOption) => {
     if (selectionIndex === questions[0].answer_id) {
       await BE.incrQuestionCorrect();
       setUser((user) => ({
@@ -63,6 +63,7 @@ const QuizScreen = ({ route, navigation }) => {
       setNumberCorrect((prev) => prev + 1);
     }
     setRevealAnswer(true);
+    selectedOption(selectionIndex);
   };
 
   const _nextHandler = () => {
@@ -128,6 +129,8 @@ const FinishedScreen = ({ numberCorrect, navigation }) => {
 };
 
 const Question = ({ question, optionHandler, nextHandler, revealAnswer }) => {
+  const [selectedOption, setSelectedOption] = useState(null);
+
   return (
     <View>
       <Header lead={question.question} />
@@ -135,13 +138,14 @@ const Question = ({ question, optionHandler, nextHandler, revealAnswer }) => {
         return (
           <Pressable
             key={opt}
-            onPress={() => optionHandler(index)}
+            onPress={() => optionHandler(index, setSelectedOption)}
             style={styles.options}
           >
             <Option
               text={opt}
               revealAnswer={revealAnswer}
               isCorrectAnswer={index === question.answer_id}
+              isSelected={index === selectedOption}
             />
           </Pressable>
         );
@@ -166,21 +170,27 @@ const Header = ({ lead }) => {
   return <Text style={styles.question}>{lead}</Text>;
 };
 
-const Option = ({ text, revealAnswer, isCorrectAnswer }) => {
+const Option = ({ text, revealAnswer, isCorrectAnswer, isSelected }) => {
+  let optionStyle;
+
+  if (!revealAnswer) {
+    optionStyle = styles.answerContainer;
+  } else if (isCorrectAnswer) {
+    optionStyle = styles.correctAnswerContainer;
+  } else if (isSelected) {
+    optionStyle = styles.incorrectAnswerContainer;
+  } else {
+    optionStyle = styles.answerContainer;
+  }
+
   return (
     <View style={styles.optionContainer}>
-      <Text
-        style={
-          (!revealAnswer && styles.answerContainer) ||
-          (isCorrectAnswer && styles.correctAnswerContainer) ||
-          styles.incorrectAnswerContainer
-        }
-      >
-        {text}
-      </Text>
+      <Text style={optionStyle}>{text}</Text>
     </View>
   );
 };
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -229,6 +239,9 @@ const styles = StyleSheet.create({
   options: {
     paddingTop: 10,
   },
+  isSelected: {
+    fontWeight: "bold",
+  },
   correctAnswerContainer: {
     backgroundColor: "green",
     fontFamily: "Inter-Bold",
@@ -251,9 +264,10 @@ const styles = StyleSheet.create({
     height: 250,
   },
   incorrectAnswerContainer: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#880808",
     fontFamily: "Inter-Regular",
     padding: 20,
+    color: "white",
     fontSize: 18,
     borderRadius: 20,
     overflow: "wrap",
@@ -290,7 +304,6 @@ const styles = StyleSheet.create({
     width: "70%",
     margin: 5,
     alignItems: "center",
-    // shadow
     shadowColor: '#363636',
     shadowOffset: {
       width: 5,
