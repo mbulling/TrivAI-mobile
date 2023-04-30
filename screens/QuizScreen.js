@@ -197,8 +197,6 @@ const Option = ({ text, revealAnswer, isCorrectAnswer, isSelected }) => {
   );
 };
 
-
-
 const styles = StyleSheet.create({
   container: {
     width: "100%",
@@ -233,20 +231,12 @@ const styles = StyleSheet.create({
     fontFamily: "Inter-Regular",
     padding: 20,
     fontSize: 18,
-    marginTop: 5,
     borderRadius: 20,
     overflow: "wrap",
     textOverflow: "wrap",
-    shadowColor: "#EE5F88",
-    shadowOffset: {
-      width: -3,
-      height: 3,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 0,
   },
   listOptions: {
-    padding: 10,
+    marginTop: 10,
   },
   options: {
     paddingTop: 10,
@@ -255,7 +245,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   correctAnswerContainer: {
-    marginTop: 5,
     backgroundColor: "green",
     fontFamily: "Inter-Bold",
     padding: 20,
@@ -264,20 +253,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     overflow: "wrap",
     textOverflow: "wrap",
-    shadowColor: "#AFE1AF",
-    shadowOffset: {
-      width: -5,
-      height: 5,
-    },
-    shadowOpacity: 0.9,
-    shadowRadius: 2,
   },
   trophy: {
     width: 250,
     height: 250,
   },
   incorrectAnswerContainer: {
-    marginTop: 5,
     backgroundColor: "#880808",
     fontFamily: "Inter-Regular",
     padding: 20,
@@ -286,13 +267,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     overflow: "wrap",
     textOverflow: "wrap",
-    shadowColor: "#AA4A44",
-    shadowOffset: {
-      width: -5,
-      height: 5,
-    },
-    shadowOpacity: 0.6,
-    shadowRadius: 2,
   },
   nextButton: {
     margin: 10,
