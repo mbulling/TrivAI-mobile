@@ -9,7 +9,7 @@ export default function Explore({ navigation }) {
   const [topicResult, setTopicResult] = useState([]);
 
   const handlePressTopic = (topic) => {
-    navigation.navigate("CreateQuiz", {
+    navigation.navigate("Create", {
       topic: topic,
     });
   };
