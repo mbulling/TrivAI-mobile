@@ -23,12 +23,12 @@ export default function Home() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Home" component={HomeWidgets} options={{ headerShown: false }} />
-      <Stack.Screen name="CreateQuiz" component={CreateQuiz} />
+      <Stack.Screen name="Create" component={CreateQuiz} />
       <Stack.Screen name="Explore" component={Explore} />
-      <Stack.Screen name="QuizScreen" component={QuizScreen} />
-      <Stack.Screen name="UserProfile" component={UserProfile} />
-      <Stack.Screen name="RecentTopics" component={RecentTopics} />
-      <Stack.Screen name="EnterTopic" component={EnterTopic} />
+      <Stack.Screen name="Quiz" component={QuizScreen} />
+      <Stack.Screen name="Profile" component={UserProfile} />
+      <Stack.Screen name="Recents" component={RecentTopics} />
+      <Stack.Screen name="Enter Topic" component={EnterTopic} />
     </Stack.Navigator>
   );
 }
@@ -37,11 +37,11 @@ function HomeWidgets() {
   const navigation = useNavigation();
 
   const handlePressCreateQuiz = () => {
-    navigation.navigate('EnterTopic', { navigation });
+    navigation.navigate('Enter Topic', { navigation });
   };
 
   const handlePressUserProfile = () => {
-    navigation.navigate("UserProfile");
+    navigation.navigate("Profile");
   };
 
   const handlePressExploreQuizzes = () => {
@@ -49,7 +49,7 @@ function HomeWidgets() {
   };
 
   const handlePressRecentTopics = () => {
-    navigation.navigate("RecentTopics");
+    navigation.navigate("Recents");
   };
 
   const renderWidget = (name, color, onPress, left) => {

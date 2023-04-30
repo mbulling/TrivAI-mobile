@@ -22,7 +22,7 @@ export default function EnterTopic() {
   const navigation = useNavigation();
 
   const handlePressTakeQuiz = () => {
-    navigation.navigate("CreateQuiz", {
+    navigation.navigate("Create", {
       topic: topic,
     });
   };

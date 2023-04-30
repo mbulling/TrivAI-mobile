@@ -34,7 +34,7 @@ export default function CreateQuiz({ route, navigation }) {
     }));
 
     await BE.appendRecentTopics(topic);
-    navigation.navigate("QuizScreen", {
+    navigation.navigate("Quiz", {
       topic: topic,
       numberQuestions: num_questions,
     });
@@ -47,8 +47,8 @@ export default function CreateQuiz({ route, navigation }) {
   const handleNumberChange = (value) => {
     setNumber(value)
   };
-  
-  const numbers = [1,2,3,4,5,6,7,8,9,10]
+
+  const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
   return (
     <View style={styles.container}>
@@ -56,7 +56,7 @@ export default function CreateQuiz({ route, navigation }) {
         <Text style={{ fontSize: 18, fontWeight: "bold", padding: 10, color: "white" }}>
           Number of Questions
         </Text>
-        <HorizontalNumberPicker values={numbers} onValueChange={handleNumberChange}/>
+        <HorizontalNumberPicker values={numbers} onValueChange={handleNumberChange} />
       </View>
 
       <View style={[styles.difficultyButtons, styles.shadow]}>

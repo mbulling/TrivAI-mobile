@@ -121,7 +121,7 @@ const FinishedScreen = ({ numberCorrect, navigation }) => {
       <Image source={myTrophy} style={styles.trophy} />
       <Text style={styles.finishMsg}>You got {numberCorrect} questions correct!</Text>
       <View style={styles.finishBtn}>
-        <Pressable onPress={() => _navigationHandler("EnterTopic")}>
+        <Pressable onPress={() => _navigationHandler("Enter Topic")}>
           <Text style={styles.finishBtnText}>Create Another Quiz</Text>
         </Pressable>
       </View>
