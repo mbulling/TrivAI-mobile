@@ -8,20 +8,28 @@ import {
   Dimensions,
 } from 'react-native';
 
-const HorizontalNumberPicker = ({ values, width, itemWidth, onValueChange }) => {
+const HorizontalNumberPicker = ({ values, onValueChange }) => {
+  const middleIndex = Math.floor(values.length / 2);
+  const itemWidth = Dimensions.get('window').width / 5
+  const width = Dimensions.get('window').width
+
   const [selected, setSelected] = useState(3);
   const scrollX = useRef(new Animated.Value(0)).current;
 
-  const middleIndex = Math.floor(values.length / 2);
   const ITEM_SIZE = itemWidth;
-  const ITEM_SPACING = (width - ITEM_SIZE) / 2;
+  const ITEM_SPACING = (width - ITEM_SIZE) / 2 - 30;
   const scrollViewRef = useRef(null);
 
   useEffect(() => {
-    scrollViewRef.current.scrollTo({
-      x: middleIndex * ITEM_SIZE,
-      animated: false,
-    });
+    const timeout = setTimeout(() => {
+      requestAnimationFrame(() => {
+        scrollViewRef.current.scrollTo({
+          x: (middleIndex * ITEM_SIZE) / 2 - 40,
+          animated: true,
+        });
+      });
+    }, 100);
+    return () => clearTimeout(timeout);
   }, []);
 
   const onScroll = (event) => {
@@ -61,7 +69,7 @@ const HorizontalNumberPicker = ({ values, width, itemWidth, onValueChange }) => 
           });
           const scale = scrollX.interpolate({
             inputRange,
-            outputRange: [0.4, 1, 0.4],
+            outputRange: [0.7, 1.1, 0.7],
             extrapolate: 'clamp',
           });
           return (
@@ -88,7 +96,7 @@ const styles = StyleSheet.create({
   numberText: {
     fontSize: 34,
     fontWeight: 'bold',
-    marginRight: 30,
+    color: 'white',
   },
 });
 

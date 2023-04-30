@@ -8,6 +8,7 @@ import {
   Button,
   TouchableOpacity,
   SafeAreaView,
+  Dimensions,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import Loading from "./Loading";
@@ -17,6 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import NavigationContainer from "@react-navigation/native";
 import * as BE from "../lib/external";
 import UserContext from "../contexts/user";
+import HorizontalNumberPicker from "./HorizontalPicker";
 
 export default function CreateQuiz({ route, navigation }) {
   const { topic } = route.params;
@@ -42,27 +44,19 @@ export default function CreateQuiz({ route, navigation }) {
     setDifficulty(value);
   };
 
+  const handleNumberChange = (value) => {
+    setNumber(value)
+  };
+  
+  const numbers = [1,2,3,4,5,6,7,8,9,10]
+
   return (
     <View style={styles.container}>
       <View style={[styles.topContainer, styles.shadow]}>
         <Text style={{ fontSize: 18, fontWeight: "bold", padding: 10, color: "white" }}>
           Number of Questions
         </Text>
-        <View style={styles.topRow}>
-          <Slider
-            style={{ width: '60%', height: 50 }}
-            minimumValue={1}
-            maximumValue={10}
-            step={1}
-            value={num_questions}
-            onValueChange={(value) => setNumber(value)}
-            minimumTrackTintColor="#ffffff"
-            maximumTrackTintColor="#363636"
-          />
-          <Text style={{ fontSize: 25, width: '20%', textAlign: 'center', color: "white" }}>
-            {num_questions}
-          </Text>
-        </View>
+        <HorizontalNumberPicker values={numbers} onValueChange={handleNumberChange}/>
       </View>
 
       <View style={[styles.difficultyButtons, styles.shadow]}>
@@ -118,6 +112,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#EE5F88",
     borderRadius: 10,
     padding: 10,
+    height: 100,
+    marginHorizontal: 20,
   },
   difficultyButton: {
     borderRadius: 10,
