@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import UserContext from "../contexts/user";
-import { View, Button, Text, TextInput, Animated, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Button, Text, TextInput, Animated, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as BE from "../lib/external";
 
@@ -9,7 +9,7 @@ const Registration = () => {
   const { user, setUser } = useContext(UserContext);
 
   return (
-    <Stack.Navigator initialRouteName="Landing">
+    <Stack.Navigator initialRouteName="Register">
       <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
       <Stack.Screen
         name="Register"
@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 20,
     paddingTop: 100,
+    paddingBottom: 50,
   },
   welcomeText: {
     color: "white",
