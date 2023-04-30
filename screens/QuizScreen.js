@@ -232,8 +232,6 @@ const styles = StyleSheet.create({
     padding: 20,
     fontSize: 18,
     borderRadius: 20,
-    overflow: "wrap",
-    textOverflow: "wrap",
   },
   listOptions: {
     marginTop: 10,
@@ -251,8 +249,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 18,
     borderRadius: 20,
-    overflow: "wrap",
-    textOverflow: "wrap",
   },
   trophy: {
     width: 250,
@@ -265,8 +261,6 @@ const styles = StyleSheet.create({
     color: "#EE4B2B",
     fontSize: 18,
     borderRadius: 20,
-    overflow: "wrap",
-    textOverflow: "wrap",
   },
   nextButton: {
     margin: 10,
