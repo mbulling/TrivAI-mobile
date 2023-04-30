@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     color: "white",
     fontFamily: "Inter-Bold",
-    marginTop: 20,
+    marginTop: 35,
   },
   userStats: {
     fontSize: 20,
