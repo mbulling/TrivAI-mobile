@@ -138,7 +138,7 @@ const Question = ({ question, optionHandler, nextHandler, revealAnswer }) => {
 
   return (
     <View>
-      <Header lead={question.question} />
+      <Header lead={question != null ? question.question : null} />
       <View style={styles.listOptions}>
         {question.options.map((opt, index) => {
           return (
