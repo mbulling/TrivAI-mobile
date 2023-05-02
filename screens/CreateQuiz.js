@@ -8,6 +8,7 @@ import {
   Button,
   TouchableOpacity,
   SafeAreaView,
+  Dimensions,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import Loading from "./Loading";
@@ -15,15 +16,15 @@ import QuizScreen from "./QuizScreen";
 import { get_topics } from "../lib/external";
 import { useNavigation } from "@react-navigation/native";
 import NavigationContainer from "@react-navigation/native";
-import HorizontalPicker from "./HorizontalPicker";
 import * as BE from "../lib/external";
 import UserContext from "../contexts/user";
+import HorizontalNumberPicker from "./HorizontalPicker";
 
 export default function CreateQuiz({ route, navigation }) {
   const { topic } = route.params;
   const [num_questions, setNumber] = useState(3);
   const [difficulty, setDifficulty] = useState("medium");
-  //const navigation = useNavigation();
+
   const { user, setUser } = useContext(UserContext);
 
   const handlePressTakeQuiz = async () => {
@@ -33,59 +34,67 @@ export default function CreateQuiz({ route, navigation }) {
     }));
 
     await BE.appendRecentTopics(topic);
-    navigation.navigate("QuizScreen", {
+    navigation.navigate("Quiz", {
+      // topic: `[${difficulty} difficulty] ` + topic,
       topic: topic,
       numberQuestions: num_questions,
     });
   };
 
+  const handleDifficultyChange = (value) => {
+    setDifficulty(value);
+  };
+
   const handleNumberChange = (value) => {
-    setNumber(value);
+    setNumber(value)
   };
 
-  const handleDifficultyChange = (difficulty) => {
-    setDifficulty(difficulty);
-  };
-
-  const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const difficulties = ["easy", "medium", "hard"];
+  const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
   return (
     <View style={styles.container}>
-      <View style={styles.topRow}>
-        <View style={styles.pickerWrapper2}>
-          <View style={styles.questionPicker}>
-            <Text style={{ marginTop: 20, fontSize: 15, fontWeight: 500 }}>
-              number of questions
-            </Text>
-            <HorizontalPicker
-              values={numbers}
-              width={200}
-              itemWidth={200}
-              onValueChange={handleNumberChange}
-            />
-          </View>
+      <View style={[styles.topContainer, styles.shadow]}>
+        <Text style={{ fontSize: 18, fontWeight: "bold", padding: 10, color: "white" }}>
+          Number of Questions
+        </Text>
+        <HorizontalNumberPicker values={numbers} onValueChange={handleNumberChange} />
+      </View>
+
+      <View style={[styles.difficultyButtons, styles.shadow]}>
+        <View style={styles.difficultyButtonsRow}>
+          <TouchableOpacity
+            style={[
+              styles.difficultyButton,
+              { backgroundColor: difficulty === "easy" ? "#4051A6" : "#a0a8d3" },
+            ]}
+            onPress={() => handleDifficultyChange("easy")}
+          >
+            <Text style={styles.difficultyButtonText}>Easy</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.difficultyButton,
+              { backgroundColor: difficulty === "medium" ? "#4051A6" : "#a0a8d3" },
+            ]}
+            onPress={() => handleDifficultyChange("medium")}
+          >
+            <Text style={styles.difficultyButtonText}>Medium</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.difficultyButton,
+              { backgroundColor: difficulty === "hard" ? "#4051A6" : "#a0a8d3" },
+            ]}
+            onPress={() => handleDifficultyChange("hard")}
+          >
+            <Text style={styles.difficultyButtonText}>Hard</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.outerCircle}>
         <TouchableOpacity style={styles.button} onPress={handlePressTakeQuiz}>
           <Text style={styles.buttonText}>Start Quiz</Text>
         </TouchableOpacity>
-      </View>
-      <View style={styles.topRow}>
-        <View style={styles.pickerWrapper1}>
-          <View style={styles.difficultyBox}>
-            <Text style={{ marginTop: 20, fontSize: 15, fontWeight: 500 }}>
-              choose difficulty
-            </Text>
-            <HorizontalPicker
-              values={difficulties}
-              width={150}
-              itemWidth={200}
-              onValueChange={handleDifficultyChange}
-            />
-          </View>
-        </View>
       </View>
     </View>
   );
@@ -94,75 +103,78 @@ export default function CreateQuiz({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start",
+    justifyContent: "center",
     alignItems: "center",
     width: "100%",
   },
-  textInput: {
-    width: "80%",
+  topContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#EE5F88",
     borderRadius: 10,
+    padding: 10,
+    height: 100,
+    marginHorizontal: 20,
+  },
+  difficultyButton: {
+    borderRadius: 10,
+    width: "32%",
+    alignItems: "center",
+  },
+  difficultyButtonText: {
+    fontSize: 20,
+    color: "white",
+    padding: 10,
+    fontWeight: "bold",
   },
   topRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    height: 200,
   },
-  pickerWrapper1: {
-    flex: 1,
+  difficultyButtons: {
+    alignItems: "center",
     justifyContent: "center",
-    alignItems: "center",
-    margin: 20,
-    maxHeight: 120,
-  },
-  pickerWrapper2: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    margin: 20,
-    maxHeight: 120,
-  },
-  difficultyBox: {
-    alignItems: "center",
-    backgroundColor: "#fac8f9",
+    width: "100%",
+    padding: 10,
+    width: "90%",
     borderRadius: 10,
+    backgroundColor: "#FFD44D",
+    marginTop: 20,
   },
-  questionPicker: {
-    justifyContent: "center",
+  difficultyButtonsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#83d4fc",
-    borderRadius: 10,
-  },
-  topic: {
-    marginTop: 40,
-    marginBottom: 10,
-    fontSize: 20,
+    width: "100%",
+    padding: 10,
   },
   outerCircle: {
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 200,
     borderWidth: 8,
-    borderColor: "#29578a",
+    borderColor: "#4051A6",
     width: 330,
     height: 330,
-    shadowColor: "#000",
+    shadowColor: "#fff",
     shadowOffset: {
       width: 0,
       height: 3,
     },
-    shadowOpacity: 0.29,
-    shadowRadius: 4.65,
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    margin: 25,
   },
   button: {
-    backgroundColor: "#fff",
+    backgroundColor: "#4051A6",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 200,
     width: 300,
     height: 300,
-    shadowColor: "#000",
+    shadowColor: "#363636",
     shadowOffset: {
       width: 0,
       height: 3,
@@ -171,20 +183,18 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 7,
     borderWidth: 5,
-    borderColor: "#29578a",
+    borderColor: "#fff",
     borderStyle: "solid",
   },
   buttonText: {
-    color: "#000",
-    fontSize: 18,
+    color: "#fff",
+    fontSize: 40,
     fontWeight: "bold",
   },
-  textInput: {
-    width: "80%",
-    height: 40,
-    borderColor: "#7a42f4",
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    backgroundColor: "#FFFFFF",
+  shadow: {
+    shadowColor: '#3d3d3d',
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.6,
+    shadowRadius: 2,
   },
 });

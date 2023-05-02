@@ -5,46 +5,71 @@ import UserContext from "../contexts/user";
 
 export default function UserProfile() {
   const { user } = useContext(UserContext);
+  const userScore = 100 * user.questionsCorrect / user.questionsTotal;
+
   return (
-    <ScrollView>
+    <View style={styles.container}>
       <View style={styles.profile}>
         <Text style={styles.name}>{user.name}</Text>
-        <Text style={styles.userStats}>
-          Questions Correct: {user.questionsCorrect}
-        </Text>
+        <View style={styles.userNumbers}>
+          <Text style={styles.score}>
+            {userScore.toFixed(2)}%
+          </Text>
+          <Text style={styles.userStats}>
+            Questions Correct: {user.questionsCorrect}
+          </Text>
+          <Text style={styles.userStats}>
+            Questions Answered: {user.questionsTotal}
+          </Text>
+        </View>
+
       </View>
-      <View style={styles.recents}>
-        <Text style={styles.userStats}>Recent Topics:</Text>
-        <View style={styles.topicsColumn}>
-          {user.recentTopics.length > 0
-            ? user.recentTopics.map((topic, i) => (
+      <ScrollView style={styles.scroll}>
+        <View style={styles.recents}>
+          <View style={styles.topicsColumn}>
+            {user.recentTopics.length > 0
+              ? user.recentTopics.map((topic, i) => (
                 <Text key={i} style={styles.topic}>
                   {topic}
                 </Text>
               ))
-            : null}
+              : null}
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+    alignContent: "center",
+    backgroundColor: "#4051A6",
+  },
   name: {
-    fontSize: 30,
+    fontSize: 40,
     marginLeft: 10,
+    color: "white",
+    // fontFamily: "Inter-Bold",
+    fontWeight: "bold",
+    marginTop: 35,
   },
   userStats: {
     fontSize: 20,
-    color: "grey",
+    color: "white",
   },
   profile: {
     padding: 10,
     justifyContent: "center",
     alignItems: "center",
+
   },
   recents: {
+    justifyContent: "center",
+    alignItems: "center",
     margin: 10,
+    padding: 10,
   },
   topicsColumn: {
     flexDirection: "row",
@@ -56,5 +81,22 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "white",
     margin: 10,
+    borderRadius: 6,
+    overflow: "hidden",
+  },
+  userNumbers: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  score: {
+    padding: 10,
+    fontSize: 30,
+    color: "white",
+    // fontFamily: "Inter-Bold",
+    fontWeight: "bold",
+  },
+  scroll: {
+    height: "100%",
   },
 });

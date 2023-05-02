@@ -22,8 +22,8 @@ export default function EnterTopic() {
   const navigation = useNavigation();
 
   const handlePressTakeQuiz = () => {
-    navigation.navigate("CreateQuiz", {
-      topic: topic,
+    navigation.navigate("Create", {
+      topic: (topic == "") ? "Null String Error Handling" : topic
     });
   };
 
@@ -34,7 +34,7 @@ export default function EnterTopic() {
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
-        <Text style={styles.topic}>Enter topic:</Text>
+        <Text style={styles.topic}>Enter Topic:</Text>
         <TextInput
           style={styles.textInput}
           onChangeText={handleTextChange}
@@ -52,53 +52,53 @@ export default function EnterTopic() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-evenly",
+    marginTop: 50,
     alignItems: "center",
     width: '100%',
   },
   inputContainer: {
     alignItems: 'center',
     width: '100%',
-  },
-  textInput: {
-    width: '80%',
-    borderRadius: 10,
+    margin: 45,
+    marginBottom: 25,
   },
   topic: {
-    marginTop: 40,
+    marginTop: 80,
     marginBottom: 10,
-    fontSize: 20,
+    fontSize: 25,
+    color: '#363636',
+    fontWeight: 'bold',
   },
   button: {
-    backgroundColor: '#fff',
+    backgroundColor: '#4051A6',
     justifyContent: 'center',
     width: '80%',
     bottom: 0,
     alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: '#363636',
     shadowOffset: {
       width: 0,
       height: 3,
     },
-    shadowOpacity: 0.29,
-    shadowRadius: 4.65,
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
     elevation: 7,
-    borderWidth: 5,
-    borderColor: '#29578a',
-    borderStyle: 'solid',
-
+    borderRadius: 10,
+    height: 60,
   },
   buttonText: {
-    color: '#000',
-    fontSize: 18,
+    color: '#fff',
+    fontSize: 30,
     fontWeight: 'bold',
   },
   textInput: {
     width: '80%',
-    height: 40,
+    height: 50,
     borderColor: '#7a42f4',
     borderRadius: 10,
     paddingHorizontal: 10,
     backgroundColor: '#FFFFFF',
+    fontSize: 24,
+    marginTop: 10,
   },
 });

@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef, useEffect } from "react";
 import {
   StyleSheet,
   View,
   TouchableOpacity,
-  ScrollView,
+  ScrollView, Animated,
   Button,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -35,47 +35,35 @@ export default function Home() {
   if (user.name === "") return <Registration />;
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="Home"
-        component={HomeWidgets}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen name="CreateQuiz" component={CreateQuiz} />
+      <Stack.Screen name="Home" component={HomeWidgets} options={{ headerShown: false }} />
+      <Stack.Screen name="Create" component={CreateQuiz} />
       <Stack.Screen name="Explore" component={Explore} />
-      <Stack.Screen name="QuizScreen" component={QuizScreen} />
-      <Stack.Screen name="UserProfile" component={UserProfile} />
-      <Stack.Screen
-        name="RecentTopics"
-        component={RecentTopics}
-        options={{
-          title: "Recent Topics",
-          headerStyle: {
-            backgroundColor: "#BCD5D4",
-          },
-          headerLeft: () => (
-            <SvgXml
-              xml={backButton}
-              onPress={() => navigation.goBack()}
-              width="100%"
-              height="100%"
-            ></SvgXml>
-          ),
-        }}
-      />
-      <Stack.Screen name="EnterTopic" component={EnterTopic} />
+      <Stack.Screen name="Quiz" component={QuizScreen} />
+      <Stack.Screen name="Profile" component={UserProfile} />
+      <Stack.Screen name="Recents" component={RecentTopics} />
+      <Stack.Screen name="Enter Topic" component={EnterTopic} />
     </Stack.Navigator>
   );
 }
 
 function HomeWidgets() {
   const navigation = useNavigation();
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
 
   const handlePressCreateQuiz = () => {
-    navigation.navigate("EnterTopic", { navigation });
+    navigation.navigate('Enter Topic', { navigation });
   };
 
   const handlePressUserProfile = () => {
-    navigation.navigate("UserProfile");
+    navigation.navigate("Profile");
   };
 
   const handlePressExploreQuizzes = () => {
@@ -83,7 +71,7 @@ function HomeWidgets() {
   };
 
   const handlePressRecentTopics = () => {
-    navigation.navigate("RecentTopics");
+    navigation.navigate("Recents");
   };
 
   const renderWidget = (name, color, onPress, left) => {
@@ -97,29 +85,19 @@ function HomeWidgets() {
   };
 
   return (
-    <LinearGradient colors={["#1F51FF", "#0096FF"]} style={styles.container}>
-      <ScrollView
-        style={styles.scroll}
-        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
-      >
-        <View style={styles.widgetRow}>
-          {renderWidget("Create Quiz", "#0096FF", handlePressCreateQuiz, true)}
-          {renderWidget(
-            "Explore Quizzes",
-            "#6495ED",
-            handlePressExploreQuizzes,
-            true
-          )}
-          {renderWidget(
-            "Recent Topics",
-            "#1F51FF",
-            handlePressRecentTopics,
-            false
-          )}
-          {renderWidget("Profile", "#3F00FF", handlePressUserProfile, false)}
-        </View>
+    <LinearGradient
+      colors={["#EE5F88", "#4051A6"]}
+      style={styles.container}
+    >
+      <ScrollView style={styles.scroll} contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
+        <Animated.View style={[styles.widgetRow, { opacity: fadeAnim }]}>
+          {renderWidget("Create", "#4051A6", handlePressCreateQuiz, true)}
+          {renderWidget("Explore", "#EE5F88", handlePressExploreQuizzes, false)}
+          {/* {renderWidget("Recents", "#4051A6", handlePressRecentTopics, true)} */}
+          {renderWidget("Profile", "#4051A6", handlePressUserProfile, true)}
+        </Animated.View>
       </ScrollView>
-    </LinearGradient>
+    </LinearGradient >
   );
 }
 
@@ -134,10 +112,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexWrap: "wrap",
-    paddingTop: 10,
+    paddingTop: '6.5%',
+    paddingBottom: '6.5%',
   },
   scroll: {
     width: "100%",
+    height: "100%",
     flex: 1,
   },
 });

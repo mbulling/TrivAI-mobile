@@ -5,6 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const defaultUser = {
   name: "",
   questionsCorrect: 0,
+  questionsTotal: 0,
   recentTopics: [],
 };
 
@@ -19,6 +20,7 @@ export const UserProvider = ({ children }) => {
     const checkRegistration = async () => {
       const name = await BE.getName();
       const questionCorrect = await BE.getQuestionCorrect();
+      const questionTotal = await BE.getQuestionTotal();
       const recentTopics = await BE.getRecentTopics();
       if (name !== null) setUser((user) => ({ ...user, name: name }));
       else console.log("could not get user name, defaulting to default value");
@@ -27,6 +29,12 @@ export const UserProvider = ({ children }) => {
       else
         console.log(
           "could not get user questions correct, defaulting to default value"
+        );
+      if (questionTotal !== null)
+        setUser((user) => ({ ...user, questionsTotal: questionTotal }));
+      else
+        console.log(
+          "could not get user questions answered, defaulting to default value"
         );
       if (recentTopics !== null)
         setUser((user) => ({ ...user, recentTopics: recentTopics }));
