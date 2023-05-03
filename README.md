@@ -1,6 +1,6 @@
 # TrivAI
 
-<center><img src="https://github.com/mbulling/TrivAI-mobile/blob/main/Slides/banner-trivai.png?raw=true" height="auto" width="auto"></img></center>
+<center><img src="https://github.com/mbulling/TrivAI-mobile/blob/main/Slides/banner-trivai.png?raw=true" style="max-width: 500px; max-height: 150px; width: auto; height: auto;"></img></center>
 
 TrivAI is an mobile application that leverages LLMs to generate questions and study materials for a user. The backend utilizes a serverless architecture that enables reduced latency and more reliable responses.
 
