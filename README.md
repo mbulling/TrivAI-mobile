@@ -4,6 +4,8 @@
 
 TrivAI is an mobile application that leverages LLMs to generate questions and study materials for a user. The backend utilizes a serverless architecture that enables reduced latency and more reliable responses.
 
+<a href="https://apps.apple.com/us/app/trivai/id6447194187">Download on iOS App Store</a>
+
 ## Getting Started
 
 ### Prerequisites
@@ -43,6 +45,8 @@ If you would like to contribute to this project, please follow these steps:
 2. Create a new branch with your proposed changes.
 3. Commit and push your changes to your fork.
 4. Submit a pull request describing your changes and their purpose.
+
+
 
 
 
