@@ -33,6 +33,8 @@ export default function Widget({ name, color, left }) {
         return myCamera;
       case 'Profile':
         return UserPfp;
+      case 'Scanner':
+        return myCamera;
     }
   }
 
