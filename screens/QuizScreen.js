@@ -39,7 +39,6 @@ const QuizScreen = ({ route, navigation }) => {
         )
           .then(fetchSuccess, fetchReject)
           .catch(fetchException);
-
         if (attempt === null) return await retries(tries - 1);
         return attempt;
       };

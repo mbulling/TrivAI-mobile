@@ -12,9 +12,9 @@ import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import UserContext from "../contexts/user";
 import Registration from "./Registration";
-import Scanner from "./Scanner";
 import CreateQuizPassage from "./CreateQuizPassage";
 import QuizScreenPassage from "./QuizScreenPassage"
+import CameraScreen from "./Camera"
 const Stack = createStackNavigator();
 
 export default function Home() {
@@ -31,9 +31,9 @@ export default function Home() {
       <Stack.Screen name="Profile" component={UserProfile} />
       <Stack.Screen name="Recents" component={RecentTopics} />
       <Stack.Screen name="Enter Topic" component={EnterTopic} />
-      <Stack.Screen name="Scanner" component={Scanner} />
       <Stack.Screen name="Create Quiz From Passage" component={CreateQuizPassage} />
       <Stack.Screen name="Quiz From Passage" component={QuizScreenPassage} />
+      <Stack.Screen name="CameraScreen" component={CameraScreen} />
     </Stack.Navigator>
   );
 }
@@ -67,7 +67,7 @@ function HomeWidgets() {
   };
 
   const handlePressCV = () => {
-    navigation.navigate("Scanner");
+    navigation.navigate("CameraScreen");
   }
   const renderWidget = (name, color, onPress, left) => {
     return (
