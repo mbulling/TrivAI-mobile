@@ -26,7 +26,6 @@ export default function CreateQuiz({ route, navigation }) {
 
   const { user, setUser } = useContext(UserContext);
   const handlePressTakeQuiz = async () => {
-    console.log(passage)
     setUser((prev) => ({
       ...prev,
       recentTopics: [...new Set([...user.recentTopics, passage])],

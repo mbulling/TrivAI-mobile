@@ -12,28 +12,14 @@ import {
   ImageBackground,
 } from "react-native";
 import { Camera, CameraType } from 'expo-camera';
+import * as ImageManipulator from 'expo-image-manipulator';
 import { Picker } from "@react-native-picker/picker";
+import * as FileSystem from 'expo-file-system';
 import { useNavigation } from "@react-navigation/native";
 import NavigationContainer from "@react-navigation/native";
 import * as BE from "../lib/external";
 import axios from "axios";
-
-const apiKey = "cce868944988957"
-const processImage = async (filepath) => {
-  const ocrEndpoint = "https://api.ocr.space/parse/image"
-  try {
-    const response = await axios.post(ocrEndpoint, {
-      apikey: apiKey,
-      file: filepath,
-    });
-    const data = response.data;
-    const passage = data["ParsedResults"][0]["ParsedText"]
-    return passage;
-
-  } catch (error) {
-    console.error(error);
-  }
-}
+import ocrkey from "../lib/ocrapikey"
 
 export default function CameraScreen() {
   const [startCamera, setStartCamera] = React.useState(false)
@@ -42,6 +28,44 @@ export default function CameraScreen() {
   const [cameraType, setCameraType] = React.useState(Camera.Constants.Type.back)
   const [uriLink, setUriLink] = React.useState("")
   const navigation = useNavigation();
+
+  const compressPhoto = async (photoUri) => {
+    const manipResult = await ImageManipulator.manipulateAsync(
+      photoUri,
+      [],
+      { base64: true, compress: 0.1, format: ImageManipulator.SaveFormat.JPEG },
+    );
+    let compressed = manipResult.base64
+    return compressed
+  }
+  const apiKey = ocrkey
+
+  const processImage = async (link) => {
+    try {
+      let filepath = await compressPhoto(link)
+      var myHeaders = new Headers();
+      myHeaders.append("apikey", ocrkey);
+
+      var formdata = new FormData();
+      formdata.append("language", "eng");
+      formdata.append("base64image", 'data:image/jpg;base64,' + filepath);
+      formdata.append("filetype", "jpg")
+
+      let response = await fetch("https://api.ocr.space/parse/image", {
+        method: 'POST',
+        headers: myHeaders,
+        body: formdata,
+        redirect: 'follow'
+      })
+
+      let json = await response.json();
+      let result = json["ParsedResults"][0]["ParsedText"]
+      return result
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
 
   const __startCamera = async () => {
     const { status } = await Camera.requestCameraPermissionsAsync()
@@ -61,10 +85,10 @@ export default function CameraScreen() {
     setUriLink(link);
   }
 
-  const __savePhoto = () => {
-    console.log(uriLink);
-    processImage(uriLink)
-    //navigation.navigate("Create Quiz From Passage", { passage: "Algorithm homework is hard." }) 
+
+  const __savePhoto = async () => {
+    const passage = await processImage(uriLink)
+    navigation.navigate("Create Quiz From Passage", { passage: passage })
   }
 
   const __retakePicture = () => {

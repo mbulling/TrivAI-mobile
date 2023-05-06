@@ -53,6 +53,7 @@ web_modules/
 # TypeScript cache
 *.tsbuildinfo
 lib/key.js
+lib/ocrapikey.js
 **/key.js
 
 # Optional npm cache directory

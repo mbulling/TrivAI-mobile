@@ -121,8 +121,8 @@ const FinishedScreen = ({ numberCorrect, navigation }) => {
       <Image source={myTrophy} style={styles.trophy} />
       <Text style={styles.finishMsg}>You got {numberCorrect} questions correct!</Text>
       <View style={styles.finishBtn}>
-        <Pressable onPress={() => _navigationHandler("Scanner")}>
-          <Text style={styles.finishBtnText}>Scan Another Passage</Text>
+        <Pressable onPress={() => _navigationHandler("Explore")}>
+          <Text style={styles.finishBtnText}>Explore Other</Text>
         </Pressable>
       </View>
 
