@@ -7,7 +7,10 @@ import {
   Slider,
   Button,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   Pressable,
+  Keyboard,
+  ScrollView,
   SafeAreaView,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
@@ -58,7 +61,7 @@ export default function Multiplayer() {
 
   const joinScreen = () => {
     return (
-      <View>
+      <View keyboardShouldPersistTaps="handled">
         <View>
           <Text>Enter Game Code:</Text>
           <TextInput
@@ -89,8 +92,19 @@ export default function Multiplayer() {
             value={topic}
           />
         </View>
+
+        <View>
+          <Text>Room Code:</Text>
+          <Text>1234</Text>
+        </View>
+
+        <View>
+          <Text>Enter Name:</Text>
+          <TextInput style={styles.textInput2} />
+        </View>
+
         <TouchableOpacity style={styles.button} onPress={handlePressTakeQuiz}>
-          <Text style={styles.buttonText}>Next</Text>
+          <Text style={styles.buttonText}>Create Game</Text>
         </TouchableOpacity>
       </View>
     );
@@ -193,6 +207,7 @@ const styles = StyleSheet.create({
     width: "80%",
     height: 50,
     borderColor: "#7a42f4",
+    borderWidth: 1,
     borderRadius: 10,
     paddingHorizontal: 10,
     backgroundColor: "#FFFFFF",
