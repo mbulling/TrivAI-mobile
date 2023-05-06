@@ -21,7 +21,7 @@ import UserContext from "../contexts/user";
 import HorizontalNumberPicker from "./HorizontalPicker";
 
 export default function CreateQuiz({ route, navigation }) {
-  const { topic } = route.params;
+  const { topic, roomID, name } = route.params;
   const [num_questions, setNumber] = useState(3);
   const [difficulty, setDifficulty] = useState("medium");
 
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   difficultyButtonText: {
-    fontSize: 20,
+    fontSize: 18,
     color: "white",
     padding: 10,
     fontWeight: "bold",

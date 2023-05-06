@@ -26,7 +26,10 @@ To run the app locally, you will need to have the following:
 4. In the `lib` directory, create a `key.js` file and add the API route as follows:
 
     ```export default AWS_HOST = "<HOST LINK>";```
-
+    
+5. In the `lib` directory, create a `ocrapikey.js` file and add the API key for the CV portion as follows: (To get a free key, go to ocr.space)
+    ```export default key = "<key>";```
+   
 
 ### Running the App
 
