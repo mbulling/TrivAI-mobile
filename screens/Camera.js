@@ -77,6 +77,7 @@ export default function CameraScreen() {
 
   const __savePhoto = async () => {
     const passage = await processImage(uriLink)
+    console.log(passage)
     navigation.navigate("Create Quiz From Passage", { passage: passage })
   }
 
@@ -151,7 +152,7 @@ export default function CameraScreen() {
         <View
           style={{
             flex: 1,
-            backgroundColor: '#fff',
+            backgroundColor: '#4051A6',
             justifyContent: 'center',
             alignItems: 'center'
           }}
@@ -187,7 +188,7 @@ export default function CameraScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#4051A6",
     alignItems: 'center',
     justifyContent: 'center'
   }
@@ -213,7 +214,7 @@ const CameraPreview = ({ photo, retakePicture, savePhoto }) => {
           style={{
             flex: 1,
             flexDirection: 'column',
-            padding: 15,
+            padding: 20,
             justifyContent: 'flex-end'
           }}
         >
@@ -226,11 +227,13 @@ const CameraPreview = ({ photo, retakePicture, savePhoto }) => {
             <TouchableOpacity
               onPress={retakePicture}
               style={{
-                width: 130,
+                backgroundColor: "#4051A6",
+                width: 140,
                 height: 40,
-
                 alignItems: 'center',
-                borderRadius: 4
+                borderRadius: 5,
+                justifyContent: 'center',
+
               }}
             >
               <Text
@@ -239,17 +242,18 @@ const CameraPreview = ({ photo, retakePicture, savePhoto }) => {
                   fontSize: 20
                 }}
               >
-                Re-take
+                Retake Photo
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={savePhoto}
               style={{
-                width: 130,
+                backgroundColor: "#4051A6",
+                width: 140,
                 height: 40,
-
                 alignItems: 'center',
-                borderRadius: 4
+                borderRadius: 5,
+                justifyContent: 'center',
               }}
             >
               <Text
@@ -258,7 +262,7 @@ const CameraPreview = ({ photo, retakePicture, savePhoto }) => {
                   fontSize: 20
                 }}
               >
-                save photo
+                Process Photo
               </Text>
             </TouchableOpacity>
           </View>
