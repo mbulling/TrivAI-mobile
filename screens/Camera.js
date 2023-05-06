@@ -3,22 +3,12 @@ import {
   StyleSheet,
   View,
   Text,
-  TextInput,
-  Button,
   TouchableOpacity,
-  SafeAreaView,
-  Dimensions,
-  Pressable,
   ImageBackground,
 } from "react-native";
-import { Camera, CameraType } from 'expo-camera';
+import { Camera } from 'expo-camera';
 import * as ImageManipulator from 'expo-image-manipulator';
-import { Picker } from "@react-native-picker/picker";
-import * as FileSystem from 'expo-file-system';
 import { useNavigation } from "@react-navigation/native";
-import NavigationContainer from "@react-navigation/native";
-import * as BE from "../lib/external";
-import axios from "axios";
 import ocrkey from "../lib/ocrapikey"
 
 export default function CameraScreen() {
@@ -38,7 +28,6 @@ export default function CameraScreen() {
     let compressed = manipResult.base64
     return compressed
   }
-  const apiKey = ocrkey
 
   const processImage = async (link) => {
     try {
