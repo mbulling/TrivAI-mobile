@@ -64,7 +64,7 @@ export default function Multiplayer() {
     return (
       <View keyboardShouldPersistTaps="handled">
         <View>
-          <Text>Enter Game Code:</Text>
+          <Text style={styles.topic}>Enter Game Code</Text>
           <TextInput
             style={styles.textInput2}
             inputMode={"numeric"}
@@ -74,8 +74,8 @@ export default function Multiplayer() {
         </View>
 
         <View>
-          <Text>Enter Name:</Text>
-          <TextInput style={styles.textInput2} />
+          <Text style={styles.topic}>Enter Name</Text>
+          <TextInput style={styles.textInput2} placeholder="John Doe" />
         </View>
 
         <TouchableOpacity style={styles.button} onPress={handlePressTakeQuiz}>
@@ -98,13 +98,22 @@ export default function Multiplayer() {
         </View>
 
         <View>
-          <Text>Room Code:</Text>
-          <Text>{roomID}</Text>
+          <Text style={styles.topic}>
+            Room Code: <Text style={{ color: "#4051A6" }}>{roomID}</Text>
+          </Text>
         </View>
 
         <View>
           <Text>Enter Name:</Text>
-          <TextInput style={styles.textInput2} />
+          <TextInput style={styles.textInput2} placeholder="John Doe" />
+        </View>
+
+        <View>
+          <TouchableOpacity style={styles.button} onPress={handlePressTakeQuiz}>
+            <Text style={[styles.buttonText, { textAlign: "center" }]}>
+              Share
+            </Text>
+          </TouchableOpacity>
         </View>
 
         <TouchableOpacity style={styles.button} onPress={handlePressTakeQuiz}>
@@ -116,9 +125,10 @@ export default function Multiplayer() {
 
   return (
     <View style={styles.container}>
-      {radioButton(data, setCreate)}
-
-      {create === "Join" ? joinScreen() : createScreen()}
+      <View style={styles.inputContainer}>
+        {radioButton(data, setCreate)}
+        {create === "Join" ? joinScreen() : createScreen()}
+      </View>
     </View>
   );
 }
@@ -176,7 +186,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     margin: 45,
-    marginBottom: 25,
+    marginBottom: 0,
   },
   topic: {
     marginTop: 80,
@@ -184,23 +194,35 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: "#363636",
     fontWeight: "bold",
+    textAlign: "center",
+  },
+  roomCode: {
+    marginBottom: 10,
+    fontSize: 20,
+    color: "black",
+    fontWeight: "bold",
+    borderColor: "#363636",
+    borderWidth: 1,
+    borderRadius: 10,
+    textAlign: "center",
   },
   button: {
     backgroundColor: "#4051A6",
     justifyContent: "center",
     width: "80%",
     bottom: 0,
-    alignItems: "center",
     shadowColor: "#363636",
     shadowOffset: {
       width: 0,
       height: 3,
     },
+    margin: 10,
     shadowOpacity: 0.5,
     shadowRadius: 5,
     elevation: 7,
     borderRadius: 10,
     height: 60,
+    textAlign: "center",
   },
   buttonText: {
     color: "#fff",
@@ -224,5 +246,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     padding: 10,
     borderColor: "#7a42f4",
+    width: "80%",
   },
 });
