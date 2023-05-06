@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import "react-native-gesture-handler";
 import { StyleSheet, Text, View } from "react-native";
 import Home from "./screens/Home";
+import Multiplayer from "./screens/Multiplayer";
 import { NavigationContainer } from "@react-navigation/native";
 import { UserProvider } from "./contexts/user";
 
@@ -9,7 +10,7 @@ export default function App() {
   return (
     <UserProvider>
       <NavigationContainer>
-        <Home />
+        <Multiplayer />
       </NavigationContainer>
     </UserProvider>
   );
