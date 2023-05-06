@@ -11,7 +11,8 @@ export default function Explore({ navigation }) {
   const handlePressTopic = (topic) => {
     navigation.navigate("Create", {
       topic: topic,
-      roomID: 0
+      roomID: 0,
+      name: "mason"
     });
   };
 

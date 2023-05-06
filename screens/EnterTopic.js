@@ -23,7 +23,7 @@ export default function EnterTopic() {
 
   const handlePressTakeQuiz = () => {
     navigation.navigate("Create", {
-      topic: (topic == "") ? "Null String Error Handling" : topic, roomID: 0
+      topic: (topic == "") ? "Null String Error Handling" : topic, roomID: 0, name: "mason"
     });
   };
 
