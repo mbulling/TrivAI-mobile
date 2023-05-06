@@ -19,7 +19,7 @@ import NavigationContainer from "@react-navigation/native";
 import HorizontalPicker from "./HorizontalPicker";
 
 export default function Multiplayer() {
-  const [create, setCreate] = useState(true);
+  const [create, setCreate] = useState("Create");
   const [topic, setTopic] = useState("");
   const navigation = useNavigation();
 
@@ -37,12 +37,16 @@ export default function Multiplayer() {
 
   const radioButton = (data, onSelect) => {
     return (
-      <View>
+      <View style={styles.radioButton}>
         {data.map((item) => {
           return (
             <Pressable
-              style={create === true ? styles.selected : styles.unselected}
-              onPress={() => setCreate(!create)}
+              style={
+                item.value === create ? styles.selected : styles.unselected
+              }
+              onPress={() =>
+                setCreate(item.value === "Create" ? "Create" : "Join")
+              }
             >
               <Text> {item.value}</Text>
             </Pressable>
@@ -52,26 +56,64 @@ export default function Multiplayer() {
     );
   };
 
+  const joinScreen = () => {
+    return (
+      <View>
+        <View>
+          <Text>Enter Game Code:</Text>
+          <TextInput
+            style={styles.textInput2}
+            inputMode={"numeric"}
+            maxLength={4}
+          />
+        </View>
+
+        <View>
+          <Text>Enter Name:</Text>
+          <TextInput style={styles.textInput2} />
+        </View>
+
+        <Button title="Join Game" />
+      </View>
+    );
+  };
+
+  const createScreen = () => {
+    return (
+      <View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.topic}>Enter Topic:</Text>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={handleTextChange}
+            value={topic}
+          />
+        </View>
+        <TouchableOpacity style={styles.button} onPress={handlePressTakeQuiz}>
+          <Text style={styles.buttonText}>Next</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       {radioButton(data, setCreate)}
-      <View style={styles.inputContainer}>
-        <Text style={styles.topic}>Enter Topic:</Text>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={handleTextChange}
-          value={topic}
-        />
-      </View>
 
-      <TouchableOpacity style={styles.button} onPress={handlePressTakeQuiz}>
-        <Text style={styles.buttonText}>Next</Text>
-      </TouchableOpacity>
+      {create === "Join" ? joinScreen() : createScreen()}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  radioButton: {
+    flexDirection: "row",
+    justifyContent: "center",
+    width: "20%",
+    alignItems: "left",
+    marginBottom: 20,
+    gap: 20,
+  },
   selected: {
     backgroundColor: "#4051A6",
     justifyContent: "center",
@@ -156,5 +198,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     fontSize: 24,
     marginTop: 10,
+  },
+  textInput2: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
   },
 });
