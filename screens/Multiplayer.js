@@ -16,7 +16,7 @@ import {
 import { Picker } from "@react-native-picker/picker";
 import Loading from "./Loading";
 import QuizScreen from "./QuizScreen";
-import { get_topics } from "../lib/external";
+import { get_topics, generateGameID } from "../lib/external";
 import { useNavigation } from "@react-navigation/native";
 import NavigationContainer from "@react-navigation/native";
 import HorizontalPicker from "./HorizontalPicker";
@@ -24,6 +24,7 @@ import HorizontalPicker from "./HorizontalPicker";
 export default function Multiplayer() {
   const [create, setCreate] = useState("Create");
   const [topic, setTopic] = useState("");
+  const [roomID, setRoomID] = useState(generateGameID().toString());
   const navigation = useNavigation();
 
   const data = [{ value: "Create" }, { value: "Join" }];
@@ -68,6 +69,7 @@ export default function Multiplayer() {
             style={styles.textInput2}
             inputMode={"numeric"}
             maxLength={4}
+            placeholder="1234"
           />
         </View>
 
@@ -76,7 +78,9 @@ export default function Multiplayer() {
           <TextInput style={styles.textInput2} />
         </View>
 
-        <Button title="Join Game" />
+        <TouchableOpacity style={styles.button} onPress={handlePressTakeQuiz}>
+          <Text style={styles.buttonText}>Join Game</Text>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -95,7 +99,7 @@ export default function Multiplayer() {
 
         <View>
           <Text>Room Code:</Text>
-          <Text>1234</Text>
+          <Text>{roomID}</Text>
         </View>
 
         <View>
@@ -217,7 +221,8 @@ const styles = StyleSheet.create({
   textInput2: {
     height: 40,
     margin: 12,
-    borderWidth: 1,
+    borderBottomWidth: 1,
     padding: 10,
+    borderColor: "#7a42f4",
   },
 });
