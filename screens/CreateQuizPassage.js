@@ -3,35 +3,15 @@ import {
   StyleSheet,
   View,
   Text,
-  TextInput,
-  Slider,
-  Button,
   TouchableOpacity,
-  SafeAreaView,
-  Dimensions,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import Loading from "./Loading";
-import QuizScreen from "./QuizScreen";
-import { get_topics } from "../lib/external";
-import { useNavigation } from "@react-navigation/native";
-import NavigationContainer from "@react-navigation/native";
-import * as BE from "../lib/external";
-import UserContext from "../contexts/user";
 import HorizontalNumberPicker from "./HorizontalPicker";
 
 export default function CreateQuiz({ route, navigation }) {
   const { passage } = route.params;
   const [num_questions, setNumber] = useState(3);
 
-  const { user, setUser } = useContext(UserContext);
   const handlePressTakeQuiz = async () => {
-    setUser((prev) => ({
-      ...prev,
-      recentTopics: [...new Set([...user.recentTopics, passage])],
-    }));
-
-    await BE.appendRecentTopics(passage);
     navigation.navigate("Quiz From Passage", {
       passage: passage,
       numberQuestions: num_questions,

@@ -9,11 +9,11 @@ import UserContext from "../contexts/user";
 const fetchSuccess = (res) => res;
 
 const fetchReject = (rej) => {
-  console.log("something went wrong while fetching mcq: ", rej);
+  console.log("something went wrong while fetching mcq for passages: ", rej);
   return null;
 };
 const fetchException = (err) => {
-  console.log("something went wrong while fetching mcq: ", err);
+  console.log("something went wrong while fetching mcq for passages: ", err);
   return null;
 };
 
