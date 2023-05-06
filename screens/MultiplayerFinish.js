@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -8,30 +8,29 @@ import {
   Pressable,
 } from "react-native";
 import UserContext from "../contexts/user";
+import { get_results } from "../lib/external";
 
-export default function MultiplayerFinish({ navigation }) {
+export default function MultiplayerFinish({ route }) {
+  const { navigation, gameID } = route.params;
+  const [data, setData] = useState([]);
 
-  const data = [
-    { score: 12, name: "Mason Bulling" },
-    { score: -9, name: "Iram Liu" },
-    { score: 1, name: "Ryan Ho" },
-  ];
-
-  const dataLeft = [
-    { text: "Ryan Ho" },
-    { text: "Mason Bulling" },
-    { text: "Iram Liu" },
-  ];
-
-  const dataRight = [{ text: "5" }, { text: "12" }, { text: "14" }];
+  useEffect(() => {
+    async function fetchData() {
+      const results = await get_results(gameID); // make API call to get results
+      setData(results); // update state with fetched data
+    }
+    fetchData();
+  }, []);
 
   const renderItem = ({ item }) => {
     return (
-      <View style={styles.item}>
-        <Text style={styles.text}>{item.text}</Text>
+      <View>
+        <Text style={styles.item}>{`${item.name}`}</Text>
+        <Text style={styles.item}>{`${item.score}`}</Text>
       </View>
     );
   };
+
 
   const _navigationHandler = (screenName) => {
     navigation.navigate(screenName);
@@ -43,17 +42,13 @@ export default function MultiplayerFinish({ navigation }) {
         <View style={styles.profile}>
           <Text style={styles.name}>Top 5 uhhhhhh</Text>
           <Text style={styles.leaderboard}>Leaderboard</Text>
+          {renderItem(data)}
         </View>
+
 
         <ScrollView style={styles.scroll}>
           <View style={styles.container2}>
-            <View>
-              <FlatList data={dataLeft} renderItem={renderItem} />
-            </View>
             <View style={styles.spacer}>{/* Spacer */}</View>
-            <View>
-              <FlatList data={dataRight} renderItem={renderItem} />
-            </View>
           </View>
         </ScrollView>
 

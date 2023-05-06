@@ -13,6 +13,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import UserContext from "../contexts/user";
 import Registration from "./Registration";
 import CreateQuizPassage from "./CreateQuizPassage";
+import MultiplayerFinish from "./MultiplayerFinish";
 import QuizScreenPassage from "./QuizScreenPassage"
 import CameraScreen from "./Camera"
 const Stack = createStackNavigator();
@@ -34,6 +35,7 @@ export default function Home() {
       <Stack.Screen name="Create Quiz From Passage" component={CreateQuizPassage} />
       <Stack.Screen name="Quiz From Passage" component={QuizScreenPassage} />
       <Stack.Screen name="CameraScreen" component={CameraScreen} />
+      <Stack.Screen name="Finish" component={MultiplayerFinish} />
     </Stack.Navigator>
   );
 }
@@ -60,6 +62,10 @@ function HomeWidgets() {
 
   const handlePressExploreQuizzes = () => {
     navigation.navigate("Explore", { navigation });
+  };
+
+  const handlePressFinishMultiplayer = () => {
+    navigation.navigate("Finish", { navigation: navigation, gameID: 2800 });
   };
 
   const handlePressRecentTopics = () => {
@@ -91,6 +97,7 @@ function HomeWidgets() {
           {/* {renderWidget("Recents", "#4051A6", handlePressRecentTopics, true)} */}
           {renderWidget("Scanner", "#4051A6", handlePressCV, true)}
           {renderWidget("Profile", "#EE5F88", handlePressUserProfile, false)}
+          {renderWidget("Test", "#EE5F88", handlePressFinishMultiplayer, false)}
         </Animated.View>
       </ScrollView>
     </LinearGradient >
