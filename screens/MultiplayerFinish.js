@@ -8,89 +8,85 @@
 //   Pressable,
 // } from "react-native";
 // import Loading from "./Loading";
-// import { get_results, add_player } from "../lib/external";
+// import { get_results } from "../lib/external";
 
 // export default function MultiplayerFinish({ route, navigation }) {
-//   const { gameID, name, score } = route.params;
-//   const [data, setData] = useState([]);
+//   const { gameID } = route.params;
+//   const [data, setData] = useState([['Mason', 1]]);
 //   const [loading, setLoading] = useState(true);
 
 //   useEffect(() => {
 //     async function fetchData() {
-//       const results = await get_results(gameID); // make API call to get results
+//       const results = await get_results(parseInt(gameID)); // make API call to get results
 //       setData(results); // update state with fetched data
-//       console.log(results);
 //       setLoading(false);
-//       await add_player(parseInt(gameID), name, score);
 //     }
 //     fetchData();
 //   }, [loading]);
 
-//   var dataLeft = [];
-//   var dataRight = [];
-
-//   if (loading) {
-//     return <Loading />;
-//   } else {
-//     if (data !== undefined) {
-//       for (let i = 0; i < data.length; i++) {
-//         if (data[i][0] !== undefined) {
-//           dataLeft.push({ key: data[i][0] });
-//         }
-//       }
-//       var dataRight = [];
-//       for (let i = 0; i < data.length; i++) {
-//         if (data[i][1] !== undefined) {
-//           dataRight.push({ key: data[i][1] });
-//         }
-//       }
-//     }
+//   const _onPress = async () => {
+//     const results = await get_results(parseInt(gameID)); // make API call to get results
+//     setData(results); // update state with fetched data
 //   }
 
-//   const renderItem = ({ item }) => {
+//   if (loading) return <Loading />;
+
+//   if (data !== undefined) {
+//     var dataLeft = [];
+//     var dataRight = [];
+//     for (let i = 0; i < data.length; i++) {
+//       dataLeft.push({ key: data[i][0] });
+//     }
+//     for (let i = 0; i < data.length; i++) {
+//       dataRight.push({ key: data[i][1] });
+//     }
+//     const renderItem = ({ item }) => {
+//       return (
+//         <View style={styles.item}>
+//           <Text style={styles.text}>{item.key}</Text>
+//         </View>
+//       );
+//     };
+
+//     const _navigationHandler = (screenName) => {
+//       navigation.navigate(screenName);
+//     };
+
 //     return (
-//       <View style={styles.item}>
-//         <Text style={styles.text}>{item.key}</Text>
+//       <View style={styles.containerStyle}>
+//         <View style={styles.container1}>
+//           <View style={styles.profile}>
+//             <Pressable onPress={() => _onPress()}>
+//               <Text style={styles.name}>Leaderboard</Text>
+//             </Pressable>
+//           </View>
+
+//           <ScrollView style={styles.scroll}>
+//             <View style={styles.container2}>
+//               <View>
+//                 <FlatList data={dataLeft} renderItem={renderItem} />
+//               </View>
+//               <View style={styles.spacer}>{/* Spacer */}</View>
+//               <View>
+//                 <FlatList data={dataRight} renderItem={renderItem} />
+//               </View>
+//             </View>
+//           </ScrollView>
+
+//           <View style={styles.button}>
+//             <Pressable
+//               style={styles.finishBtn}
+//               onPress={() => _navigationHandler("Home")}
+//             >
+//               <Text style={styles.finishBtnText}>Go Home</Text>
+//             </Pressable>
+//           </View>
+//         </View>
 //       </View>
 //     );
-//   };
+//   }
 
-//   const _navigationHandler = (screenName) => {
-//     navigation.navigate(screenName);
-//   };
 
-//   return (
-//     <View style={styles.containerStyle}>
-//       <View style={styles.container1}>
-//         <View style={styles.profile}>
-//           <Pressable onPress={() => setLoading(!loading)}>
-//             <Text style={styles.name}>Leaderboard</Text>
-//           </Pressable>
-//         </View>
-
-//         <ScrollView style={styles.scroll}>
-//           <View style={styles.container2}>
-//             <View>
-//               <FlatList data={dataLeft} renderItem={renderItem} />
-//             </View>
-//             <View style={styles.spacer}>{/* Spacer */}</View>
-//             <View>
-//               <FlatList data={dataRight} renderItem={renderItem} />
-//             </View>
-//           </View>
-//         </ScrollView>
-
-//         <View style={styles.button}>
-//           <Pressable
-//             style={styles.finishBtn}
-//             onPress={() => _navigationHandler("Home")}
-//           >
-//             <Text style={styles.finishBtnText}>Go Home</Text>
-//           </Pressable>
-//         </View>
-//       </View>
-//     </View>
-//   );
 // }
 
 // const styles = StyleSheet.create({
@@ -163,7 +159,6 @@
 //   },
 //   left: {
 //     padding: 10,
-//     alignItems: "left",
 //     fontSize: 30,
 //     color: "white",
 //     fontWeight: "bold",
@@ -183,7 +178,7 @@
 //   text: {
 //     color: "white",
 //     fontWeight: "bold",
-//     fontSize: "22px",
+//     fontSize: 22,
 //   },
 //   spacer: {
 //     padding: 80,
@@ -214,6 +209,7 @@
 //     alignItems: "center",
 //   },
 // });
+
 import React, { useContext, useState, useEffect } from "react";
 import {
   StyleSheet,
@@ -228,7 +224,7 @@ import { get_results } from "../lib/external";
 
 export default function MultiplayerFinish({ route, navigation }) {
   const { gameID } = route.params;
-  const [data, setData] = useState([['Mason', 1]]);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -238,16 +234,24 @@ export default function MultiplayerFinish({ route, navigation }) {
       console.log(results);
     }
     fetchData();
-  }, []);
+  }, [loading]);
 
   const dataLeft = [];
-  for (let i = 0; i < data.length; i++) {
-    dataLeft.push({ key: data[i][0] });
-  }
   const dataRight = [];
-  for (let i = 0; i < data.length; i++) {
-    dataRight.push({ key: data[i][1] });
+
+  if (data !== undefined) {
+
+    for (let i = 0; i < data.length; i++) {
+      dataLeft.push({ key: data[i][0] });
+    }
+
+    for (let i = 0; i < data.length; i++) {
+      dataRight.push({ key: data[i][1] });
+    }
+
+
   }
+
 
   const renderItem = ({ item }) => {
     return (
@@ -256,7 +260,6 @@ export default function MultiplayerFinish({ route, navigation }) {
       </View>
     );
   };
-
   const _navigationHandler = (screenName) => {
     navigation.navigate(screenName);
   };

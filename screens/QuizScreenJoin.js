@@ -90,9 +90,9 @@ const QuizScreenJoin = ({ route, navigation }) => {
   };
 
   if (loading) return <Loading />;
-  if (questions != null && questions.length === 0)
+  if (questions != null && questions.length === 0 && loading === false)
     return (
-      <FinishedScreen numberCorrect={numberCorrect} navigation={navigation} user_name={user_name} gameID={gameID} />
+      <FinishedScreen numberCorrect={numberCorrect} navigation={navigation} user_name={user.name} gameID={gameID} />
     );
   return (
     <View style={styles.quizScreenContainer}>
@@ -117,9 +117,9 @@ const QuizScreenJoin = ({ route, navigation }) => {
 };
 
 const FinishedScreen = ({ numberCorrect, navigation, user_name, gameID }) => {
-  if (gameID > 0) {
-    BE.add_player(parseInt(gameID), user_name, numberCorrect);
-  };
+
+  BE.add_player(parseInt(gameID), user_name, parseInt(numberCorrect));
+
 
   const _navigationHandler = (screenName) => {
     navigation.navigate(screenName);
