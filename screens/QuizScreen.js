@@ -67,6 +67,8 @@ const QuizScreen = ({ route, navigation }) => {
       const res = await retries();
       if (res === null) return;
 
+      setQuestions(res);
+
       if (gameID > 0) {
         const question_multiplayer = await get_questions(parseInt(gameID));
         setQuestions(question_multiplayer);
@@ -74,7 +76,7 @@ const QuizScreen = ({ route, navigation }) => {
         const success = await makeGame(parseInt(gameID), topic, res)
       };
 
-      if (!joining) { setLoading(false); }
+      if (joining === false) { setLoading(false); }
     };
 
     fetchQuestions();
