@@ -3,46 +3,19 @@ import {
   StyleSheet,
   View,
   Text,
-  TextInput,
-  Slider,
-  Button,
   TouchableOpacity,
-  SafeAreaView,
-  Dimensions,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import Loading from "./Loading";
-import QuizScreen from "./QuizScreen";
-import { get_topics } from "../lib/external";
-import { useNavigation } from "@react-navigation/native";
-import NavigationContainer from "@react-navigation/native";
-import * as BE from "../lib/external";
-import UserContext from "../contexts/user";
 import HorizontalNumberPicker from "./HorizontalPicker";
 
 export default function CreateQuiz({ route, navigation }) {
-  const { topic, roomID, name } = route.params;
+  const { passage } = route.params;
   const [num_questions, setNumber] = useState(3);
-  const [difficulty, setDifficulty] = useState("medium");
-
-  const { user, setUser } = useContext(UserContext);
 
   const handlePressTakeQuiz = async () => {
-    setUser((prev) => ({
-      ...prev,
-      recentTopics: [...new Set([...user.recentTopics, topic])],
-    }));
-
-    await BE.appendRecentTopics(topic);
-    navigation.navigate("Quiz", {
-      // topic: `[${difficulty} difficulty] ` + topic,
-      topic: topic,
+    navigation.navigate("Quiz From Passage", {
+      passage: passage,
       numberQuestions: num_questions,
     });
-  };
-
-  const handleDifficultyChange = (value) => {
-    setDifficulty(value);
   };
 
   const handleNumberChange = (value) => {
@@ -60,37 +33,6 @@ export default function CreateQuiz({ route, navigation }) {
         <HorizontalNumberPicker values={numbers} onValueChange={handleNumberChange} />
       </View>
 
-      <View style={[styles.difficultyButtons, styles.shadow]}>
-        <View style={styles.difficultyButtonsRow}>
-          <TouchableOpacity
-            style={[
-              styles.difficultyButton,
-              { backgroundColor: difficulty === "easy" ? "#4051A6" : "#a0a8d3" },
-            ]}
-            onPress={() => handleDifficultyChange("easy")}
-          >
-            <Text style={styles.difficultyButtonText}>Easy</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.difficultyButton,
-              { backgroundColor: difficulty === "medium" ? "#4051A6" : "#a0a8d3" },
-            ]}
-            onPress={() => handleDifficultyChange("medium")}
-          >
-            <Text style={styles.difficultyButtonText}>Medium</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.difficultyButton,
-              { backgroundColor: difficulty === "hard" ? "#4051A6" : "#a0a8d3" },
-            ]}
-            onPress={() => handleDifficultyChange("hard")}
-          >
-            <Text style={styles.difficultyButtonText}>Hard</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
       <View style={styles.outerCircle}>
         <TouchableOpacity style={styles.button} onPress={handlePressTakeQuiz}>
           <Text style={styles.buttonText}>Start Quiz</Text>
@@ -122,7 +64,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   difficultyButtonText: {
-    fontSize: 18,
+    fontSize: 20,
     color: "white",
     padding: 10,
     fontWeight: "bold",
