@@ -16,7 +16,7 @@ import {
 import { Picker } from "@react-native-picker/picker";
 import Loading from "./Loading";
 import QuizScreen from "./QuizScreen";
-import { get_topics, generateGameID } from "../lib/external";
+import { get_topics, generateGameID, get_quiz_info } from "../lib/external";
 import { useNavigation } from "@react-navigation/native";
 import NavigationContainer from "@react-navigation/native";
 import HorizontalPicker from "./HorizontalPicker";
@@ -30,16 +30,26 @@ export default function Multiplayer({ navigation }) {
 
   const data = [{ value: "Create" }, { value: "Join" }];
 
-  const handlePressTakeQuiz = () => {
+  const handlePressTakeQuiz = async () => {
+    if (create == "Join") {
+      var topic_multiplayer = await get_quiz_info(parseInt(roomID));
+      navigation.navigate("Create", {
+        topic: topic_multiplayer.topic,
+        roomID: joinRoomID,
+        name: name,
+        joining: true,
+      });
+    }
     navigation.navigate("Create", {
-      topic: topic == "" ? "Null String Error Handling" : topic,
-      roomID: joinRoomID == 0 ? roomID : joinRoomID,
+      topic: (topic == "" && create == "Create") ? "Null String Error Handling" : topic,
+      roomID: roomID,
       name: name,
+      joining: false,
     });
   };
 
   const handleTextChange = (text) => {
-    setTopic(text);
+    if (create == "Create") { setTopic(text); }
   };
 
   const handleNameChange = (text) => {
