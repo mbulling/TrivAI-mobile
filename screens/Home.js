@@ -3,6 +3,7 @@ import { StyleSheet, View, TouchableOpacity, ScrollView, Animated } from "react-
 import { LinearGradient } from "expo-linear-gradient";
 import Widget from "./Widget";
 import QuizScreen from "./QuizScreen";
+import QuizScreenJoin from "./QuizScreenJoin";
 import CreateQuiz from "./CreateQuiz";
 import Explore from "./Explore";
 import UserProfile from "./UserProfile";
@@ -15,9 +16,9 @@ import Registration from "./Registration";
 import Multiplayer from "./Multiplayer";
 import CreateQuizPassage from "./CreateQuizPassage";
 import MultiplayerFinish from "./MultiplayerFinish";
-import QuizScreenPassage from "./QuizScreenPassage"
-import CameraScreen from "./Camera"
-import ErrorScreen from "./ErrorScreen"
+import QuizScreenPassage from "./QuizScreenPassage";
+import CameraScreen from "./Camera";
+import ErrorScreen from "./ErrorScreen";
 const Stack = createStackNavigator();
 
 export default function Home() {
@@ -31,6 +32,7 @@ export default function Home() {
       <Stack.Screen name="Create" component={CreateQuiz} />
       <Stack.Screen name="Explore" component={Explore} />
       <Stack.Screen name="Quiz" component={QuizScreen} />
+      <Stack.Screen name="QuizJoin" component={QuizScreenJoin} />
       <Stack.Screen name="Profile" component={UserProfile} />
       <Stack.Screen name="Recents" component={RecentTopics} />
       <Stack.Screen name="Enter Topic" component={EnterTopic} />
@@ -39,7 +41,7 @@ export default function Home() {
       <Stack.Screen name="Quiz From Passage" component={QuizScreenPassage} />
       <Stack.Screen name="Textbook Scanner" component={CameraScreen} />
       <Stack.Screen name="Error" component={ErrorScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="CameraScreen" component={CameraScreen} />
+      {/* <Stack.Screen name="CameraScreen" component={CameraScreen} /> */}
       <Stack.Screen name="Finish" component={MultiplayerFinish} />
     </Stack.Navigator>
   );

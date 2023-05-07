@@ -25,27 +25,38 @@ export default function Multiplayer({ navigation }) {
   const [create, setCreate] = useState("Create");
   const [topic, setTopic] = useState("");
   const [name, setName] = useState("");
-  const [roomID, setRoomID] = useState(generateGameID().toString());
+  const origID = generateGameID().toString();
+  const [roomID, setRoomID] = useState(origID);
   const [joinRoomID, setJoinRoomID] = useState(0);
 
   const data = [{ value: "Create" }, { value: "Join" }];
 
   const handlePressTakeQuiz = async () => {
-    if (create == "Join") {
-      var topic_multiplayer = await get_quiz_info(parseInt(roomID));
+    if (create !== "Create" && (parseInt(roomID) !== 0 && roomID !== parseInt(origID))) {
+      const topic_multiplayer = await get_quiz_info(parseInt(roomID));
+
+      // call function in 5 seconds
+      setTimeout(() => {
+        navigation.navigate("QuizJoin", {
+          topic: topic_multiplayer.topic,
+          numberQuestions: topic_multiplayer.numberQuestions,
+          questionList: topic_multiplayer.questions,
+          gameID: parseInt(joinRoomID),
+          name: name,
+          joining: true,
+          navigation: navigation,
+        });
+      }, 1000);
+
+      // const { topic, numberQuestions, gameID, user_name, joining } = route.params;
+    } else {
       navigation.navigate("Create", {
-        topic: topic_multiplayer.topic,
-        roomID: joinRoomID,
+        topic: (topic == "" && create == "Create") ? "Null String Error Handling" : topic,
+        roomID: roomID,
         name: name,
-        joining: true,
+        joining: false,
       });
     }
-    navigation.navigate("Create", {
-      topic: (topic == "" && create == "Create") ? "Null String Error Handling" : topic,
-      roomID: roomID,
-      name: name,
-      joining: false,
-    });
   };
 
   const handleTextChange = (text) => {

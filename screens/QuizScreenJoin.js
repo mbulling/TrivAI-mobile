@@ -5,108 +5,55 @@ import myTrophy from "../assets/myTrophy.png";
 import Loading from "./Loading";
 import * as BE from "../lib/external";
 import UserContext from "../contexts/user";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
-import ErrorScreen from "./ErrorScreen";
 
 const fetchSuccess = (res) => res;
 
 const fetchReject = (rej) => {
   console.log("something went wrong while fetching mcq: ", rej);
-  navigationPage.navigate("Error")
   return null;
 };
 const fetchException = (err) => {
   console.log("something went wrong while fetching mcq: ", err);
-  navigationPage.navigate("Error")
   return null;
 };
 
-const QuizScreen = ({ route, navigation }) => {
-  const { topic, numberQuestions, gameID, user_name, joining } = route.params;
+const QuizScreenJoin = ({ route, navigation }) => {
+  const { topic, numberQuestions, questionList, gameID, user_name, joining } = route.params;
   const [questions, setQuestions] = useState([]);
   const [numberCorrect, setNumberCorrect] = useState(0);
   const [revealAnswer, setRevealAnswer] = useState(false);
   const [loading, setLoading] = useState(true);
   const { user, setUser } = useContext(UserContext);
-  const [going, setGoing] = useState(true);
-  const [jQuestions, setJQuestions] = useState([]);
 
   useEffect(() => {
-    const join_game = async (gameID) => {
-      try {
-        const question_data = await get_quiz_info(parseInt(gameID)).then(fetchSuccess, fetchReject)
-          .catch(fetchException);
-        setQuestions(question_data.questions);
-        // setLoading(false);
-        // return question_data.questions;
-      }
-      catch (err) {
-        console.log("Error creating game: ", err);
-      }
-      // timer to wait 3 seconds then setLoading(false)
-      // setLoading(false);
-      // return true;
-    };
-    const get_questions = async (gameID) => {
-      const question_data = await get_quiz_info(parseInt(gameID)).then(fetchSuccess, fetchReject)
-        .catch(fetchException);
-      setQuestions(question_data.questions);
-      // try {
-      //   const question_data = await get_quiz_info(parseInt(gameID)).then(fetchSuccess, fetchReject)
-      //   .catch(fetchException);
-      //   setQuestions(question_data.questions);
-      //   return question_data.questions;
-      // }
-      // catch (err) {
-      //   console.log("Error creating game: ", err);
-      // }
-      // setLoading(false);
-      return true;
-    };
-    const fetchQuestions = async () => {
-      const makeGame = async (gameID, topic, questions) => {
-        try {
-          const success = await create_game(parseInt(gameID), topic, questions);
-        }
-        catch (err) {
-          console.log("Error creating game: ", err);
-        }
-        return true;
-      };
-      const retries = async (tries = 3) => {
-        if (topic === undefined || numberQuestions === undefined) return null;
-        if (tries <= 0) {
-          console.log("max retries reached, could not fetch mcq");
-          navigationPage.navigate("Error")
-          return null;
-        }
-        const attempt = await get_topic_mcq(
-          topic,
-          Math.max(Math.min(numberQuestions, 10), 1)
-        )
-          .then(fetchSuccess, fetchReject)
-          .catch(fetchException);
-        if (attempt === null) return await retries(tries - 1);
-        return attempt;
-      };
+    // const fetchQuestions = async () => {
+    //   const retries = async (tries = 3) => {
+    //     const { topic, numberQuestions } = route.params;
+    //     if (topic === undefined || numberQuestions === undefined) return null;
+    //     if (tries <= 0) {
+    //       console.log("max retries reached, could not fetch mcq");
+    //       return null;
+    //     }
+    //     const attempt = await get_topic_mcq(
+    //       topic,
+    //       Math.max(Math.min(numberQuestions, 10), 1)
+    //     )
+    //       .then(fetchSuccess, fetchReject)
+    //       .catch(fetchException);
 
-      if (joining === false) {
-        const res = await retries();
-        if (res === null) return;
-
-        if (gameID > 0 && joining === false) {
-          const ifCreate = async (res) => {
-            const success = await makeGame(parseInt(gameID), topic, res);
-          };
-          await ifCreate(res);
-        };
-        setQuestions(res);
-      }
+    //     if (attempt === null) return await retries(tries - 1);
+    //     return attempt;
+    //   };
+    //   const res = await retries();
+    //   if (res === null) return;
+    //   setLoading(false);
+    //   setQuestions(res);
+    // };
+    // fetchQuestions();
+    if (questions !== undefined) {
+      setQuestions(questionList);
       setLoading(false);
-    };
-
-    fetchQuestions();
-
+    }
   }, []);
 
   const _selectionHandler = async (selectionIndex, selectedOption) => {
@@ -143,12 +90,10 @@ const QuizScreen = ({ route, navigation }) => {
   };
 
   if (loading) return <Loading />;
-  if (questions != null && questions.length === 0 && loading === false) {
+  if (questions != null && questions.length === 0 && loading === false)
     return (
-      <FinishedScreen numberCorrect={numberCorrect} navigation={navigation} user_name={user_name} gameID={gameID} />
+      <FinishedScreen numberCorrect={numberCorrect} navigation={navigation} user_name={user.name} gameID={gameID} />
     );
-  }
-
   return (
     <View style={styles.quizScreenContainer}>
       <ScrollView>
@@ -172,9 +117,9 @@ const QuizScreen = ({ route, navigation }) => {
 };
 
 const FinishedScreen = ({ numberCorrect, navigation, user_name, gameID }) => {
-  if (gameID > 0) {
-    BE.add_player(parseInt(gameID), user_name, numberCorrect);
-  };
+
+  BE.add_player(parseInt(gameID), user_name, parseInt(numberCorrect));
+
 
   const _navigationHandler = (screenName) => {
     navigation.navigate(screenName);
@@ -189,11 +134,9 @@ const FinishedScreen = ({ numberCorrect, navigation, user_name, gameID }) => {
       <Image source={myTrophy} style={styles.trophy} />
       <Text style={styles.finishMsg}>You got {numberCorrect} questions correct!</Text>
       <View style={styles.finishBtn}>
-        {gameID > 0 ? (<Pressable onPress={() => MultiplayerFinish()}>
+        <Pressable onPress={() => MultiplayerFinish()}>
           <Text style={styles.finishBtnText}>See Leaderboard</Text>
-        </Pressable>) : (<Pressable onPress={() => _navigationHandler("Enter Topic")}>
-          <Text style={styles.finishBtnText}>Create Another Quiz</Text>
-        </Pressable>)}
+        </Pressable>
       </View>
 
       <Pressable style={styles.finishBtn} onPress={() => _navigationHandler("Home")}>
@@ -383,4 +326,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default QuizScreen;
+export default QuizScreenJoin;
