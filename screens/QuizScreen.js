@@ -6,6 +6,7 @@ import Loading from "./Loading";
 import * as BE from "../lib/external";
 import UserContext from "../contexts/user";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import ErrorScreen from "./ErrorScreen";
 
 const fetchSuccess = (res) => res;
 
@@ -188,6 +189,7 @@ const Question = ({ question, optionHandler, nextHandler, revealAnswer }) => {
 
   return (
     <View>
+      {question != null ? null : <ErrorScreen />}
       <Header lead={question != null ? question.question : null} />
       <View style={styles.listOptions}>
         {question.options.map((opt, index) => {
