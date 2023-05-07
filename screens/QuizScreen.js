@@ -155,14 +155,20 @@ const FinishedScreen = ({ numberCorrect, navigation, user_name, gameID }) => {
     navigation.navigate(screenName);
   };
 
+  const MultiplayerFinish = () => {
+    navigation.navigate("Finish", { gameID: gameID });
+  }
+
   return (
     <View style={styles.endScreenContainer}>
       <Image source={myTrophy} style={styles.trophy} />
       <Text style={styles.finishMsg}>You got {numberCorrect} questions correct!</Text>
       <View style={styles.finishBtn}>
-        <Pressable onPress={() => _navigationHandler("Enter Topic")}>
+        {gameID > 0 ? (<Pressable onPress={() => MultiplayerFinish()}>
+          <Text style={styles.finishBtnText}>See Leaderboard</Text>
+        </Pressable>) : (<Pressable onPress={() => _navigationHandler("Enter Topic")}>
           <Text style={styles.finishBtnText}>Create Another Quiz</Text>
-        </Pressable>
+        </Pressable>)}
       </View>
 
       <Pressable style={styles.finishBtn} onPress={() => _navigationHandler("Home")}>

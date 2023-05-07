@@ -10,14 +10,15 @@ import {
 
 import { get_results } from "../lib/external";
 
-export default function MultiplayerFinish({ route }) {
-  const { navigation, gameID } = route.params;
+export default function MultiplayerFinish({ route, navigation }) {
+  const { gameID } = route.params;
   const [data, setData] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       const results = await get_results(gameID); // make API call to get results
       setData(results); // update state with fetched data
+      console.log(results);
     }
     fetchData();
   }, []);
@@ -47,8 +48,7 @@ export default function MultiplayerFinish({ route }) {
     <View style={styles.containerStyle}>
       <View style={styles.container1}>
         <View style={styles.profile}>
-          <Text style={styles.name}>Top 5 uhhhhhh</Text>
-          <Text style={styles.leaderboard}>Leaderboard</Text>
+          <Text style={styles.name}>Leaderboard</Text>
         </View>
 
         <ScrollView style={styles.scroll}>
@@ -88,7 +88,8 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   name: {
-    fontSize: 30,
+    fontSize: 35,
+    paddingBottom: 15,
     marginLeft: 10,
     color: "white",
     fontFamily: "Inter-Bold",
