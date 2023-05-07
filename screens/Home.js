@@ -17,6 +17,7 @@ import CreateQuizPassage from "./CreateQuizPassage";
 import MultiplayerFinish from "./MultiplayerFinish";
 import QuizScreenPassage from "./QuizScreenPassage"
 import CameraScreen from "./Camera"
+import ErrorScreen from "./ErrorScreen"
 const Stack = createStackNavigator();
 
 export default function Home() {
@@ -36,6 +37,8 @@ export default function Home() {
       <Stack.Screen name="Multiplayer" component={Multiplayer} />
       <Stack.Screen name="Create Quiz From Passage" component={CreateQuizPassage} />
       <Stack.Screen name="Quiz From Passage" component={QuizScreenPassage} />
+      <Stack.Screen name="Textbook Scanner" component={CameraScreen} />
+      <Stack.Screen name="Error" component={ErrorScreen} options={{ headerShown: false }} />
       <Stack.Screen name="CameraScreen" component={CameraScreen} />
       <Stack.Screen name="Finish" component={MultiplayerFinish} />
     </Stack.Navigator>
@@ -79,7 +82,7 @@ function HomeWidgets() {
   };
 
   const handlePressCV = () => {
-    navigation.navigate("CameraScreen");
+    navigation.navigate("Textbook Scanner");
   }
   const renderWidget = (name, color, onPress, left) => {
     return (

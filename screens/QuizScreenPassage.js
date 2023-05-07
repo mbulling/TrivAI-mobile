@@ -5,15 +5,19 @@ import myTrophy from "../assets/myTrophy.png";
 import Loading from "./Loading";
 import * as BE from "../lib/external";
 import UserContext from "../contexts/user";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
+
 
 const fetchSuccess = (res) => res;
 
 const fetchReject = (rej) => {
   console.log("something went wrong while fetching mcq for passages: ", rej);
+  navigationPage.navigate("Error")
   return null;
 };
 const fetchException = (err) => {
   console.log("something went wrong while fetching mcq for passages: ", err);
+  navigationPage.navigate("Error")
   return null;
 };
 
@@ -23,7 +27,7 @@ const QuizScreen = ({ route, navigation }) => {
   const [revealAnswer, setRevealAnswer] = useState(false);
   const [loading, setLoading] = useState(true);
   const { user, setUser } = useContext(UserContext);
-
+  const navigationPage = useNavigation();
   useEffect(() => {
     const fetchQuestions = async () => {
       const retries = async (tries = 3) => {
@@ -31,6 +35,7 @@ const QuizScreen = ({ route, navigation }) => {
         if (passage === undefined || numberQuestions === undefined) return null;
         if (tries <= 0) {
           console.log("max retries reached, could not fetch mcq");
+          navigationPage.navigate("Error")
           return null;
         }
         const attempt = await get_passage_mcq(

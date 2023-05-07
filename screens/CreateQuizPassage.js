@@ -10,7 +10,7 @@ import HorizontalNumberPicker from "./HorizontalPicker";
 export default function CreateQuiz({ route, navigation }) {
   const { passage } = route.params;
   const [num_questions, setNumber] = useState(3);
-
+  console.log(passage);
   const handlePressTakeQuiz = async () => {
     navigation.navigate("Quiz From Passage", {
       passage: passage,

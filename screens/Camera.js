@@ -52,6 +52,7 @@ export default function CameraScreen() {
       return result
     }
     catch (error) {
+      navigation.navigate("Error");
       console.log(error)
     }
   }
@@ -76,9 +77,16 @@ export default function CameraScreen() {
 
 
   const __savePhoto = async () => {
-    const passage = await processImage(uriLink)
-    console.log(passage)
-    navigation.navigate("Create Quiz From Passage", { passage: passage })
+    try {
+      const passage = await processImage(uriLink)
+      if (passage === "") {
+        throw new Error("Issue with parsing text")
+      }
+      navigation.navigate("Create Quiz From Passage", { passage: passage })
+    } catch (err) {
+      console.log(err)
+      navigation.navigate("Error")
+    }
   }
 
   const __retakePicture = () => {

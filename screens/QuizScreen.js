@@ -5,15 +5,19 @@ import myTrophy from "../assets/myTrophy.png";
 import Loading from "./Loading";
 import * as BE from "../lib/external";
 import UserContext from "../contexts/user";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import ErrorScreen from "./ErrorScreen";
 
 const fetchSuccess = (res) => res;
 
 const fetchReject = (rej) => {
   console.log("something went wrong while fetching mcq: ", rej);
+  navigationPage.navigate("Error")
   return null;
 };
 const fetchException = (err) => {
   console.log("something went wrong while fetching mcq: ", err);
+  navigationPage.navigate("Error")
   return null;
 };
 
@@ -24,7 +28,6 @@ const QuizScreen = ({ route, navigation }) => {
   const [revealAnswer, setRevealAnswer] = useState(false);
   const [loading, setLoading] = useState(true);
   const { user, setUser } = useContext(UserContext);
-
 
   useEffect(() => {
     const get_questions = async (gameID) => {
@@ -53,6 +56,7 @@ const QuizScreen = ({ route, navigation }) => {
         if (topic === undefined || numberQuestions === undefined) return null;
         if (tries <= 0) {
           console.log("max retries reached, could not fetch mcq");
+          navigationPage.navigate("Error")
           return null;
         }
         const attempt = await get_topic_mcq(
@@ -185,6 +189,7 @@ const Question = ({ question, optionHandler, nextHandler, revealAnswer }) => {
 
   return (
     <View>
+      {question != null ? null : <ErrorScreen />}
       <Header lead={question != null ? question.question : null} />
       <View style={styles.listOptions}>
         {question.options.map((opt, index) => {
