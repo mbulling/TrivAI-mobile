@@ -26,13 +26,14 @@ export default function Multiplayer({ navigation }) {
   const [topic, setTopic] = useState("");
   const [name, setName] = useState("");
   const [roomID, setRoomID] = useState(generateGameID().toString());
+  const [joinRoomID, setJoinRoomID] = useState(0);
 
   const data = [{ value: "Create" }, { value: "Join" }];
 
   const handlePressTakeQuiz = () => {
     navigation.navigate("Create", {
       topic: topic == "" ? "Null String Error Handling" : topic,
-      roomID: roomID,
+      roomID: joinRoomID == 0 ? roomID : joinRoomID,
       name: name,
     });
   };
@@ -43,6 +44,10 @@ export default function Multiplayer({ navigation }) {
 
   const handleNameChange = (text) => {
     setName(text);
+  };
+
+  const handleCodeChange = (text) => {
+    setRoomID(text);
   };
 
 
@@ -76,12 +81,18 @@ export default function Multiplayer({ navigation }) {
               inputMode={"numeric"}
               maxLength={4}
               placeholder="0000"
+              onChangeText={handleCodeChange}
+              value={joinRoomID}
             />
           </View>
 
           <View style={styles.room}>
             <Text style={styles.topic}>Enter Name:</Text>
-            <TextInput style={styles.textInput} />
+            <TextInput
+              style={styles.textInput}
+              onChangeText={handleNameChange}
+              value={name}
+            />
           </View>
         </View>
 
@@ -128,7 +139,6 @@ export default function Multiplayer({ navigation }) {
   return (
     <View style={styles.container}>
       {radioButton(data, setCreate)}
-
       {create === "Join" ? joinScreen() : createScreen()}
     </View>
   );

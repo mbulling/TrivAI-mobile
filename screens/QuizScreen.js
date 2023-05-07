@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { get_topic_mcq } from "../lib/external";
+import { get_topic_mcq, create_game } from "../lib/external";
 import { View, Text, Pressable, StyleSheet, Image, Button, ScrollView } from "react-native";
 import myTrophy from "../assets/myTrophy.png";
 import Loading from "./Loading";
@@ -25,8 +25,18 @@ const QuizScreen = ({ route, navigation }) => {
   const [loading, setLoading] = useState(true);
   const { user, setUser } = useContext(UserContext);
 
+
   useEffect(() => {
     const fetchQuestions = async () => {
+      const makeGame = async (gameID, topic, questions) => {
+        try {
+          const success = await create_game(gameID, topic, questions);
+        }
+        catch (err) {
+          console.log("Error creating game: ", err);
+        }
+        return true;
+      };
       const retries = async (tries = 3) => {
         if (topic === undefined || numberQuestions === undefined) return null;
         if (tries <= 0) {
@@ -44,8 +54,12 @@ const QuizScreen = ({ route, navigation }) => {
       };
       const res = await retries();
       if (res === null) return;
-      setLoading(false);
+
       setQuestions(res);
+      if (gameID > 0) {
+        const success = await makeGame(gameID, topic, res)
+      };
+      setLoading(false);
     };
     fetchQuestions();
   }, []);
