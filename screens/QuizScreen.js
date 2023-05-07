@@ -33,8 +33,9 @@ const QuizScreen = ({ route, navigation }) => {
     const get_questions = async (gameID) => {
       try {
         const question_data = await get_quiz_info(parseInt(gameID));
+        console.log(question_data);
         setQuestions(question_data.questions);
-        return question_data.questions;
+        // return question_data.questions;
       }
       catch (err) {
         console.log("Error creating game: ", err);
@@ -76,17 +77,19 @@ const QuizScreen = ({ route, navigation }) => {
       if (gameID > 0) {
         const question_multiplayer = await get_questions(parseInt(gameID));
         setQuestions(question_multiplayer);
-
-        const success = await makeGame(parseInt(gameID), topic, res)
       };
 
-      if (joining === false) { setLoading(false); }
+      if (joining === false) {
+        const success = await makeGame(parseInt(gameID), topic, questions);
+        setLoading(false);
+      }
     };
 
     fetchQuestions();
 
     if (joining) {
       const question_multiplayer = get_questions(gameID);
+      console.log(question_multiplayer);
       setQuestions(question_multiplayer);
     }
 
@@ -191,24 +194,25 @@ const Question = ({ question, optionHandler, nextHandler, revealAnswer }) => {
     <View>
       {question != null ? null : <ErrorScreen />}
       <Header lead={question != null ? question.question : null} />
-      <View style={styles.listOptions}>
-        {question.options.map((opt, index) => {
-          return (
-            <Pressable
-              key={opt}
-              onPress={() => optionHandler(index, setSelectedOption)}
-              style={styles.options}
-            >
-              <Option
-                text={opt}
-                revealAnswer={revealAnswer}
-                isCorrectAnswer={index === question.answer_id}
-                isSelected={index === selectedOption}
-              />
-            </Pressable>
-          );
-        })}
-      </View>
+      {question != null && question.options != null ? (
+        <View style={styles.listOptions}>
+          {question.options.map((opt, index) => {
+            return (
+              <Pressable
+                key={opt}
+                onPress={() => optionHandler(index, setSelectedOption)}
+                style={styles.options}
+              >
+                <Option
+                  text={opt}
+                  revealAnswer={revealAnswer}
+                  isCorrectAnswer={index === question.answer_id}
+                  isSelected={index === selectedOption}
+                />
+              </Pressable>
+            );
+          })}
+        </View>) : <ErrorScreen />}
     </View>
   );
 };

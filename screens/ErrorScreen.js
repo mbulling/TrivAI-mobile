@@ -85,13 +85,15 @@ const styles = StyleSheet.create({
     height: "12.5%",
   },
   imageRow: {
-    marginTop: "-20%",
+    //marginTop: "-20%",
     height: "60%",
   },
   image: {
     flex: 1,
-    aspectRatio: 1.5,
-    resizeMode: 'contain'
+    aspectRatio: 1.0,
+    resizeMode: "contain",
+    width: "50%",
+    height: "50%",
 
   },
   container: {
@@ -99,6 +101,7 @@ const styles = StyleSheet.create({
     paddingRight: "7%",
     paddingTop: "10%",
     flex: 1,
+    height: "100%",
     backgroundColor: "#4051A6",
     alignItems: 'center',
   }
