@@ -31,8 +31,9 @@ export default function Multiplayer({ navigation }) {
   const data = [{ value: "Create" }, { value: "Join" }];
 
   const handlePressTakeQuiz = async () => {
-    if (create == "Join") {
+    if (create === "Join" || create !== "Create") {
       var topic_multiplayer = await get_quiz_info(parseInt(roomID));
+      console.log(topic_multiplayer);
       navigation.navigate("Create", {
         topic: topic_multiplayer.topic,
         roomID: joinRoomID,

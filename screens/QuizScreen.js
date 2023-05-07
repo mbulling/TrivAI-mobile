@@ -70,27 +70,33 @@ const QuizScreen = ({ route, navigation }) => {
       };
       const res = await retries();
       if (res === null) return;
-
+      console.log(res);
       setQuestions(res);
 
-      if (gameID > 0) {
+      const ifCreate = async () => {
         const question_multiplayer = await get_questions(parseInt(gameID));
         setQuestions(question_multiplayer);
 
-        const success = await makeGame(parseInt(gameID), topic, res)
+        const success = await makeGame(parseInt(gameID), topic, question_multiplayer);
+      }
+
+      if (gameID > 0 && joining === false) {
+        await ifCreate();
       };
 
       if (joining === false) { setLoading(false); }
     };
 
-    fetchQuestions();
-
-    if (joining) {
-      const question_multiplayer = get_questions(gameID);
+    if (joining === true && gameID > 0) {
+      const question_multiplayer = get_questions(gameID.then(fetchSuccess, fetchReject));
+      console.log(question_multiplayer);
       setQuestions(question_multiplayer);
+      setLoading(false);
+    } else {
+      fetchQuestions();
     }
 
-  }, [loading]);
+  }, []);
 
   const _selectionHandler = async (selectionIndex, selectedOption) => {
     if (revealAnswer) { // Prevent user from answering twice
