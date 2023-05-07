@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -7,28 +7,34 @@ import {
   FlatList,
   Pressable,
 } from "react-native";
-import UserContext from "../contexts/user";
 
-export default function MultiplayerFinish({ navigation }) {
+import { get_results } from "../lib/external";
 
-  const data = [
-    { score: 12, name: "Mason Bulling" },
-    { score: -9, name: "Iram Liu" },
-    { score: 1, name: "Ryan Ho" },
-  ];
+export default function MultiplayerFinish({ route }) {
+  const { navigation, gameID } = route.params;
+  const [data, setData] = useState([]);
 
-  const dataLeft = [
-    { text: "Ryan Ho" },
-    { text: "Mason Bulling" },
-    { text: "Iram Liu" },
-  ];
+  useEffect(() => {
+    async function fetchData() {
+      const results = await get_results(gameID); // make API call to get results
+      setData(results); // update state with fetched data
+    }
+    fetchData();
+  }, []);
 
-  const dataRight = [{ text: "5" }, { text: "12" }, { text: "14" }];
+  const dataLeft = [];
+  for (let i = 0; i < data.length; i++) {
+    dataLeft.push({ key: data[i][0] });
+  }
+  const dataRight = [];
+  for (let i = 0; i < data.length; i++) {
+    dataRight.push({ key: data[i][1] });
+  }
 
   const renderItem = ({ item }) => {
     return (
       <View style={styles.item}>
-        <Text style={styles.text}>{item.text}</Text>
+        <Text style={styles.text}>{item.key}</Text>
       </View>
     );
   };
@@ -134,7 +140,6 @@ const styles = StyleSheet.create({
     alignItems: "right",
     fontSize: 30,
     color: "white",
-    // fontFamily: "Inter-Bold",
     fontWeight: "bold",
     flex: 1,
   },
@@ -143,7 +148,6 @@ const styles = StyleSheet.create({
     alignItems: "left",
     fontSize: 30,
     color: "white",
-    // fontFamily: "Inter-Bold",
     fontWeight: "bold",
   },
   item: {
