@@ -12,6 +12,7 @@ import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import UserContext from "../contexts/user";
 import Registration from "./Registration";
+import Multiplayer from "./Multiplayer";
 import CreateQuizPassage from "./CreateQuizPassage";
 import QuizScreenPassage from "./QuizScreenPassage"
 import CameraScreen from "./Camera"
@@ -31,6 +32,7 @@ export default function Home() {
       <Stack.Screen name="Profile" component={UserProfile} />
       <Stack.Screen name="Recents" component={RecentTopics} />
       <Stack.Screen name="Enter Topic" component={EnterTopic} />
+      <Stack.Screen name="Multiplayer" component={Multiplayer} />
       <Stack.Screen name="Create Quiz From Passage" component={CreateQuizPassage} />
       <Stack.Screen name="Quiz From Passage" component={QuizScreenPassage} />
       <Stack.Screen name="CameraScreen" component={CameraScreen} />
@@ -56,6 +58,10 @@ function HomeWidgets() {
 
   const handlePressUserProfile = () => {
     navigation.navigate("Profile");
+  };
+
+  const handlePressMultiplayer = () => {
+    navigation.navigate("Multiplayer", { navigation });
   };
 
   const handlePressExploreQuizzes = () => {
@@ -89,8 +95,9 @@ function HomeWidgets() {
           {renderWidget("Create", "#4051A6", handlePressCreateQuiz, true)}
           {renderWidget("Explore", "#EE5F88", handlePressExploreQuizzes, false)}
           {/* {renderWidget("Recents", "#4051A6", handlePressRecentTopics, true)} */}
-          {renderWidget("Scanner", "#4051A6", handlePressCV, true)}
-          {renderWidget("Profile", "#EE5F88", handlePressUserProfile, false)}
+          {renderWidget("Multiplayer", "#4051A6", handlePressMultiplayer, true)}
+          {renderWidget("Scanner", "#EE5F88", handlePressCV, false)}
+          {renderWidget("Profile", "#4051A6", handlePressUserProfile, true)}
         </Animated.View>
       </ScrollView>
     </LinearGradient >
