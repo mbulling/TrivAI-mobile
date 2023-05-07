@@ -18,6 +18,7 @@ const fetchException = (err) => {
 };
 
 const QuizScreen = ({ route, navigation }) => {
+  const { topic, numberQuestions, gameID, user_name } = route.params;
   const [questions, setQuestions] = useState([]);
   const [numberCorrect, setNumberCorrect] = useState(0);
   const [revealAnswer, setRevealAnswer] = useState(false);
@@ -27,7 +28,6 @@ const QuizScreen = ({ route, navigation }) => {
   useEffect(() => {
     const fetchQuestions = async () => {
       const retries = async (tries = 3) => {
-        const { topic, numberQuestions } = route.params;
         if (topic === undefined || numberQuestions === undefined) return null;
         if (tries <= 0) {
           console.log("max retries reached, could not fetch mcq");
@@ -86,7 +86,7 @@ const QuizScreen = ({ route, navigation }) => {
   if (loading) return <Loading />;
   if (questions != null && questions.length === 0)
     return (
-      <FinishedScreen numberCorrect={numberCorrect} navigation={navigation} />
+      <FinishedScreen numberCorrect={numberCorrect} navigation={navigation} user_name={user_name} gameID={gameID} />
     );
   return (
     <View style={styles.quizScreenContainer}>
@@ -110,7 +110,11 @@ const QuizScreen = ({ route, navigation }) => {
   );
 };
 
-const FinishedScreen = ({ numberCorrect, navigation }) => {
+const FinishedScreen = ({ numberCorrect, navigation, user_name, gameID }) => {
+  if (gameID > 0) {
+    BE.add_player(gameID, user_name, numberCorrect);
+  };
+
   const _navigationHandler = (screenName) => {
     navigation.navigate(screenName);
   };

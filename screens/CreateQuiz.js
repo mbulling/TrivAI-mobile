@@ -38,6 +38,8 @@ export default function CreateQuiz({ route, navigation }) {
       // topic: `[${difficulty} difficulty] ` + topic,
       topic: topic,
       numberQuestions: num_questions,
+      gameID: roomID,
+      user_name: name,
     });
   };
 
