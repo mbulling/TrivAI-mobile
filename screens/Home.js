@@ -96,9 +96,8 @@ function HomeWidgets() {
           {renderWidget("Explore", "#EE5F88", handlePressExploreQuizzes, false)}
           {/* {renderWidget("Recents", "#4051A6", handlePressRecentTopics, true)} */}
           {renderWidget("Multiplayer", "#4051A6", handlePressMultiplayer, true)}
+          {renderWidget("Scanner", "#EE5F88", handlePressCV, false)}
           {renderWidget("Profile", "#4051A6", handlePressUserProfile, true)}
-          {renderWidget("Scanner", "#4051A6", handlePressCV, true)}
-          {renderWidget("Profile", "#EE5F88", handlePressUserProfile, false)}
         </Animated.View>
       </ScrollView>
     </LinearGradient >
