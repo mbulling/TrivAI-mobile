@@ -7,7 +7,6 @@ import {
   FlatList,
   Pressable,
 } from "react-native";
-import UserContext from "../contexts/user";
 import { get_results } from "../lib/external";
 
 export default function MultiplayerFinish({ route }) {
@@ -22,15 +21,22 @@ export default function MultiplayerFinish({ route }) {
     fetchData();
   }, []);
 
+  const dataLeft = [];
+  for (let i = 0; i < data.length; i++) {
+    dataLeft.push({ key: data[i][0] });
+  }
+  const dataRight = [];
+  for (let i = 0; i < data.length; i++) {
+    dataRight.push({ key: data[i][1] });
+  }
+
   const renderItem = ({ item }) => {
     return (
-      <View>
-        <Text style={styles.item}>{`${item.name}`}</Text>
-        <Text style={styles.item}>{`${item.score}`}</Text>
+      <View style={styles.item}>
+        <Text style={styles.text}>{item.key}</Text>
       </View>
     );
   };
-
 
   const _navigationHandler = (screenName) => {
     navigation.navigate(screenName);
@@ -42,13 +48,17 @@ export default function MultiplayerFinish({ route }) {
         <View style={styles.profile}>
           <Text style={styles.name}>Top 5 uhhhhhh</Text>
           <Text style={styles.leaderboard}>Leaderboard</Text>
-          {renderItem(data)}
         </View>
-
 
         <ScrollView style={styles.scroll}>
           <View style={styles.container2}>
+            <View>
+              <FlatList data={dataLeft} renderItem={renderItem} />
+            </View>
             <View style={styles.spacer}>{/* Spacer */}</View>
+            <View>
+              <FlatList data={dataRight} renderItem={renderItem} />
+            </View>
           </View>
         </ScrollView>
 
@@ -129,7 +139,6 @@ const styles = StyleSheet.create({
     alignItems: "right",
     fontSize: 30,
     color: "white",
-    // fontFamily: "Inter-Bold",
     fontWeight: "bold",
     flex: 1,
   },
@@ -138,7 +147,6 @@ const styles = StyleSheet.create({
     alignItems: "left",
     fontSize: 30,
     color: "white",
-    // fontFamily: "Inter-Bold",
     fontWeight: "bold",
   },
   item: {
