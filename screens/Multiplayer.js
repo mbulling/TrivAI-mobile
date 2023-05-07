@@ -32,6 +32,8 @@ export default function Multiplayer({ navigation }) {
   const handlePressTakeQuiz = () => {
     navigation.navigate("Create", {
       topic: topic == "" ? "Null String Error Handling" : topic,
+      roomID: roomID,
+      name: name,
     });
   };
 
@@ -42,6 +44,7 @@ export default function Multiplayer({ navigation }) {
   const handleNameChange = (text) => {
     setName(text);
   };
+
 
   const radioButton = (data, onSelect) => {
     return (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { get_topic_mcq } from "../lib/external";
+import { get_passage_mcq } from "../lib/external";
 import { View, Text, Pressable, StyleSheet, Image, Button, ScrollView } from "react-native";
 import myTrophy from "../assets/myTrophy.png";
 import Loading from "./Loading";
@@ -9,11 +9,11 @@ import UserContext from "../contexts/user";
 const fetchSuccess = (res) => res;
 
 const fetchReject = (rej) => {
-  console.log("something went wrong while fetching mcq: ", rej);
+  console.log("something went wrong while fetching mcq for passages: ", rej);
   return null;
 };
 const fetchException = (err) => {
-  console.log("something went wrong while fetching mcq: ", err);
+  console.log("something went wrong while fetching mcq for passages: ", err);
   return null;
 };
 
@@ -27,18 +27,19 @@ const QuizScreen = ({ route, navigation }) => {
   useEffect(() => {
     const fetchQuestions = async () => {
       const retries = async (tries = 3) => {
-        const { topic, numberQuestions } = route.params;
-        if (topic === undefined || numberQuestions === undefined) return null;
+        const { passage, numberQuestions } = route.params;
+        if (passage === undefined || numberQuestions === undefined) return null;
         if (tries <= 0) {
           console.log("max retries reached, could not fetch mcq");
           return null;
         }
-        const attempt = await get_topic_mcq(
-          topic,
+        const attempt = await get_passage_mcq(
+          passage,
           Math.max(Math.min(numberQuestions, 10), 1)
         )
           .then(fetchSuccess, fetchReject)
           .catch(fetchException);
+
         if (attempt === null) return await retries(tries - 1);
         return attempt;
       };
@@ -120,8 +121,8 @@ const FinishedScreen = ({ numberCorrect, navigation }) => {
       <Image source={myTrophy} style={styles.trophy} />
       <Text style={styles.finishMsg}>You got {numberCorrect} questions correct!</Text>
       <View style={styles.finishBtn}>
-        <Pressable onPress={() => _navigationHandler("Enter Topic")}>
-          <Text style={styles.finishBtnText}>Create Another Quiz</Text>
+        <Pressable onPress={() => _navigationHandler("Explore")}>
+          <Text style={styles.finishBtnText}>Explore Other</Text>
         </Pressable>
       </View>
 

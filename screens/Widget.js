@@ -33,6 +33,8 @@ export default function Widget({ name, color, left }) {
         return myCamera;
       case 'Profile':
         return UserPfp;
+      case 'Scanner':
+        return myCamera;
     }
   }
 
@@ -40,12 +42,12 @@ export default function Widget({ name, color, left }) {
     containerLeft: {
       backgroundColor: color,
       padding: 10,
-      marginVertical: 5,
+      marginVertical: 0,
       borderBottomRightRadius: 100,
       borderTopRightRadius: 100,
       elevation: 5,
       width: '100%',
-      height: 150,
+      height: 120,
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'row',
@@ -53,12 +55,12 @@ export default function Widget({ name, color, left }) {
     containerRight: {
       backgroundColor: color,
       padding: 10,
-      marginVertical: 5,
+      marginVertical: 0,
       borderBottomLeftRadius: 100,
       borderTopLeftRadius: 100,
       elevation: 5,
       width: '100%',
-      height: 150,
+      height: 120,
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'row',
