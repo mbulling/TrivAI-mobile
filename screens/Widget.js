@@ -6,6 +6,7 @@ import myQuiz from '../assets/myQuiz.png';
 import myTrophy from '../assets/myTrophy.png';
 import newQuiz from '../assets/newQuiz.png';
 import UserPfp from '../assets/UserPfp.png';
+import myMultiplayer from '../assets/multiplayer.png';
 
 export default function Widget({ name, color, left }) {
   const position = useRef(new Animated.Value(left ? -200 : 200)).current;
@@ -35,6 +36,8 @@ export default function Widget({ name, color, left }) {
         return UserPfp;
       case 'Scanner':
         return myCamera;
+      case 'Multiplayer':
+        return myMultiplayer;
     }
   }
 

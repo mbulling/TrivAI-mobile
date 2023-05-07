@@ -101,8 +101,8 @@ function HomeWidgets() {
           {renderWidget("Create", "#4051A6", handlePressCreateQuiz, true)}
           {renderWidget("Explore", "#EE5F88", handlePressExploreQuizzes, false)}
           {/* {renderWidget("Recents", "#4051A6", handlePressRecentTopics, true)} */}
-          {renderWidget("Multiplayer", "#4051A6", handlePressMultiplayer, true)}
-          {renderWidget("Scanner", "#EE5F88", handlePressCV, false)}
+          {renderWidget("Scanner", "#4051A6", handlePressCV, true)}
+          {renderWidget("Multiplayer", "#EE5F88", handlePressMultiplayer, false)}
           {renderWidget("Profile", "#4051A6", handlePressUserProfile, true)}
         </Animated.View>
       </ScrollView>
@@ -121,8 +121,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexWrap: "wrap",
-    paddingTop: '6.5%',
-    paddingBottom: '6.5%',
+    paddingTop: '5.5%',
+    paddingBottom: '5.5%',
   },
   scroll: {
     width: "100%",
