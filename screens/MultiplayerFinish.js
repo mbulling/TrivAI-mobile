@@ -13,6 +13,7 @@ import { get_results } from "../lib/external";
 export default function MultiplayerFinish({ route, navigation }) {
   const { gameID } = route.params;
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -21,7 +22,7 @@ export default function MultiplayerFinish({ route, navigation }) {
       console.log(results);
     }
     fetchData();
-  }, []);
+  }, [loading]);
 
   const dataLeft = [];
   for (let i = 0; i < data.length; i++) {
@@ -48,7 +49,9 @@ export default function MultiplayerFinish({ route, navigation }) {
     <View style={styles.containerStyle}>
       <View style={styles.container1}>
         <View style={styles.profile}>
-          <Text style={styles.name}>Leaderboard</Text>
+          <Pressable onPress={() => setLoading(!loading)}>
+            <Text style={styles.name}>Leaderboard</Text>
+          </Pressable>
         </View>
 
         <ScrollView style={styles.scroll}>
