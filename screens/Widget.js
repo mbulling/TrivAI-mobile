@@ -6,6 +6,7 @@ import myQuiz from '../assets/myQuiz.png';
 import myTrophy from '../assets/myTrophy.png';
 import newQuiz from '../assets/newQuiz.png';
 import UserPfp from '../assets/UserPfp.png';
+import myMultiplayer from '../assets/multiplayer.png';
 
 export default function Widget({ name, color, left }) {
   const position = useRef(new Animated.Value(left ? -200 : 200)).current;
@@ -35,6 +36,8 @@ export default function Widget({ name, color, left }) {
         return UserPfp;
       case 'Scanner':
         return myCamera;
+      case 'Multiplayer':
+        return myMultiplayer;
     }
   }
 
@@ -42,12 +45,12 @@ export default function Widget({ name, color, left }) {
     containerLeft: {
       backgroundColor: color,
       padding: 10,
-      marginVertical: 5,
+      marginVertical: 0,
       borderBottomRightRadius: 100,
       borderTopRightRadius: 100,
       elevation: 5,
       width: '100%',
-      height: 150,
+      height: 120,
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'row',
@@ -55,12 +58,12 @@ export default function Widget({ name, color, left }) {
     containerRight: {
       backgroundColor: color,
       padding: 10,
-      marginVertical: 5,
+      marginVertical: 0,
       borderBottomLeftRadius: 100,
       borderTopLeftRadius: 100,
       elevation: 5,
       width: '100%',
-      height: 150,
+      height: 120,
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'row',

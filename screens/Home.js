@@ -12,7 +12,9 @@ import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import UserContext from "../contexts/user";
 import Registration from "./Registration";
+import Multiplayer from "./Multiplayer";
 import CreateQuizPassage from "./CreateQuizPassage";
+import MultiplayerFinish from "./MultiplayerFinish";
 import QuizScreenPassage from "./QuizScreenPassage"
 import CameraScreen from "./Camera"
 import ErrorScreen from "./ErrorScreen"
@@ -32,10 +34,13 @@ export default function Home() {
       <Stack.Screen name="Profile" component={UserProfile} />
       <Stack.Screen name="Recents" component={RecentTopics} />
       <Stack.Screen name="Enter Topic" component={EnterTopic} />
+      <Stack.Screen name="Multiplayer" component={Multiplayer} />
       <Stack.Screen name="Create Quiz From Passage" component={CreateQuizPassage} />
       <Stack.Screen name="Quiz From Passage" component={QuizScreenPassage} />
       <Stack.Screen name="Textbook Scanner" component={CameraScreen} />
       <Stack.Screen name="Error" component={ErrorScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="CameraScreen" component={CameraScreen} />
+      <Stack.Screen name="Finish" component={MultiplayerFinish} />
     </Stack.Navigator>
   );
 }
@@ -60,8 +65,16 @@ function HomeWidgets() {
     navigation.navigate("Profile");
   };
 
+  const handlePressMultiplayer = () => {
+    navigation.navigate("Multiplayer", { navigation });
+  };
+
   const handlePressExploreQuizzes = () => {
     navigation.navigate("Explore", { navigation });
+  };
+
+  const handlePressFinishMultiplayer = () => {
+    navigation.navigate("Finish", { navigation: navigation, gameID: 2800 });
   };
 
   const handlePressRecentTopics = () => {
@@ -91,8 +104,9 @@ function HomeWidgets() {
           {renderWidget("Create", "#4051A6", handlePressCreateQuiz, true)}
           {renderWidget("Explore", "#EE5F88", handlePressExploreQuizzes, false)}
           {/* {renderWidget("Recents", "#4051A6", handlePressRecentTopics, true)} */}
+          {renderWidget("Scanner", "#4051A6", handlePressCV, true)}
+          {renderWidget("Multiplayer", "#EE5F88", handlePressMultiplayer, false)}
           {renderWidget("Profile", "#4051A6", handlePressUserProfile, true)}
-          {renderWidget("Scanner", "#EE5F88", handlePressCV, false)}
         </Animated.View>
       </ScrollView>
     </LinearGradient >
@@ -110,8 +124,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexWrap: "wrap",
-    paddingTop: '6.5%',
-    paddingBottom: '6.5%',
+    paddingTop: '5.5%',
+    paddingBottom: '5.5%',
   },
   scroll: {
     width: "100%",

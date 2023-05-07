@@ -21,7 +21,7 @@ import UserContext from "../contexts/user";
 import HorizontalNumberPicker from "./HorizontalPicker";
 
 export default function CreateQuiz({ route, navigation }) {
-  const { topic } = route.params;
+  const { topic, roomID, name } = route.params;
   const [num_questions, setNumber] = useState(3);
   const [difficulty, setDifficulty] = useState("medium");
 
@@ -38,6 +38,9 @@ export default function CreateQuiz({ route, navigation }) {
       // topic: `[${difficulty} difficulty] ` + topic,
       topic: topic,
       numberQuestions: num_questions,
+      gameID: roomID,
+      user_name: name,
+      joining: false,
     });
   };
 
@@ -53,6 +56,7 @@ export default function CreateQuiz({ route, navigation }) {
 
   return (
     <View style={styles.container}>
+
       <View style={[styles.topContainer, styles.shadow]}>
         <Text style={{ fontSize: 18, fontWeight: "bold", padding: 10, color: "white" }}>
           Number of Questions
@@ -122,7 +126,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   difficultyButtonText: {
-    fontSize: 20,
+    fontSize: 18,
     color: "white",
     padding: 10,
     fontWeight: "bold",
@@ -185,6 +189,10 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: "#fff",
     borderStyle: "solid",
+  },
+  shaded: {
+    opacity: 0.5,
+    tintColor: 'gray',
   },
   buttonText: {
     color: "#fff",
