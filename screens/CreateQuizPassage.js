@@ -15,6 +15,9 @@ export default function CreateQuiz({ route, navigation }) {
     navigation.navigate("Quiz From Passage", {
       passage: passage,
       numberQuestions: num_questions,
+      gameID: 0,
+      user_name: "mason",
+      joining: false,
     });
   };
 

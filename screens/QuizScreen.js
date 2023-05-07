@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { get_topic_mcq } from "../lib/external";
+import { get_topic_mcq, create_game, get_quiz_info } from "../lib/external";
 import { View, Text, Pressable, StyleSheet, Image, Button, ScrollView } from "react-native";
 import myTrophy from "../assets/myTrophy.png";
 import Loading from "./Loading";
@@ -18,16 +18,38 @@ const fetchException = (err) => {
 };
 
 const QuizScreen = ({ route, navigation }) => {
+  const { topic, numberQuestions, gameID, user_name, joining } = route.params;
   const [questions, setQuestions] = useState([]);
   const [numberCorrect, setNumberCorrect] = useState(0);
   const [revealAnswer, setRevealAnswer] = useState(false);
   const [loading, setLoading] = useState(true);
   const { user, setUser } = useContext(UserContext);
 
+
   useEffect(() => {
+    const get_questions = async (gameID) => {
+      try {
+        const question_data = await get_quiz_info(parseInt(gameID));
+        setQuestions(question_data.questions);
+        return question_data.questions;
+      }
+      catch (err) {
+        console.log("Error creating game: ", err);
+      }
+      setLoading(false);
+      return true;
+    };
     const fetchQuestions = async () => {
+      const makeGame = async (gameID, topic, questions) => {
+        try {
+          const success = await create_game(parseInt(gameID), topic, questions);
+        }
+        catch (err) {
+          console.log("Error creating game: ", err);
+        }
+        return true;
+      };
       const retries = async (tries = 3) => {
-        const { topic, numberQuestions } = route.params;
         if (topic === undefined || numberQuestions === undefined) return null;
         if (tries <= 0) {
           console.log("max retries reached, could not fetch mcq");
@@ -44,11 +66,25 @@ const QuizScreen = ({ route, navigation }) => {
       };
       const res = await retries();
       if (res === null) return;
-      setLoading(false);
-      setQuestions(res);
+
+      if (gameID > 0) {
+        const question_multiplayer = await get_questions(parseInt(gameID));
+        setQuestions(question_multiplayer);
+
+        const success = await makeGame(parseInt(gameID), topic, res)
+      };
+
+      if (!joining) { setLoading(false); }
     };
+
     fetchQuestions();
-  }, []);
+
+    if (joining) {
+      const question_multiplayer = get_questions(gameID);
+      setQuestions(question_multiplayer);
+    }
+
+  }, [loading]);
 
   const _selectionHandler = async (selectionIndex, selectedOption) => {
     if (revealAnswer) { // Prevent user from answering twice
@@ -86,7 +122,7 @@ const QuizScreen = ({ route, navigation }) => {
   if (loading) return <Loading />;
   if (questions != null && questions.length === 0)
     return (
-      <FinishedScreen numberCorrect={numberCorrect} navigation={navigation} />
+      <FinishedScreen numberCorrect={numberCorrect} navigation={navigation} user_name={user_name} gameID={gameID} />
     );
   return (
     <View style={styles.quizScreenContainer}>
@@ -110,7 +146,11 @@ const QuizScreen = ({ route, navigation }) => {
   );
 };
 
-const FinishedScreen = ({ numberCorrect, navigation }) => {
+const FinishedScreen = ({ numberCorrect, navigation, user_name, gameID }) => {
+  if (gameID > 0) {
+    BE.add_player(parseInt(gameID), user_name, numberCorrect);
+  };
+
   const _navigationHandler = (screenName) => {
     navigation.navigate(screenName);
   };

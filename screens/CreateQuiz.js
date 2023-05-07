@@ -38,6 +38,9 @@ export default function CreateQuiz({ route, navigation }) {
       // topic: `[${difficulty} difficulty] ` + topic,
       topic: topic,
       numberQuestions: num_questions,
+      gameID: roomID,
+      user_name: name,
+      joining: false,
     });
   };
 
@@ -53,6 +56,7 @@ export default function CreateQuiz({ route, navigation }) {
 
   return (
     <View style={styles.container}>
+
       <View style={[styles.topContainer, styles.shadow]}>
         <Text style={{ fontSize: 18, fontWeight: "bold", padding: 10, color: "white" }}>
           Number of Questions
@@ -185,6 +189,10 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: "#fff",
     borderStyle: "solid",
+  },
+  shaded: {
+    opacity: 0.5,
+    tintColor: 'gray',
   },
   buttonText: {
     color: "#fff",

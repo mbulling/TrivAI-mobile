@@ -7,6 +7,7 @@ import {
   FlatList,
   Pressable,
 } from "react-native";
+
 import { get_results } from "../lib/external";
 
 export default function MultiplayerFinish({ route }) {
